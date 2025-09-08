@@ -16,6 +16,10 @@ public class TennisMatch {
 		this.dateOfTheMatch = dateOfTheMatch;
 	}
 
+	public TennisMatch() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public String getId() {
 		return id;
 	}
