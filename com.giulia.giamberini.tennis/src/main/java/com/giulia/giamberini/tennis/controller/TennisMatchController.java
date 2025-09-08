@@ -33,10 +33,12 @@ public class TennisMatchController {
 
 	public void deleteTennisMatch(TennisMatch matchToDelete) {
 		TennisMatch existingMatch = repo.findByMatchInfo(matchToDelete.getWinner(), matchToDelete.getLoser(), matchToDelete.getDateOfTheMatch());
-		if (existingMatch != null) {
-			repo.delete(matchToDelete);
-			view.tennisMatchRemoved(matchToDelete);
+		if (existingMatch == null) {
+			view.showErrorNotExistingTennisMatch("The selected match doesn't exist", matchToDelete);
+			return;
 		}
+		repo.delete(matchToDelete);
+		view.tennisMatchRemoved(matchToDelete);
 	}
 
 }
