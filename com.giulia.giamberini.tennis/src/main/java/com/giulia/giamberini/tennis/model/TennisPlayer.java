@@ -14,6 +14,9 @@ public class TennisPlayer {
 		this.surname = surname;
 	}
 
+	public TennisPlayer() {
+	}
+
 	public String getId() {
 		return id;
 	}
