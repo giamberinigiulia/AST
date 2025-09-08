@@ -1,4 +1,4 @@
-package com.giulia.giamberini.tennis.model;
+package com.giulia.giamberini.tennis.controller;
 
 import static org.mockito.Mockito.ignoreStubs;
 import static org.mockito.Mockito.inOrder;
@@ -17,7 +17,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import com.giulia.giamberini.tennis.controller.TennisPlayerController;
+import com.giulia.giamberini.tennis.model.TennisPlayer;
 import com.giulia.giamberini.tennis.repository.TennisPlayerRepository;
 import com.giulia.giamberini.tennis.view.TennisManagementView;
 
