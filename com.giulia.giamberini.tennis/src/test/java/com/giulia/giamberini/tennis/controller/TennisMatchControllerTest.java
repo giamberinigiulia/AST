@@ -90,5 +90,17 @@ public class TennisMatchControllerTest {
 		order.verify(matchesRepo).delete(matchToDelete);
 		order.verify(view).tennisMatchRemoved(matchToDelete);
 	}
+	
+	@Test
+	public void testDeleteTennisMatchWhenItDoesntExist() {
+		TennisPlayer winner = new TennisPlayer("1", "winner name", "loser name");
+		TennisPlayer loser = new TennisPlayer("2", "loser name", "loser surname");
+		LocalDate date = LocalDate.of(2025, 10, 10);
+		TennisMatch matchToDelete = new TennisMatch(winner, loser, date);
+		when(matchesRepo.findByMatchInfo(winner, loser, date)).thenReturn(null);
+		matchesController.deleteTennisMatch(matchToDelete);
+		verify(view).showErrorNotExistingTennisMatch("The selected match doesn't exist", matchToDelete);
+		verifyNoMoreInteractions(ignoreStubs(matchesRepo));
+	}
 
 }
