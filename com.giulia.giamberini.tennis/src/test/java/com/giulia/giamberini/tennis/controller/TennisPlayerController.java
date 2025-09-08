@@ -20,7 +20,11 @@ public class TennisPlayerController {
 
 	public void addNewTennisPlayer(TennisPlayer tennisPlayerToAdd) {
 		// TODO Auto-generated method stub
-
+		TennisPlayer existingPlayer = repo.findById(tennisPlayerToAdd.getId());
+		if (existingPlayer == null) {
+			repo.save(tennisPlayerToAdd);
+			view.newTennisPlayerAdded(tennisPlayerToAdd);
+		}
 	}
 
 }
