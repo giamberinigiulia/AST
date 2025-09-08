@@ -10,4 +10,6 @@ public interface TennisManagementView {
 
 	void newTennisPlayerAdded(TennisPlayer tennisPlayerToAdd);
 
+	void showErrorTennisPlayerAlreadyExist(String errorMessage, TennisPlayer existingTennisPlayer);
+
 }

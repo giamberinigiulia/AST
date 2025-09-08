@@ -1,7 +1,9 @@
 package com.giulia.giamberini.tennis.model;
 
+import static org.mockito.Mockito.ignoreStubs;
 import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
@@ -56,6 +58,16 @@ public class TennisPlayerControllerTest {
 		InOrder order = inOrder(playersRepo, view);
 		order.verify(playersRepo).save(tennisPlayerToAdd);
 		order.verify(view).newTennisPlayerAdded(tennisPlayerToAdd);
+	}
+	
+	@Test
+	public void testInsertNewPlayerWhenItAlreadyExistShouldDisplayAnErrorInTheView() {
+		TennisPlayer existingTennisPlayer = new TennisPlayer("1","existing name","existing surname");
+		TennisPlayer newTennisPlayer = new TennisPlayer("1","another name","another surname");
+		when(playersRepo.findById("1")).thenReturn(existingTennisPlayer);
+		playersController.addNewTennisPlayer(newTennisPlayer);
+		verify(view).showErrorTennisPlayerAlreadyExist("The selected id 1 is already in use by another player", existingTennisPlayer);
+		verifyNoMoreInteractions(ignoreStubs(playersRepo));
 	}
 
 }
