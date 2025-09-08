@@ -19,12 +19,20 @@ public class TennisPlayerController {
 	}
 
 	public void addNewTennisPlayer(TennisPlayer tennisPlayerToAdd) {
-		// TODO Auto-generated method stub
 		TennisPlayer existingPlayer = repo.findById(tennisPlayerToAdd.getId());
-		if (existingPlayer == null) {
-			repo.save(tennisPlayerToAdd);
-			view.newTennisPlayerAdded(tennisPlayerToAdd);
+		if (existingPlayer != null) {
+			view.showErrorTennisPlayerAlreadyExist(
+					"The selected id " + tennisPlayerToAdd.getId() + " is already in use by another player",
+					existingPlayer);
+			return;
 		}
+		repo.save(tennisPlayerToAdd);
+		view.newTennisPlayerAdded(tennisPlayerToAdd);
+	}
+
+	public void deleteTennisPlayer(TennisPlayer tennisPlayerToRemove) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

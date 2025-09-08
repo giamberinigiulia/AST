@@ -69,5 +69,15 @@ public class TennisPlayerControllerTest {
 		verify(view).showErrorTennisPlayerAlreadyExist("The selected id 1 is already in use by another player", existingTennisPlayer);
 		verifyNoMoreInteractions(ignoreStubs(playersRepo));
 	}
+	
+	@Test
+	public void testRemoveTennisPlayerWhenItAlreadyExist() {
+		TennisPlayer tennisPlayerToRemove = new TennisPlayer("1","toRemove name","toRemove surname");
+		when(playersRepo.findById("1")).thenReturn(tennisPlayerToRemove);
+		playersController.deleteTennisPlayer(tennisPlayerToRemove);
+		InOrder order = inOrder(playersRepo,view);
+		order.verify(playersRepo).delete(tennisPlayerToRemove);
+		order.verify(view).tennisPlayerRemoved(tennisPlayerToRemove);
+	}
 
 }

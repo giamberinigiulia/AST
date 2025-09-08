@@ -12,4 +12,6 @@ public interface TennisPlayerRepository {
 
 	void save(TennisPlayer tennisPlayerToAdd);
 
+	void delete(TennisPlayer tennisPlayerToRemove);
+
 }

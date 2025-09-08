@@ -12,4 +12,6 @@ public interface TennisManagementView {
 
 	void showErrorTennisPlayerAlreadyExist(String errorMessage, TennisPlayer existingTennisPlayer);
 
+	void tennisPlayerRemoved(TennisPlayer tennisPlayerToRemove);
+
 }
