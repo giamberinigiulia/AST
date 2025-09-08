@@ -4,13 +4,11 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 public class TennisMatch {
-	private String id;
 	private TennisPlayer winner;
 	private TennisPlayer loser;
 	private LocalDate dateOfTheMatch;
 
-	public TennisMatch(String id, TennisPlayer winner, TennisPlayer loser, LocalDate dateOfTheMatch) {
-		this.id = id;
+	public TennisMatch(TennisPlayer winner, TennisPlayer loser, LocalDate dateOfTheMatch) {
 		this.winner = winner;
 		this.loser = loser;
 		this.dateOfTheMatch = dateOfTheMatch;
@@ -18,10 +16,6 @@ public class TennisMatch {
 
 	public TennisMatch() {
 		// TODO Auto-generated constructor stub
-	}
-
-	public String getId() {
-		return id;
 	}
 
 	public TennisPlayer getWinner() {
@@ -38,7 +32,7 @@ public class TennisMatch {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(dateOfTheMatch, id, loser, winner);
+		return Objects.hash(dateOfTheMatch, loser, winner);
 	}
 
 	@Override
@@ -50,14 +44,13 @@ public class TennisMatch {
 		if (getClass() != obj.getClass())
 			return false;
 		TennisMatch other = (TennisMatch) obj;
-		return Objects.equals(dateOfTheMatch, other.dateOfTheMatch) && Objects.equals(id, other.id)
-				&& Objects.equals(loser, other.loser) && Objects.equals(winner, other.winner);
+		return Objects.equals(dateOfTheMatch, other.dateOfTheMatch) && Objects.equals(loser, other.loser)
+				&& Objects.equals(winner, other.winner);
 	}
 
 	@Override
 	public String toString() {
-		return "TennisMatch [id=" + id + ", winner=" + winner + ", loser=" + loser + ", dateOfTheMatch="
-				+ dateOfTheMatch + "]";
+		return "TennisMatch [winner=" + winner + ", loser=" + loser + ", dateOfTheMatch=" + dateOfTheMatch + "]";
 	}
 
 }

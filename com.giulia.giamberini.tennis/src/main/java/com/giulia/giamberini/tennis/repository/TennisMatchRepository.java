@@ -10,7 +10,7 @@ public interface TennisMatchRepository {
 
 	List<TennisMatch> findAll();
 
-	TennisMatch findByMatchInfo(String id, TennisPlayer winner, TennisPlayer loser, LocalDate date);
+	TennisMatch findByMatchInfo(TennisPlayer winner, TennisPlayer loser, LocalDate date);
 
 	void save(TennisMatch tennisMatchToAdd);
 

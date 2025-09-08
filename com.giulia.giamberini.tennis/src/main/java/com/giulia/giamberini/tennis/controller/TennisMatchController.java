@@ -19,7 +19,7 @@ public class TennisMatchController {
 	}
 
 	public void addNewTennisMatch(TennisMatch tennisMatchToAdd) {
-		TennisMatch existingMatch = repo.findByMatchInfo(tennisMatchToAdd.getId(), tennisMatchToAdd.getWinner(),
+		TennisMatch existingMatch = repo.findByMatchInfo(tennisMatchToAdd.getWinner(),
 				tennisMatchToAdd.getLoser(), tennisMatchToAdd.getDateOfTheMatch());
 		if (existingMatch != null) {
 			view.showErrorTennisMatchAlreadyExist("The match between " + existingMatch.getWinner().toString() + " and "
