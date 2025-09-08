@@ -31,8 +31,11 @@ public class TennisPlayerController {
 	}
 
 	public void deleteTennisPlayer(TennisPlayer tennisPlayerToRemove) {
-		// TODO Auto-generated method stub
-		
+		TennisPlayer existingPlayer = repo.findById(tennisPlayerToRemove.getId());
+		if (existingPlayer != null) {
+			repo.delete(tennisPlayerToRemove);
+			view.tennisPlayerRemoved(tennisPlayerToRemove);
+		}
 	}
 
 }
