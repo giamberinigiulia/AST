@@ -32,10 +32,14 @@ public class TennisPlayerController {
 
 	public void deleteTennisPlayer(TennisPlayer tennisPlayerToRemove) {
 		TennisPlayer existingPlayer = repo.findById(tennisPlayerToRemove.getId());
-		if (existingPlayer != null) {
-			repo.delete(tennisPlayerToRemove);
-			view.tennisPlayerRemoved(tennisPlayerToRemove);
+		if (existingPlayer == null) {
+			view.showErrorNotExistingTennisPlayer(
+					"The selected id " + tennisPlayerToRemove.getId() + " is not associated with any tennis player",
+					tennisPlayerToRemove);
+			return;
 		}
+		repo.delete(tennisPlayerToRemove);
+		view.tennisPlayerRemoved(tennisPlayerToRemove);
 	}
 
 }
