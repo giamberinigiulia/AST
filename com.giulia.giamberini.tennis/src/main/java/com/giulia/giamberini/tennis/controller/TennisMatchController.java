@@ -1,6 +1,7 @@
 package com.giulia.giamberini.tennis.controller;
 
 import com.giulia.giamberini.tennis.model.TennisMatch;
+import com.giulia.giamberini.tennis.model.TennisPlayer;
 import com.giulia.giamberini.tennis.repository.TennisMatchRepository;
 import com.giulia.giamberini.tennis.view.TennisManagementView;
 
@@ -19,8 +20,12 @@ public class TennisMatchController {
 	}
 
 	public void addNewTennisMatch(TennisMatch tennisMatchToAdd) {
-		// TODO Auto-generated method stub
-		
+		TennisMatch existingMatch = repo.findByMatchInfo(tennisMatchToAdd.getId(), tennisMatchToAdd.getWinner(),
+				tennisMatchToAdd.getLoser(), tennisMatchToAdd.getDateOfTheMatch());
+		if (existingMatch == null) {
+			repo.save(tennisMatchToAdd);
+			view.newTennisMatchAdded(tennisMatchToAdd);
+		}
 	}
 
 }
