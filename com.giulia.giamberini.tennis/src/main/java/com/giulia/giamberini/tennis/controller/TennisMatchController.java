@@ -21,10 +21,14 @@ public class TennisMatchController {
 	public void addNewTennisMatch(TennisMatch tennisMatchToAdd) {
 		TennisMatch existingMatch = repo.findByMatchInfo(tennisMatchToAdd.getId(), tennisMatchToAdd.getWinner(),
 				tennisMatchToAdd.getLoser(), tennisMatchToAdd.getDateOfTheMatch());
-		if (existingMatch == null) {
-			repo.save(tennisMatchToAdd);
-			view.newTennisMatchAdded(tennisMatchToAdd);
+		if (existingMatch != null) {
+			view.showErrorTennisMatchAlreadyExist("The match between " + existingMatch.getWinner().toString() + " and "
+					+ existingMatch.getLoser().toString() + " has been already played in the selected date "
+					+ existingMatch.getDateOfTheMatch(), existingMatch);
+			return;
 		}
+		repo.save(tennisMatchToAdd);
+		view.newTennisMatchAdded(tennisMatchToAdd);
 	}
 
 }
