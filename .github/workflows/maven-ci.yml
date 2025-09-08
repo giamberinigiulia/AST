@@ -9,8 +9,7 @@ jobs:
       runs-on: ubuntu-latest
       strategy:
          matrix:
-            include:
-            -  java: [11, 17]
+            java: [11, 17]
             
       name: Build with Java ${{matrix.java}}
       steps:
