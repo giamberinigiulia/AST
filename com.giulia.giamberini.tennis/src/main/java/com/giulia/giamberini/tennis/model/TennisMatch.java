@@ -1,15 +1,15 @@
 package com.giulia.giamberini.tennis.model;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.Objects;
 
 public class TennisMatch {
 	private String id;
 	private TennisPlayer winner;
 	private TennisPlayer loser;
-	private Date dateOfTheMatch;
+	private LocalDate dateOfTheMatch;
 
-	public TennisMatch(String id, TennisPlayer winner, TennisPlayer loser, Date dateOfTheMatch) {
+	public TennisMatch(String id, TennisPlayer winner, TennisPlayer loser, LocalDate dateOfTheMatch) {
 		this.id = id;
 		this.winner = winner;
 		this.loser = loser;
@@ -32,7 +32,7 @@ public class TennisMatch {
 		return loser;
 	}
 
-	public Date getDateOfTheMatch() {
+	public LocalDate getDateOfTheMatch() {
 		return dateOfTheMatch;
 	}
 
@@ -56,8 +56,8 @@ public class TennisMatch {
 
 	@Override
 	public String toString() {
-		return "Match [id=" + id + ", winner=" + winner + ", loser=" + loser + ", dateOfTheMatch=" + dateOfTheMatch
-				+ "]";
+		return "TennisMatch [id=" + id + ", winner=" + winner + ", loser=" + loser + ", dateOfTheMatch="
+				+ dateOfTheMatch + "]";
 	}
 
 }
