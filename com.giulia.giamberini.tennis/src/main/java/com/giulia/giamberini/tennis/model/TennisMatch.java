@@ -3,13 +3,13 @@ package com.giulia.giamberini.tennis.model;
 import java.util.Date;
 import java.util.Objects;
 
-public class Match {
+public class TennisMatch {
 	private String id;
 	private TennisPlayer winner;
 	private TennisPlayer loser;
 	private Date dateOfTheMatch;
 
-	public Match(String id, TennisPlayer winner, TennisPlayer loser, Date dateOfTheMatch) {
+	public TennisMatch(String id, TennisPlayer winner, TennisPlayer loser, Date dateOfTheMatch) {
 		this.id = id;
 		this.winner = winner;
 		this.loser = loser;
@@ -45,7 +45,7 @@ public class Match {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Match other = (Match) obj;
+		TennisMatch other = (TennisMatch) obj;
 		return Objects.equals(dateOfTheMatch, other.dateOfTheMatch) && Objects.equals(id, other.id)
 				&& Objects.equals(loser, other.loser) && Objects.equals(winner, other.winner);
 	}
