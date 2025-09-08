@@ -2,6 +2,7 @@ package com.giulia.giamberini.tennis.view;
 
 import java.util.List;
 
+import com.giulia.giamberini.tennis.model.TennisMatch;
 import com.giulia.giamberini.tennis.model.TennisPlayer;
 
 public interface TennisManagementView {
@@ -15,5 +16,7 @@ public interface TennisManagementView {
 	void tennisPlayerRemoved(TennisPlayer tennisPlayerToRemove);
 
 	void showErrorNotExistingTennisPlayer(String errorMessage, TennisPlayer tennisPlayerToRemove);
+
+	void showAllTennisMatches(List<TennisMatch> matches);
 
 }
