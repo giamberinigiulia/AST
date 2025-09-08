@@ -1,6 +1,7 @@
 package com.giulia.giamberini.tennis.model;
 
 import java.util.Date;
+import java.util.Objects;
 
 public class Match {
 	private String id;
@@ -29,6 +30,30 @@ public class Match {
 
 	public Date getDateOfTheMatch() {
 		return dateOfTheMatch;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(dateOfTheMatch, id, loser, winner);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Match other = (Match) obj;
+		return Objects.equals(dateOfTheMatch, other.dateOfTheMatch) && Objects.equals(id, other.id)
+				&& Objects.equals(loser, other.loser) && Objects.equals(winner, other.winner);
+	}
+
+	@Override
+	public String toString() {
+		return "Match [id=" + id + ", winner=" + winner + ", loser=" + loser + ", dateOfTheMatch=" + dateOfTheMatch
+				+ "]";
 	}
 
 }
