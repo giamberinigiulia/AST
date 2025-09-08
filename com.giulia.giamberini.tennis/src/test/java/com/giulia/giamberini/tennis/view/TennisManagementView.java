@@ -14,4 +14,6 @@ public interface TennisManagementView {
 
 	void tennisPlayerRemoved(TennisPlayer tennisPlayerToRemove);
 
+	void showErrorNotExistingTennisPlayer(String errorMessage, TennisPlayer tennisPlayerToRemove);
+
 }

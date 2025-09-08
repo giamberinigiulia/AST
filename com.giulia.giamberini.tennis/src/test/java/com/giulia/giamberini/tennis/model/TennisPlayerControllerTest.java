@@ -79,5 +79,14 @@ public class TennisPlayerControllerTest {
 		order.verify(playersRepo).delete(tennisPlayerToRemove);
 		order.verify(view).tennisPlayerRemoved(tennisPlayerToRemove);
 	}
+	
+	@Test
+	public void testRemoveTennisPlayerWhenItDoesntExist() {
+		TennisPlayer tennisPlayerToRemove = new TennisPlayer("1","toRemove name","toRemove surname");
+		when(playersRepo.findById("1")).thenReturn(null);
+		playersController.deleteTennisPlayer(tennisPlayerToRemove);
+		verify(view).showErrorNotExistingTennisPlayer("The selected id 1 is not associated with any tennis player", tennisPlayerToRemove);
+		verifyNoMoreInteractions(ignoreStubs(playersRepo));
+	}
 
 }
