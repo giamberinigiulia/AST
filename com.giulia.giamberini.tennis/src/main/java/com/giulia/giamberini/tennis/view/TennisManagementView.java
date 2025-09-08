@@ -19,4 +19,6 @@ public interface TennisManagementView {
 
 	void showAllTennisMatches(List<TennisMatch> matches);
 
+	void newTennisMatchAdded(TennisMatch tennisMatchToAdd);
+
 }

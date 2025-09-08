@@ -1,5 +1,6 @@
 package com.giulia.giamberini.tennis.controller;
 
+import com.giulia.giamberini.tennis.model.TennisMatch;
 import com.giulia.giamberini.tennis.repository.TennisMatchRepository;
 import com.giulia.giamberini.tennis.view.TennisManagementView;
 
@@ -15,6 +16,11 @@ public class TennisMatchController {
 
 	public void findAllTennisMatches() {
 		view.showAllTennisMatches(repo.findAll());
+	}
+
+	public void addNewTennisMatch(TennisMatch tennisMatchToAdd) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
