@@ -3,7 +3,7 @@ package com.giulia.giamberini.tennis.controller;
 import static org.mockito.Mockito.ignoreStubs;
 import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoInteractions;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
 import java.time.LocalDate;
@@ -75,7 +75,7 @@ public class TennisMatchControllerTest {
 		matchesController.addNewTennisMatch(existingMatch);
 		verify(view).showErrorTennisMatchAlreadyExist("The match between " + winner.toString() + " and "
 				+ loser.toString() + " has been already played in the selected date " + date, existingMatch);
-		verifyNoInteractions(ignoreStubs(matchesRepo));
+		verifyNoMoreInteractions(ignoreStubs(matchesRepo));
 	}
 
 }
