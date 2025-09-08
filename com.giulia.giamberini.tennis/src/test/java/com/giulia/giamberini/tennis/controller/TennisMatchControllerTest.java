@@ -1,7 +1,9 @@
 package com.giulia.giamberini.tennis.controller;
 
+import static org.mockito.Mockito.ignoreStubs;
 import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
 
 import java.time.LocalDate;
@@ -58,9 +60,22 @@ public class TennisMatchControllerTest {
 		TennisMatch tennisMatchToAdd = new TennisMatch("1", winner, loser, date);
 		when(matchesRepo.findByMatchInfo("1", winner, loser, date)).thenReturn(null);
 		matchesController.addNewTennisMatch(tennisMatchToAdd);
-		InOrder order = inOrder(matchesRepo,view);
+		InOrder order = inOrder(matchesRepo, view);
 		order.verify(matchesRepo).save(tennisMatchToAdd);
 		order.verify(view).newTennisMatchAdded(tennisMatchToAdd);
+	}
+
+	@Test
+	public void testInsertNewTennisMatchWhenItAlreadyExist() {
+		TennisPlayer winner = new TennisPlayer("1", "winner name", "loser name");
+		TennisPlayer loser = new TennisPlayer("2", "loser name", "loser surname");
+		LocalDate date = LocalDate.of(2025, 10, 10);
+		TennisMatch existingMatch = new TennisMatch("1", winner, loser, date);
+		when(matchesRepo.findByMatchInfo("1", winner, loser, date)).thenReturn(existingMatch);
+		matchesController.addNewTennisMatch(existingMatch);
+		verify(view).showErrorTennisMatchAlreadyExist("The match between " + winner.toString() + " and "
+				+ loser.toString() + " has been already played in the selected date " + date, existingMatch);
+		verifyNoInteractions(ignoreStubs(matchesRepo));
 	}
 
 }

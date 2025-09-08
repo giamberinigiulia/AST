@@ -1,7 +1,6 @@
 package com.giulia.giamberini.tennis.controller;
 
 import com.giulia.giamberini.tennis.model.TennisMatch;
-import com.giulia.giamberini.tennis.model.TennisPlayer;
 import com.giulia.giamberini.tennis.repository.TennisMatchRepository;
 import com.giulia.giamberini.tennis.view.TennisManagementView;
 

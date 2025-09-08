@@ -21,4 +21,6 @@ public interface TennisManagementView {
 
 	void newTennisMatchAdded(TennisMatch tennisMatchToAdd);
 
+	void showErrorTennisMatchAlreadyExist(String errorMessage, TennisMatch existingMatch);
+
 }
