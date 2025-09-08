@@ -8,8 +8,8 @@ import com.mongodb.MongoClient;
 
 public class TennisPlayerRepositoryMongo implements TennisPlayerRepository {
 
-	public TennisPlayerRepositoryMongo(MongoClient client, String string, String string2) {
-		// TODO Auto-generated constructor stub
+	public TennisPlayerRepositoryMongo(MongoClient client, String databaseName, String collectionName) {
+		// TODO Auto-generated method stub
 	}
 
 	@Override
