@@ -9,6 +9,7 @@
   <packaging>jar</packaging>
 
   <properties>
+    <pitest-maven-version>1.16.1</pitest-maven-version>
     <jaxb-api-version>2.3.1</jaxb-api-version>
     <coveralls-maven-plugin-version>4.3.0</coveralls-maven-plugin-version>
     <jacoco-maven-plugin-version>0.8.12</jacoco-maven-plugin-version>
@@ -105,6 +106,24 @@
               <version>${jaxb-api-version}</version>
             </dependency>
           </dependencies>
+        </plugin>
+        <plugin>
+          <groupId>org.pitest</groupId>
+          <artifactId>pitest-maven</artifactId>
+          <version>${pitest-maven-version}</version>
+          <configuration>
+            <targetClasses>
+              <param>com.giulia.giamberini.tennis.controller.*</param>
+            </targetClasses>
+            <targetTests>
+              <param>com.giulia.giamberini.tennis.controller.TennisMatchControllerTest</param>
+              <param>com.giulia.giamberini.tennis.controller.TennisPlayerControllerTest</param>
+            </targetTests>
+            <mutators>
+              <mutator>STRONGER</mutator>
+            </mutators>
+            <mutationThreshold>100</mutationThreshold>
+          </configuration>
         </plugin>
       </plugins>
     </pluginManagement>
