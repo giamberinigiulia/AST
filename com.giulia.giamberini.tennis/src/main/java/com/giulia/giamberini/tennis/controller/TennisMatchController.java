@@ -19,8 +19,8 @@ public class TennisMatchController {
 	}
 
 	public void addNewTennisMatch(TennisMatch tennisMatchToAdd) {
-		TennisMatch existingMatch = repo.findByMatchInfo(tennisMatchToAdd.getWinner(),
-				tennisMatchToAdd.getLoser(), tennisMatchToAdd.getDateOfTheMatch());
+		TennisMatch existingMatch = repo.findByMatchInfo(tennisMatchToAdd.getWinner(), tennisMatchToAdd.getLoser(),
+				tennisMatchToAdd.getDateOfTheMatch());
 		if (existingMatch != null) {
 			view.showErrorTennisMatchAlreadyExist("The match between " + existingMatch.getWinner().toString() + " and "
 					+ existingMatch.getLoser().toString() + " has been already played in the selected date "
@@ -32,8 +32,11 @@ public class TennisMatchController {
 	}
 
 	public void deleteTennisMatch(TennisMatch matchToDelete) {
-		// TODO Auto-generated method stub
-		
+		TennisMatch existingMatch = repo.findByMatchInfo(matchToDelete.getWinner(), matchToDelete.getLoser(), matchToDelete.getDateOfTheMatch());
+		if (existingMatch != null) {
+			repo.delete(matchToDelete);
+			view.tennisMatchRemoved(matchToDelete);
+		}
 	}
 
 }
