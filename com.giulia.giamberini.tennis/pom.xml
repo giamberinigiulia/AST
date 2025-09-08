@@ -9,6 +9,7 @@
   <packaging>jar</packaging>
 
   <properties>
+    <mongo-java-driver-version>3.12.14</mongo-java-driver-version>
     <assertj-core-version>3.27.4</assertj-core-version>
     <mockito-core-version>4.11.0</mockito-core-version>
     <junit-version>4.13.2</junit-version>
@@ -35,6 +36,11 @@
       <artifactId>assertj-core</artifactId>
       <version>${assertj-core-version}</version>
       <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.mongodb</groupId>
+      <artifactId>mongo-java-driver</artifactId>
+      <version>${mongo-java-driver-version}</version>
     </dependency>
   </dependencies>
 </project>
