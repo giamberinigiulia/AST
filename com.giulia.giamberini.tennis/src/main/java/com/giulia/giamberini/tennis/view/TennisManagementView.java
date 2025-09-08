@@ -23,4 +23,6 @@ public interface TennisManagementView {
 
 	void showErrorTennisMatchAlreadyExist(String errorMessage, TennisMatch existingMatch);
 
+	void tennisMatchRemoved(TennisMatch matchToDelete);
+
 }

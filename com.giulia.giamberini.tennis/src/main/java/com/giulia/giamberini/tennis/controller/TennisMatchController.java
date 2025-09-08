@@ -31,4 +31,9 @@ public class TennisMatchController {
 		view.newTennisMatchAdded(tennisMatchToAdd);
 	}
 
+	public void deleteTennisMatch(TennisMatch matchToDelete) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

@@ -14,4 +14,6 @@ public interface TennisMatchRepository {
 
 	void save(TennisMatch tennisMatchToAdd);
 
+	void delete(TennisMatch matchToDelete);
+
 }
