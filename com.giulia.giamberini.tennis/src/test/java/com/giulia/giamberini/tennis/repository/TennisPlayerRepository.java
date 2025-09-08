@@ -8,4 +8,8 @@ public interface TennisPlayerRepository {
 
 	List<TennisPlayer> findAll();
 
+	TennisPlayer findById(String id);
+
+	void save(TennisPlayer tennisPlayerToAdd);
+
 }

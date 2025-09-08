@@ -8,4 +8,6 @@ public interface TennisManagementView {
 
 	void showAllTennisPlayers(List<TennisPlayer> players);
 
+	void newTennisPlayerAdded(TennisPlayer tennisPlayerToAdd);
+
 }
