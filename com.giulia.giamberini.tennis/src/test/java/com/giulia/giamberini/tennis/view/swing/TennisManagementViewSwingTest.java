@@ -142,4 +142,18 @@ public class TennisManagementViewSwingTest extends AssertJSwingJUnitTestCase {
 		assertThat(window.list("playersList").contents()).containsExactly(player.toString());
 		window.label("errorPlayerLbl").requireText(" ");
 	}
+	
+	@Test
+	public void testPlayerSuccessfullyRemovedShouldRemoveThePlayerFromTheListAndResetTheErrorLabel() {
+		TennisPlayer player1 = new TennisPlayer("1","test name1", "test surname1");
+		TennisPlayer player2 = new TennisPlayer("2","test name2", "test surname2");
+		GuiActionRunner.execute(() -> {
+			DefaultListModel<TennisPlayer> listPlayersModel = view.getListPlayerModel();
+			listPlayersModel.addElement(player1);
+			listPlayersModel.addElement(player2);
+		});
+		GuiActionRunner.execute(() -> view.tennisPlayerRemoved(player1));
+		assertThat(window.list("playersList").contents()).containsExactly(player2.toString());
+		window.label("errorPlayerLbl").requireText(" ");
+	}
 }
