@@ -51,4 +51,11 @@ public class TennisManagementViewSwingTest extends AssertJSwingJUnitTestCase {
 		window.label("errorMatchLbl").requireText(" ");
 	}
 
+	@Test @GUITest
+	public void testAddPlayerButtonEnableddWhenIdAndNameAndSurnameAreNotEmpty() {
+		window.textBox("idTextBox").enterText("1");
+		window.textBox("nameTextBox").enterText("test name");
+		window.textBox("surnameTextBox").enterText("test surname");
+		window.button(JButtonMatcher.withText("Add player")).requireEnabled();
+	}
 }
