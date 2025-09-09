@@ -425,8 +425,9 @@ public class TennisManagementViewSwing extends JFrame implements TennisManagemen
 
 	@Override
 	public void showAllTennisMatches(List<TennisMatch> matches) {
-		// TODO Auto-generated method stub
-
+		for (TennisMatch tennisMatch : matches) {
+			listMatchModel.addElement(tennisMatch);
+		}
 	}
 
 	@Override
