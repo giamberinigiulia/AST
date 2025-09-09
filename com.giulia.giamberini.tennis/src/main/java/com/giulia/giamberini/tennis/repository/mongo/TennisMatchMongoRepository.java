@@ -16,6 +16,7 @@ import com.giulia.giamberini.tennis.repository.TennisMatchRepository;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientSettings;
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.model.Filters;
 
 public class TennisMatchMongoRepository implements TennisMatchRepository {
 
@@ -35,8 +36,8 @@ public class TennisMatchMongoRepository implements TennisMatchRepository {
 
 	@Override
 	public TennisMatch findByMatchInfo(TennisPlayer winner, TennisPlayer loser, LocalDate date) {
-		// TODO Auto-generated method stub
-		return null;
+		return collection.find(Filters.and(Filters.eq("winner", winner), Filters.eq("loser", loser),
+				Filters.eq("dateOfTheMatch", date))).first();
 	}
 
 	@Override
