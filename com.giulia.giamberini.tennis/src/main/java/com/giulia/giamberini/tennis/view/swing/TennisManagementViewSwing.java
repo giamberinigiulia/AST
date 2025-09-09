@@ -359,8 +359,9 @@ public class TennisManagementViewSwing extends JFrame implements TennisManagemen
 
 	@Override
 	public void showErrorNotExistingTennisPlayer(String errorMessage, TennisPlayer tennisPlayerToRemove) {
-		// TODO Auto-generated method stub
-
+		errorPlayerLbl.setText(errorMessage + ": " + tennisPlayerToRemove.getId() + " - "
+				+ tennisPlayerToRemove.getName() + " - " + tennisPlayerToRemove.getSurname());
+		listPlayerModel.removeElement(tennisPlayerToRemove);
 	}
 
 	@Override
