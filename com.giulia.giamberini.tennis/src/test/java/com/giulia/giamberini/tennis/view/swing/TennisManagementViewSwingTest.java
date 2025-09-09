@@ -404,4 +404,16 @@ public class TennisManagementViewSwingTest extends AssertJSwingJUnitTestCase {
 		window.label("errorMatchLbl").requireText("Error message: (1,test name1,test surname1) - (2,test name2,test surname2) - 2025-10-25");
 		assertThat(window.list("matchesList").contents()).containsExactly(match2.toString());
 	}
+	
+	@Test
+	@GUITest
+	public void testMatchSuccessfullyAddedShouldResetTheErrorLabelAndAddTheNewmatchToTheList() {
+		TennisPlayer player1 = new TennisPlayer("1", "test name1", "test surname1");
+		TennisPlayer player2 = new TennisPlayer("2", "test name2", "test surname2");
+		LocalDate date = LocalDate.of(2025, 10, 25);
+		TennisMatch match = new TennisMatch(player1, player2, date);
+		GuiActionRunner.execute(() -> view.newTennisMatchAdded(match));
+		assertThat(window.list("matchesList").contents()).containsExactly(match.toString());
+		window.label("errorMatchLbl").requireText(" ");
+	}
 }
