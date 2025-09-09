@@ -26,7 +26,8 @@ public class TennisManagementViewSwingTest extends AssertJSwingJUnitTestCase {
 		window.show();
 	}
 
-	@Test @GUITest
+	@Test
+	@GUITest
 	public void testInitialConfiguration() {
 		window.requireTitle("Tennis Matches Management");
 		window.label(JLabelMatcher.withText("ID"));
@@ -51,11 +52,38 @@ public class TennisManagementViewSwingTest extends AssertJSwingJUnitTestCase {
 		window.label("errorMatchLbl").requireText(" ");
 	}
 
-	@Test @GUITest
+	@Test
+	@GUITest
 	public void testAddPlayerButtonEnableddWhenIdAndNameAndSurnameAreNotEmpty() {
 		window.textBox("idTextBox").enterText("1");
 		window.textBox("nameTextBox").enterText("test name");
 		window.textBox("surnameTextBox").enterText("test surname");
 		window.button(JButtonMatcher.withText("Add player")).requireEnabled();
+	}
+
+	@Test
+	public void testAddPlayerButtonShouldRemainDisabledWhenAtLeastOneOfIdNameAndSurnameIsBlank() {
+		window.textBox("idTextBox").enterText(" ");
+		window.textBox("nameTextBox").enterText("test name");
+		window.textBox("surnameTextBox").enterText("test surname");
+		window.button(JButtonMatcher.withText("Add player")).requireDisabled();
+
+		window.textBox("idTextBox").setText("");
+		window.textBox("nameTextBox").setText("");
+		window.textBox("surnameTextBox").setText("");
+
+		window.textBox("idTextBox").enterText("1");
+		window.textBox("nameTextBox").enterText(" ");
+		window.textBox("surnameTextBox").enterText("test surname");
+		window.button(JButtonMatcher.withText("Add player")).requireDisabled();
+
+		window.textBox("idTextBox").setText("");
+		window.textBox("nameTextBox").setText("");
+		window.textBox("surnameTextBox").setText("");
+
+		window.textBox("idTextBox").enterText("1");
+		window.textBox("nameTextBox").enterText("test name");
+		window.textBox("surnameTextBox").enterText(" ");
+		window.button(JButtonMatcher.withText("Add player")).requireDisabled();
 	}
 }
