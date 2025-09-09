@@ -16,4 +16,6 @@ public interface TennisMatchRepository {
 
 	void delete(TennisMatch matchToDelete);
 
+	List<TennisMatch> findMatchesByTennisPlayerId(String playerId);
+
 }

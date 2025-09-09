@@ -22,12 +22,24 @@ public class TennisMatch {
 		return winner;
 	}
 
+	public void setWinner(TennisPlayer winner) {
+		this.winner = winner;
+	}
+
 	public TennisPlayer getLoser() {
 		return loser;
 	}
 
+	public void setLoser(TennisPlayer loser) {
+		this.loser = loser;
+	}
+
 	public LocalDate getDateOfTheMatch() {
 		return dateOfTheMatch;
+	}
+
+	public void setDateOfTheMatch(LocalDate dateOfTheMatch) {
+		this.dateOfTheMatch = dateOfTheMatch;
 	}
 
 	@Override
