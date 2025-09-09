@@ -51,8 +51,9 @@ public class TennisMatchMongoRepository implements TennisMatchRepository {
 
 	@Override
 	public void delete(TennisMatch matchToDelete) {
-		// TODO Auto-generated method stub
-
+		collection.deleteOne(Filters.and(Filters.eq("winner", matchToDelete.getWinner()),
+				Filters.eq("loser", matchToDelete.getLoser()),
+				Filters.eq("dateOfTheMatch", matchToDelete.getDateOfTheMatch())));
 	}
 
 }
