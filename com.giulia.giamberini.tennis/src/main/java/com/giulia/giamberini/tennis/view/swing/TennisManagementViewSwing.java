@@ -199,6 +199,7 @@ public class TennisManagementViewSwing extends JFrame implements TennisManagemen
 		playersListScrollPane.setViewportView(playersList);
 
 		deletePlayerBtn = new JButton("Delete player");
+		deletePlayerBtn.addActionListener(e -> playerController.deleteTennisPlayer(playersList.getSelectedValue()));
 		deletePlayerBtn.setEnabled(false);
 		deletePlayerBtn.setName("deletePlayerBtn");
 		GridBagConstraints gbc_deletePlayerBtn = new GridBagConstraints();
