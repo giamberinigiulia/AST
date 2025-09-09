@@ -114,5 +114,16 @@ public class TennisMatchRepositoryMongoTest {
 		repo.save(tennisMatchToSave);
 		assertThat(collection.find()).containsExactly(tennisMatchToSave);
 	}
+	
+	@Test
+	public void testDelete() {
+		TennisPlayer winner = new TennisPlayer(WINNER_ID, WINNER_NAME, WINNER_SURNAME);
+		TennisPlayer loser = new TennisPlayer(LOSER_ID, LOSER_NAME, LOSER_SURNAME);
+		LocalDate tennisMatchDate1 = LocalDate.of(2025, 10, 22);
+		TennisMatch tennisMatchToDelete = new TennisMatch(winner, loser, tennisMatchDate1);
+		collection.insertOne(tennisMatchToDelete);
+		repo.delete(tennisMatchToDelete);
+		assertThat(collection.find()).isEmpty();
+	}
 
 }
