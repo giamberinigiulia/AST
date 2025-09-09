@@ -110,8 +110,8 @@ public class TennisManagementViewSwing extends JFrame implements TennisManagemen
 		KeyAdapter addPlayerBtnEnabler = new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
-				addPlayerBtn.setEnabled(!idTextBox.getText().isEmpty() && !nameTextBox.getText().isEmpty()
-						&& !surnameTextBox.getText().isEmpty());
+				addPlayerBtn.setEnabled(!idTextBox.getText().trim().isEmpty() && !nameTextBox.getText().trim().isEmpty()
+						&& !surnameTextBox.getText().trim().isEmpty());
 			}
 		};
 		idTextBox.addKeyListener(addPlayerBtnEnabler);
