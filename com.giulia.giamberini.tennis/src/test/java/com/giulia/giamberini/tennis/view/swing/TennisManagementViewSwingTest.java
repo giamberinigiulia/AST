@@ -479,4 +479,27 @@ public class TennisManagementViewSwingTest extends AssertJSwingJUnitTestCase {
 		window.button(JButtonMatcher.withText("Delete match")).click();
 		verify(matchController).deleteTennisMatch(match2);
 	}
+	
+	@Test
+	@GUITest
+	public void testMatchSeccessfullyAddedShouldResetAlsoTheSelections() {
+		TennisPlayer player1 = new TennisPlayer("1", "test name1", "test surname1");
+		TennisPlayer player2 = new TennisPlayer("2", "test name2", "test surname2");
+		LocalDate date = LocalDate.of(2025, 10, 25);
+		GuiActionRunner.execute(() -> {
+			DefaultComboBoxModel<TennisPlayer> winnerComboBoxModel = view.getWinnerComboBoxModel();
+			winnerComboBoxModel.addElement(player1);
+			winnerComboBoxModel.addElement(player2);
+			DefaultComboBoxModel<TennisPlayer> loserComboBoxModel = view.getLoserComboBoxModel();
+			loserComboBoxModel.addElement(player1);
+			loserComboBoxModel.addElement(player2);
+		});
+		window.comboBox("winnerComboBox").selectItem(0);
+		window.comboBox("loserComboBox").selectItem(1);
+		window.textBox("dateOfTheMatchTextBox").enterText(date.toString());
+		GuiActionRunner.execute(() -> view.newTennisMatchAdded(new TennisMatch(player1, player2, date)));
+		window.comboBox("winnerComboBox").clearSelection();
+		window.comboBox("loserComboBox").clearSelection();
+		window.textBox("dateOfTheMatchTextBox").requireText("");
+	}
 }
