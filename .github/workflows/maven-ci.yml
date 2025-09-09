@@ -11,8 +11,9 @@ jobs:
          matrix:
             include:
              - java: 11
-               additional-maven-args: "-Pjacoco -DrepoToken=$COVERALLS_REPO_TOKEN coveralls:report org.pitest:pitest-maven:mutationCoverage"
+               additional-maven-args: "-Pjacoco -DrepoToken=$COVERALLS_REPO_TOKEN coveralls:report"
              - java: 17
+               additional-maven-args: "-Ppit-mutation-testing"
             
       name: Build with Java ${{matrix.java}}
       steps:
@@ -33,3 +34,8 @@ jobs:
          env:
             COVERALLS_REPO_TOKEN: ${{secrets.COVERALLS_REPO_TOKEN}}
          working-directory: com.giulia.giamberini.tennis
+      -  name: Archive PIT report
+         uses: actions/upload-artifact@v4
+         with: 
+            name: PIT-report
+            path: '**/target/pit-reports'
