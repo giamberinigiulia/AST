@@ -433,8 +433,8 @@ public class TennisManagementViewSwing extends JFrame implements TennisManagemen
 
 	@Override
 	public void newTennisMatchAdded(TennisMatch tennisMatchToAdd) {
-		// TODO Auto-generated method stub
-
+		listMatchModel.addElement(tennisMatchToAdd);
+		errorMatchLbl.setText(" ");
 	}
 
 	@Override
