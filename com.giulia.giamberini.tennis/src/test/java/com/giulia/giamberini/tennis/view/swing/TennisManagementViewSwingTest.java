@@ -43,7 +43,7 @@ public class TennisManagementViewSwingTest extends AssertJSwingJUnitTestCase {
 		window = new FrameFixture(robot(), view);
 		window.show();
 	}
-	
+
 	@Override
 	public void onTearDown() throws Exception {
 		closeable.close();
@@ -84,7 +84,8 @@ public class TennisManagementViewSwingTest extends AssertJSwingJUnitTestCase {
 		window.button(JButtonMatcher.withText("Add player")).requireEnabled();
 	}
 
-	@Test @GUITest
+	@Test
+	@GUITest
 	public void testAddPlayerButtonShouldRemainDisabledWhenAtLeastOneOfIdNameAndSurnameIsBlank() {
 		window.textBox("idTextBox").enterText(" ");
 		window.textBox("nameTextBox").enterText("test name");
@@ -110,7 +111,8 @@ public class TennisManagementViewSwingTest extends AssertJSwingJUnitTestCase {
 		window.button(JButtonMatcher.withText("Add player")).requireDisabled();
 	}
 
-	@Test @GUITest
+	@Test
+	@GUITest
 	public void testSelectionOfPlayerShouldEnableDeletePlayerButton() {
 		GuiActionRunner.execute(
 				() -> view.getListPlayerModel().addElement(new TennisPlayer("1", "test name", "test surname")));
@@ -121,7 +123,8 @@ public class TennisManagementViewSwingTest extends AssertJSwingJUnitTestCase {
 		window.button(JButtonMatcher.withText("Delete player")).requireDisabled();
 	}
 
-	@Test @GUITest
+	@Test
+	@GUITest
 	public void testPlayerAreAddedToTheListWhenShowAllTennisPlayers() {
 		TennisPlayer player1 = new TennisPlayer("1", "test name1", "test surname1");
 		TennisPlayer player2 = new TennisPlayer("2", "test name2", "test surname2");
@@ -129,14 +132,16 @@ public class TennisManagementViewSwingTest extends AssertJSwingJUnitTestCase {
 		assertThat(window.list("playersList").contents()).containsExactly(player1.toString(), player2.toString());
 	}
 
-	@Test @GUITest
+	@Test
+	@GUITest
 	public void testshowErrorTennisPlayerAlreadyExistShouldShowTheErrorMessageInTheErrorPlayerLabel() {
-		TennisPlayer player = new TennisPlayer("1","test name","test surname");
+		TennisPlayer player = new TennisPlayer("1", "test name", "test surname");
 		GuiActionRunner.execute(() -> view.showErrorTennisPlayerAlreadyExist("Error message", player));
 		window.label("errorPlayerLbl").requireText("Error message: 1 - test name - test surname");
 	}
-	
-	@Test @GUITest
+
+	@Test
+	@GUITest
 	public void testShowErrorPlayerNotFound() {
 		TennisPlayer player1 = new TennisPlayer("1", "test name1", "test surname1");
 		TennisPlayer player2 = new TennisPlayer("2", "test name2", "test surname2");
@@ -149,19 +154,21 @@ public class TennisManagementViewSwingTest extends AssertJSwingJUnitTestCase {
 		window.label("errorPlayerLbl").requireText("Error message: 1 - test name1 - test surname1");
 		assertThat(window.list("playersList").contents()).containsExactly(player2.toString());
 	}
-	
-	@Test @GUITest
+
+	@Test
+	@GUITest
 	public void testPlayerSuccessfullyAddedShouldResetTheErrorLabelAndAddTheNewPlayerToTheList() {
 		TennisPlayer player = new TennisPlayer("1", "test name", "test surname");
 		GuiActionRunner.execute(() -> view.newTennisPlayerAdded(player));
 		assertThat(window.list("playersList").contents()).containsExactly(player.toString());
 		window.label("errorPlayerLbl").requireText(" ");
 	}
-	
-	@Test @GUITest
+
+	@Test
+	@GUITest
 	public void testPlayerSuccessfullyRemovedShouldRemoveThePlayerFromTheListAndResetTheErrorLabel() {
-		TennisPlayer player1 = new TennisPlayer("1","test name1", "test surname1");
-		TennisPlayer player2 = new TennisPlayer("2","test name2", "test surname2");
+		TennisPlayer player1 = new TennisPlayer("1", "test name1", "test surname1");
+		TennisPlayer player2 = new TennisPlayer("2", "test name2", "test surname2");
 		GuiActionRunner.execute(() -> {
 			DefaultListModel<TennisPlayer> listPlayersModel = view.getListPlayerModel();
 			listPlayersModel.addElement(player1);
@@ -171,20 +178,22 @@ public class TennisManagementViewSwingTest extends AssertJSwingJUnitTestCase {
 		assertThat(window.list("playersList").contents()).containsExactly(player2.toString());
 		window.label("errorPlayerLbl").requireText(" ");
 	}
-	
-	@Test @GUITest
+
+	@Test
+	@GUITest
 	public void testAddButtonShouldInvokePlayerControllerForAddingNewPlayer() {
 		window.textBox("idTextBox").enterText("1");
 		window.textBox("nameTextBox").enterText("test name");
 		window.textBox("surnameTextBox").enterText("test surname");
 		window.button(JButtonMatcher.withText("Add player")).click();
-		verify(playerController).addNewTennisPlayer(new TennisPlayer("1","test name","test surname"));
+		verify(playerController).addNewTennisPlayer(new TennisPlayer("1", "test name", "test surname"));
 	}
-	
-	@Test @GUITest
+
+	@Test
+	@GUITest
 	public void testDeleteButtonShouldInvokePlayerControllerForDeletingThePlayer() {
-		TennisPlayer player1 = new TennisPlayer("1","test name1", "test surname1");
-		TennisPlayer player2 = new TennisPlayer("2","test name2", "test surname2");
+		TennisPlayer player1 = new TennisPlayer("1", "test name1", "test surname1");
+		TennisPlayer player2 = new TennisPlayer("2", "test name2", "test surname2");
 		GuiActionRunner.execute(() -> {
 			DefaultListModel<TennisPlayer> listPlayersModel = view.getListPlayerModel();
 			listPlayersModel.addElement(player1);
@@ -194,10 +203,11 @@ public class TennisManagementViewSwingTest extends AssertJSwingJUnitTestCase {
 		window.button(JButtonMatcher.withText("Delete player")).click();
 		verify(playerController).deleteTennisPlayer(player2);
 	}
-	
-	@Test @GUITest
+
+	@Test
+	@GUITest
 	public void testPlayerSeccessfullyAddedShouldResetAlsoTheTextBoxes() {
-		TennisPlayer player = new TennisPlayer("1","test name","test surname");
+		TennisPlayer player = new TennisPlayer("1", "test name", "test surname");
 		window.textBox("idTextBox").enterText(player.getId());
 		window.textBox("nameTextBox").enterText(player.getName());
 		window.textBox("surnameTextBox").enterText(player.getSurname());
@@ -206,24 +216,27 @@ public class TennisManagementViewSwingTest extends AssertJSwingJUnitTestCase {
 		window.textBox("nameTextBox").requireText("");
 		window.textBox("surnameTextBox").requireText("");
 	}
-	
-	@Test @GUITest
+
+	@Test
+	@GUITest
 	public void testWinnerAndLoserComboBoxAreFilledWithTheSameElementsAsThePlayersList() {
-		TennisPlayer player1 = new TennisPlayer("1","test name1", "test surname1");
+		TennisPlayer player1 = new TennisPlayer("1", "test name1", "test surname1");
 		GuiActionRunner.execute(() -> view.newTennisPlayerAdded(player1));
 		assertThat(window.comboBox("winnerComboBox").contents()).containsExactly(player1.toString());
 		assertThat(window.comboBox("loserComboBox").contents()).containsExactly(player1.toString());
 	}
-	
-	@Test @GUITest
+
+	@Test
+	@GUITest
 	public void testWinnerAndLoserComboBoxAreUpdatedWithExistingPlayerElementWhenshowAllTennisPlayers() {
 		TennisPlayer player1 = new TennisPlayer("1", "test name1", "test surname1");
 		GuiActionRunner.execute(() -> view.showAllTennisPlayers(Arrays.asList(player1)));
 		assertThat(window.comboBox("winnerComboBox").contents()).containsExactly(player1.toString());
 		assertThat(window.comboBox("loserComboBox").contents()).containsExactly(player1.toString());
 	}
-	
-	@Test @GUITest
+
+	@Test
+	@GUITest
 	public void testWinnerAndLoserComboBoxesShouldBeEnabledWhenThereAreAtLeastTwoElementsInTheOptions() {
 		TennisPlayer player1 = new TennisPlayer("1", "test name1", "test surname1");
 		TennisPlayer player2 = new TennisPlayer("2", "test name2", "test surname2");
@@ -234,6 +247,27 @@ public class TennisManagementViewSwingTest extends AssertJSwingJUnitTestCase {
 		});
 		window.comboBox("winnerComboBox").requireEnabled();
 		window.comboBox("loserComboBox").requireEnabled();
+	}
+
+	@Test
+	@GUITest
+	public void testWinnerAndLoserComboBoxShouldBeDisabledWhenTheListOfPlayersAvaliableIsReducedToLessThanTwo() {
+		TennisPlayer player1 = new TennisPlayer("1", "test name1", "test surname1");
+		TennisPlayer player2 = new TennisPlayer("2", "test name2", "test surname2");
+		GuiActionRunner.execute(() -> {
+			DefaultComboBoxModel<TennisPlayer> comboBoxModel = view.getComboBoxModel();
+			comboBoxModel.addElement(player1);
+			comboBoxModel.addElement(player2);
+		});
+		window.comboBox("winnerComboBox").requireEnabled();
+		window.comboBox("loserComboBox").requireEnabled();
+
+		GuiActionRunner.execute(() -> {
+			DefaultComboBoxModel<TennisPlayer> comboBoxModel = view.getComboBoxModel();
+			comboBoxModel.removeElement(player1);
+		});
+		window.comboBox("winnerComboBox").requireDisabled();
+		window.comboBox("loserComboBox").requireDisabled();
 	}
 
 }
