@@ -453,8 +453,11 @@ public class TennisManagementViewSwing extends JFrame implements TennisManagemen
 
 	@Override
 	public void showErrorNotExistingTennisMatch(String errorMessage, TennisMatch matchToDelete) {
-		// TODO Auto-generated method stub
-
+		errorMatchLbl.setText(errorMessage + ": (" + matchToDelete.getWinner().getId() + ","
+				+ matchToDelete.getWinner().getName() + "," + matchToDelete.getWinner().getSurname() + ") - ("
+				+ matchToDelete.getLoser().getId() + "," + matchToDelete.getLoser().getName() + ","
+				+ matchToDelete.getLoser().getSurname() + ") - " + matchToDelete.getDateOfTheMatch());
+		listMatchModel.removeElement(matchToDelete);
 	}
 
 	public DefaultListModel<TennisPlayer> getListPlayerModel() {
