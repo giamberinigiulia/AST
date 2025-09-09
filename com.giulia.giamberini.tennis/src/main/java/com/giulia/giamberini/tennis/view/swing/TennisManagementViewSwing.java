@@ -75,7 +75,8 @@ public class TennisManagementViewSwing extends JFrame implements TennisManagemen
 	private JTextField idTextBox;
 	private DefaultListModel<TennisPlayer> listPlayerModel;
 	private TennisPlayerController playerController;
-	private DefaultComboBoxModel<TennisPlayer> comboBoxModel;
+	private DefaultComboBoxModel<TennisPlayer> winnerComboBoxModel;
+	private DefaultComboBoxModel<TennisPlayer> loserComboBoxModel;
 
 	public TennisManagementViewSwing() {
 
@@ -250,7 +251,7 @@ public class TennisManagementViewSwing extends JFrame implements TennisManagemen
 		gbc_winnerLbl.gridy = 0;
 		matchPanel.add(winnerLbl, gbc_winnerLbl);
 
-		comboBoxModel = new DefaultComboBoxModel<TennisPlayer>();
+		winnerComboBoxModel = new DefaultComboBoxModel<TennisPlayer>();
 		ListDataListener listDataListener = new ListDataListener() {
 
 			@Override
@@ -265,8 +266,8 @@ public class TennisManagementViewSwing extends JFrame implements TennisManagemen
 			}
 
 			private void updateEnablingDisablingCondition() {
-				winnerComboBox.setEnabled(comboBoxModel.getSize() > 1);
-				loserComboBox.setEnabled(comboBoxModel.getSize() > 1);
+				winnerComboBox.setEnabled(winnerComboBoxModel.getSize() > 1);
+				loserComboBox.setEnabled(loserComboBoxModel.getSize() > 1);
 			}
 
 			@Override
@@ -274,7 +275,7 @@ public class TennisManagementViewSwing extends JFrame implements TennisManagemen
 			}
 
 		};
-		winnerComboBox = new JComboBox<>(comboBoxModel);
+		winnerComboBox = new JComboBox<>(winnerComboBoxModel);
 		winnerComboBox.getModel().addListDataListener(listDataListener);
 		winnerComboBox.setName("winnerComboBox");
 		winnerComboBox.setEnabled(false);
@@ -294,7 +295,8 @@ public class TennisManagementViewSwing extends JFrame implements TennisManagemen
 		gbc_loserLbl.gridy = 1;
 		matchPanel.add(loserLbl, gbc_loserLbl);
 
-		loserComboBox = new JComboBox<>(comboBoxModel);
+		loserComboBoxModel = new DefaultComboBoxModel<TennisPlayer>();
+		loserComboBox = new JComboBox<>(loserComboBoxModel);
 		loserComboBox.getModel().addListDataListener(listDataListener);
 		loserComboBox.setName("loserComboBox");
 		loserComboBox.setEnabled(false);
@@ -371,14 +373,16 @@ public class TennisManagementViewSwing extends JFrame implements TennisManagemen
 	public void showAllTennisPlayers(List<TennisPlayer> players) {
 		for (TennisPlayer tennisPlayer : players) {
 			listPlayerModel.addElement(tennisPlayer);
-			comboBoxModel.addElement(tennisPlayer);
+			winnerComboBoxModel.addElement(tennisPlayer);
+			loserComboBoxModel.addElement(tennisPlayer);
 		}
 	}
 
 	@Override
 	public void newTennisPlayerAdded(TennisPlayer tennisPlayerToAdd) {
 		listPlayerModel.addElement(tennisPlayerToAdd);
-		comboBoxModel.addElement(tennisPlayerToAdd);
+		winnerComboBoxModel.addElement(tennisPlayerToAdd);
+		loserComboBoxModel.addElement(tennisPlayerToAdd);
 		errorPlayerLbl.setText(" ");
 		idTextBox.setText("");
 		nameTextBox.setText("");
@@ -442,8 +446,12 @@ public class TennisManagementViewSwing extends JFrame implements TennisManagemen
 		this.playerController = playerController;
 	}
 
-	public DefaultComboBoxModel<TennisPlayer> getComboBoxModel() {
-		return comboBoxModel;
+	public DefaultComboBoxModel<TennisPlayer> getWinnerComboBoxModel() {
+		return winnerComboBoxModel;
+	}
+
+	public DefaultComboBoxModel<TennisPlayer> getLoserComboBoxModel() {
+		return loserComboBoxModel;
 	}
 
 }

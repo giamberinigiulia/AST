@@ -241,9 +241,12 @@ public class TennisManagementViewSwingTest extends AssertJSwingJUnitTestCase {
 		TennisPlayer player1 = new TennisPlayer("1", "test name1", "test surname1");
 		TennisPlayer player2 = new TennisPlayer("2", "test name2", "test surname2");
 		GuiActionRunner.execute(() -> {
-			DefaultComboBoxModel<TennisPlayer> comboBoxModel = view.getComboBoxModel();
-			comboBoxModel.addElement(player1);
-			comboBoxModel.addElement(player2);
+			DefaultComboBoxModel<TennisPlayer> winnerComboBoxModel = view.getWinnerComboBoxModel();
+			winnerComboBoxModel.addElement(player1);
+			winnerComboBoxModel.addElement(player2);
+			DefaultComboBoxModel<TennisPlayer> loserComboBoxModel = view.getLoserComboBoxModel();
+			loserComboBoxModel.addElement(player1);
+			loserComboBoxModel.addElement(player2);
 		});
 		window.comboBox("winnerComboBox").requireEnabled();
 		window.comboBox("loserComboBox").requireEnabled();
@@ -255,29 +258,39 @@ public class TennisManagementViewSwingTest extends AssertJSwingJUnitTestCase {
 		TennisPlayer player1 = new TennisPlayer("1", "test name1", "test surname1");
 		TennisPlayer player2 = new TennisPlayer("2", "test name2", "test surname2");
 		GuiActionRunner.execute(() -> {
-			DefaultComboBoxModel<TennisPlayer> comboBoxModel = view.getComboBoxModel();
-			comboBoxModel.addElement(player1);
-			comboBoxModel.addElement(player2);
+			DefaultComboBoxModel<TennisPlayer> winnerComboBoxModel = view.getWinnerComboBoxModel();
+			winnerComboBoxModel.addElement(player1);
+			winnerComboBoxModel.addElement(player2);
+			DefaultComboBoxModel<TennisPlayer> loserComboBoxModel = view.getLoserComboBoxModel();
+			loserComboBoxModel.addElement(player1);
+			loserComboBoxModel.addElement(player2);
 		});
 		window.comboBox("winnerComboBox").requireEnabled();
 		window.comboBox("loserComboBox").requireEnabled();
 
 		GuiActionRunner.execute(() -> {
-			DefaultComboBoxModel<TennisPlayer> comboBoxModel = view.getComboBoxModel();
-			comboBoxModel.removeElement(player1);
+			DefaultComboBoxModel<TennisPlayer> winnerComboBoxModel = view.getWinnerComboBoxModel();
+			winnerComboBoxModel.removeElement(player1);
+			DefaultComboBoxModel<TennisPlayer> loserComboBoxModel = view.getLoserComboBoxModel();
+			loserComboBoxModel.removeElement(player1);
 		});
 		window.comboBox("winnerComboBox").requireDisabled();
 		window.comboBox("loserComboBox").requireDisabled();
+
 	}
 	
 	@Test
+	@GUITest
 	public void testAddButtonShouldBeEnabledWhenWinnerAndLoserAreSelectedAndDateIsNotEmpty() {
 		TennisPlayer player1 = new TennisPlayer("1", "test name1", "test surname1");
 		TennisPlayer player2 = new TennisPlayer("2", "test name2", "test surname2");
 		GuiActionRunner.execute(() -> {
-			DefaultComboBoxModel<TennisPlayer> comboBoxModel = view.getComboBoxModel();
-			comboBoxModel.addElement(player1);
-			comboBoxModel.addElement(player2);
+			DefaultComboBoxModel<TennisPlayer> winnerComboBoxModel = view.getWinnerComboBoxModel();
+			winnerComboBoxModel.addElement(player1);
+			winnerComboBoxModel.addElement(player2);
+			DefaultComboBoxModel<TennisPlayer> loserComboBoxModel = view.getLoserComboBoxModel();
+			loserComboBoxModel.addElement(player1);
+			loserComboBoxModel.addElement(player2);
 		});
 		window.comboBox("winnerComboBox").requireEnabled();
 		window.comboBox("loserComboBox").requireEnabled();
