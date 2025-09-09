@@ -255,12 +255,18 @@ public class TennisManagementViewSwing extends JFrame implements TennisManagemen
 
 			@Override
 			public void intervalAdded(ListDataEvent e) {
-				winnerComboBox.setEnabled(comboBoxModel.getSize() > 1);
-				loserComboBox.setEnabled(comboBoxModel.getSize() > 1);
+				updateEnablingDisablingCondition();
+
 			}
 
 			@Override
 			public void intervalRemoved(ListDataEvent e) {
+				updateEnablingDisablingCondition();
+			}
+
+			private void updateEnablingDisablingCondition() {
+				winnerComboBox.setEnabled(comboBoxModel.getSize() > 1);
+				loserComboBox.setEnabled(comboBoxModel.getSize() > 1);
 			}
 
 			@Override
