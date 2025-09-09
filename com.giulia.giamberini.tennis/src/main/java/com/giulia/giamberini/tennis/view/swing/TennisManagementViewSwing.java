@@ -344,6 +344,7 @@ public class TennisManagementViewSwing extends JFrame implements TennisManagemen
 	public void showAllTennisPlayers(List<TennisPlayer> players) {
 		for (TennisPlayer tennisPlayer : players) {
 			listPlayerModel.addElement(tennisPlayer);
+			comboBoxModel.addElement(tennisPlayer);
 		}
 	}
 
