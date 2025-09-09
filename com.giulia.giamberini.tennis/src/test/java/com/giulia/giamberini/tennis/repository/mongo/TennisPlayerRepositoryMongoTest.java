@@ -25,6 +25,12 @@ public class TennisPlayerRepositoryMongoTest {
 
 	private static final String COLLECTION_NAME_PLAYERS = "players";
 	private static final String DATABASE_NAME_TENNIS_MATCHES = "tennis_matches";
+	private static final String TENNIS_PLAYER_ID_1 = "1";
+	private static final String TENNIS_PLAYER_NAME_1 = "test name1";
+	private static final String TENNIS_PLAYER_SURNAME_1 = "test surname1";
+	private static final String TENNIS_PLAYER_ID_2 = "2";
+	private static final String TENNIS_PLAYER_NAME_2 = "test name2";
+	private static final String TENNIS_PLAYER_SURNAME_2 = "test surname2";
 	@ClassRule
 	public static final MongoDBContainer mongo = new MongoDBContainer("mongo:8.0.13");
 	private MongoClient mongoClient;
@@ -37,7 +43,8 @@ public class TennisPlayerRepositoryMongoTest {
 				fromProviders(PojoCodecProvider.builder().automatic(true).build()));
 		mongoClient = new MongoClient(new ServerAddress(mongo.getHost(), mongo.getFirstMappedPort()));
 		repo = new TennisPlayerRepositoryMongo(mongoClient, DATABASE_NAME_TENNIS_MATCHES, COLLECTION_NAME_PLAYERS);
-		MongoDatabase database = mongoClient.getDatabase(DATABASE_NAME_TENNIS_MATCHES).withCodecRegistry(pojoCodecRegistry);
+		MongoDatabase database = mongoClient.getDatabase(DATABASE_NAME_TENNIS_MATCHES)
+				.withCodecRegistry(pojoCodecRegistry);
 		database.drop();
 		collection = database.getCollection(COLLECTION_NAME_PLAYERS, TennisPlayer.class);
 	}
@@ -51,12 +58,15 @@ public class TennisPlayerRepositoryMongoTest {
 	public void testFindAllWhenDBIsEmpty() {
 		assertThat(repo.findAll()).isEmpty();
 	}
-	
+
 	@Test
 	public void testFindAllWhenThereAreElementsInTheDB() {
-		TennisPlayer tennisPlayer1 = new TennisPlayer("1","test name1", "test surname1");
-		TennisPlayer tennisPlayer2 = new TennisPlayer("2","test name2", "test surname2");
+		TennisPlayer tennisPlayer1 = new TennisPlayer(TENNIS_PLAYER_ID_1, TENNIS_PLAYER_NAME_1,
+				TENNIS_PLAYER_SURNAME_1);
+		TennisPlayer tennisPlayer2 = new TennisPlayer(TENNIS_PLAYER_ID_2, TENNIS_PLAYER_NAME_2,
+				TENNIS_PLAYER_SURNAME_2);
 		collection.insertMany(Arrays.asList(tennisPlayer1, tennisPlayer2));
 		assertThat(repo.findAll()).containsExactly(tennisPlayer1, tennisPlayer2);
 	}
+
 }
