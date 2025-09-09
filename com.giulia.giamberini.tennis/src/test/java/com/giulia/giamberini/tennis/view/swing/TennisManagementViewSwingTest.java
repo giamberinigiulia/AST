@@ -4,6 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Arrays;
 
+import javax.swing.DefaultListModel;
+
 import org.assertj.swing.annotation.GUITest;
 import org.assertj.swing.core.matcher.JButtonMatcher;
 import org.assertj.swing.core.matcher.JLabelMatcher;
@@ -117,5 +119,19 @@ public class TennisManagementViewSwingTest extends AssertJSwingJUnitTestCase {
 		TennisPlayer player = new TennisPlayer("1","test name","test surname");
 		GuiActionRunner.execute(() -> view.showErrorTennisPlayerAlreadyExist("Error message", player));
 		window.label("errorPlayerLbl").requireText("Error message: 1 - test name - test surname");
+	}
+	
+	@Test
+	public void testShowErrorPlayerNotFound() {
+		TennisPlayer player1 = new TennisPlayer("1", "test name1", "test surname1");
+		TennisPlayer player2 = new TennisPlayer("2", "test name2", "test surname2");
+		GuiActionRunner.execute(() -> {
+			DefaultListModel<TennisPlayer> listPlayersModel = view.getListPlayerModel();
+			listPlayersModel.addElement(player1);
+			listPlayersModel.addElement(player2);
+		});
+		GuiActionRunner.execute(() -> view.showErrorNotExistingTennisPlayer("Error message", player1));
+		window.label("errorPlayerLbl").requireText("Error message: 1 - test name1 - test surname1");
+		assertThat(window.list("playersList").contents()).containsExactly(player2.toString());
 	}
 }
