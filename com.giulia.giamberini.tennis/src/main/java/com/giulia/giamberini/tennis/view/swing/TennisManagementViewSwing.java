@@ -275,7 +275,15 @@ public class TennisManagementViewSwing extends JFrame implements TennisManagemen
 			}
 
 		};
+		KeyAdapter enablerAddMatchButton = new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				addMatchBtn.setEnabled(winnerComboBox.getSelectedIndex() != -1 && loserComboBox.getSelectedIndex() != -1
+						&& !dateOfTheMatchTextBox.getText().isEmpty());
+			}
+		};
 		winnerComboBox = new JComboBox<>(winnerComboBoxModel);
+		winnerComboBox.addKeyListener(enablerAddMatchButton);
 		winnerComboBox.getModel().addListDataListener(listDataListener);
 		winnerComboBox.setName("winnerComboBox");
 		winnerComboBox.setEnabled(false);
@@ -298,6 +306,7 @@ public class TennisManagementViewSwing extends JFrame implements TennisManagemen
 		loserComboBoxModel = new DefaultComboBoxModel<TennisPlayer>();
 		loserComboBox = new JComboBox<>(loserComboBoxModel);
 		loserComboBox.getModel().addListDataListener(listDataListener);
+		loserComboBox.addKeyListener(enablerAddMatchButton);
 		loserComboBox.setName("loserComboBox");
 		loserComboBox.setEnabled(false);
 		GridBagConstraints gbc_loserComboBox = new GridBagConstraints();
@@ -317,6 +326,7 @@ public class TennisManagementViewSwing extends JFrame implements TennisManagemen
 		matchPanel.add(dateLbl, gbc_dateLbl);
 
 		dateOfTheMatchTextBox = new JTextField();
+		dateOfTheMatchTextBox.addKeyListener(enablerAddMatchButton);
 		dateOfTheMatchTextBox.setName("dateOfTheMatchTextBox");
 		GridBagConstraints gbc_dateOfTheMatchTextBox = new GridBagConstraints();
 		gbc_dateOfTheMatchTextBox.insets = new Insets(0, 0, 5, 0);
