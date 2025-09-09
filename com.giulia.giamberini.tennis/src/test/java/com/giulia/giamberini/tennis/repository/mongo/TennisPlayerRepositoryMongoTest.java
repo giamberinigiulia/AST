@@ -91,4 +91,15 @@ public class TennisPlayerRepositoryMongoTest {
 		repo.save(tennisPlayerToSave);
 		assertThat(collection.find()).containsExactly(tennisPlayerToSave);
 	}
+	
+	@Test
+	public void testDelete() {
+		TennisPlayer remainingTennisPlayer = new TennisPlayer(TENNIS_PLAYER_ID_1, TENNIS_PLAYER_NAME_1,
+				TENNIS_PLAYER_SURNAME_1);
+		TennisPlayer tennisPlayerToRemove = new TennisPlayer(TENNIS_PLAYER_ID_2, TENNIS_PLAYER_NAME_2,
+				TENNIS_PLAYER_SURNAME_2);
+		collection.insertMany(Arrays.asList(remainingTennisPlayer,tennisPlayerToRemove));
+		repo.delete(tennisPlayerToRemove);
+		assertThat(collection.find()).containsExactly(remainingTennisPlayer);
+	}
 }
