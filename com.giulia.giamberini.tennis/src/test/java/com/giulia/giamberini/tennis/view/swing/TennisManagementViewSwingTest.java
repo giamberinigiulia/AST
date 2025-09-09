@@ -112,4 +112,10 @@ public class TennisManagementViewSwingTest extends AssertJSwingJUnitTestCase {
 		assertThat(window.list("playersList").contents()).containsExactly(player1.toString(), player2.toString());
 	}
 
+	@Test
+	public void testshowErrorTennisPlayerAlreadyExistShouldShowTheErrorMessageInTheErrorPlayerLabel() {
+		TennisPlayer player = new TennisPlayer("1","test name","test surname");
+		GuiActionRunner.execute(() -> view.showErrorTennisPlayerAlreadyExist("Error message", player));
+		window.label("errorPlayerLbl").requireText("Error message: 1 - test name - test surname");
+	}
 }
