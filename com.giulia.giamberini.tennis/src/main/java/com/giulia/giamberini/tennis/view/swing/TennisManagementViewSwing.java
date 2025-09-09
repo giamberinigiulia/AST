@@ -353,8 +353,8 @@ public class TennisManagementViewSwing extends JFrame implements TennisManagemen
 
 	@Override
 	public void tennisPlayerRemoved(TennisPlayer tennisPlayerToRemove) {
-		// TODO Auto-generated method stub
-
+		listPlayerModel.removeElement(tennisPlayerToRemove);
+		errorPlayerLbl.setText(" ");
 	}
 
 	@Override
