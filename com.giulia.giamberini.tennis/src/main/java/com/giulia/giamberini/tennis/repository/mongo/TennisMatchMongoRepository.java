@@ -10,8 +10,7 @@ import com.mongodb.MongoClient;
 
 public class TennisMatchMongoRepository implements TennisMatchRepository {
 
-	public TennisMatchMongoRepository(MongoClient mognoClient, String databaseNameTennisMatches,
-			String collectionNameMatches) {
+	public TennisMatchMongoRepository(MongoClient client, String databaseName, String collectionName) {
 		// TODO Auto-generated constructor stub
 	}
 
