@@ -56,4 +56,10 @@ public class TennisMatchMongoRepository implements TennisMatchRepository {
 				Filters.eq("dateOfTheMatch", matchToDelete.getDateOfTheMatch())));
 	}
 
+	@Override
+	public List<TennisMatch> findMatchesByTennisPlayerId(String playerId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
