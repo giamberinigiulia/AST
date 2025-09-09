@@ -375,6 +375,7 @@ public class TennisManagementViewSwing extends JFrame implements TennisManagemen
 		matchPanel.add(deleteMatchBtn, gbc_deleteMatchBtn);
 
 		errorMatchLbl = new JLabel(" ");
+		errorMatchLbl.setForeground(new Color(255, 0, 0));
 		errorMatchLbl.setName("errorMatchLbl");
 		GridBagConstraints gbc_errorMatchLbl = new GridBagConstraints();
 		gbc_errorMatchLbl.gridwidth = 2;
@@ -438,8 +439,10 @@ public class TennisManagementViewSwing extends JFrame implements TennisManagemen
 
 	@Override
 	public void showErrorTennisMatchAlreadyExist(String errorMessage, TennisMatch existingMatch) {
-		// TODO Auto-generated method stub
-
+		errorMatchLbl.setText(errorMessage + ": (" + existingMatch.getWinner().getId() + ","
+				+ existingMatch.getWinner().getName() + "," + existingMatch.getWinner().getSurname() + ") - ("
+				+ existingMatch.getLoser().getId() + "," + existingMatch.getLoser().getName() + ","
+				+ existingMatch.getLoser().getSurname() + ") - " + existingMatch.getDateOfTheMatch());
 	}
 
 	@Override
