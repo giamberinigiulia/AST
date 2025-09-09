@@ -83,4 +83,12 @@ public class TennisPlayerRepositoryMongoTest {
 		collection.insertMany(Arrays.asList(tennisPlayer1, tennisPlayer2));
 		assertThat(repo.findById(TENNIS_PLAYER_ID_2)).isEqualTo(tennisPlayer2);
 	}
+
+	@Test
+	public void testSave() {
+		TennisPlayer tennisPlayerToSave = new TennisPlayer(TENNIS_PLAYER_ID_1, TENNIS_PLAYER_NAME_1,
+				TENNIS_PLAYER_SURNAME_1);
+		repo.save(tennisPlayerToSave);
+		assertThat(collection.find()).containsExactly(tennisPlayerToSave);
+	}
 }
