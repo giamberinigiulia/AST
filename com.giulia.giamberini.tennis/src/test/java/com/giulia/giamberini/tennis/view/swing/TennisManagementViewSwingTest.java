@@ -460,4 +460,23 @@ public class TennisManagementViewSwingTest extends AssertJSwingJUnitTestCase {
 		window.button(JButtonMatcher.withText("Add match")).click();
 		verify(matchController).addNewTennisMatch(new TennisMatch(player1,player2,date));
 	}
+	
+	@Test
+	@GUITest
+	public void testDeleteButtonShouldInvokeMatchControllerForDeletingTheMatch() {
+		TennisPlayer player1 = new TennisPlayer("1", "test name1", "test surname1");
+		TennisPlayer player2 = new TennisPlayer("2", "test name2", "test surname2");
+		LocalDate date1 = LocalDate.of(2025, 10, 25);
+		LocalDate date2 = LocalDate.of(2025, 10, 28);
+		TennisMatch match1 = new TennisMatch(player1, player2, date1);
+		TennisMatch match2 = new TennisMatch(player2, player1, date2);
+		GuiActionRunner.execute(() -> {
+			DefaultListModel<TennisMatch> listMatchModel = view.getListMatchModel();
+			listMatchModel.addElement(match1);
+			listMatchModel.addElement(match2);
+		});
+		window.list("matchesList").selectItem(1);
+		window.button(JButtonMatcher.withText("Delete match")).click();
+		verify(matchController).deleteTennisMatch(match2);
+	}
 }
