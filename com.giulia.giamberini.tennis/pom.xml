@@ -113,11 +113,14 @@
           <version>${pitest-maven-version}</version>
           <configuration>
             <targetClasses>
-              <param>com.giulia.giamberini.tennis.controller.*</param>
+              <param>com.giamberini.giulia.tennis.controller.*</param>
+              <param>com.giamberini.giulia.tennis.repository.mongo.*</param>
             </targetClasses>
             <targetTests>
-              <param>com.giulia.giamberini.tennis.controller.TennisMatchControllerTest</param>
-              <param>com.giulia.giamberini.tennis.controller.TennisPlayerControllerTest</param>
+              <param>com.giamberini.giulia.tennis.controller.TennisMatchControllerTest</param>
+              <param>com.giamberini.giulia.tennis.controller.TennisPlayerControllerTest</param>
+              <param>com.giamberini.giulia.tennis.repository.mongo.TennisMatchRepositoryMongoTest</param>
+              <param>com.giamberini.giulia.tennis.repository.mongo.TennisPlayerRepositoryMongoTest</param>
             </targetTests>
             <mutators>
               <mutator>STRONGER</mutator>
@@ -136,6 +139,25 @@
           <plugin>
             <groupId>org.jacoco</groupId>
             <artifactId>jacoco-maven-plugin</artifactId>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <profile>
+      <id>pit-mutation-testing</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.pitest</groupId>
+            <artifactId>pitest-maven</artifactId>
+            <executions>
+              <execution>
+                <goals>
+                  <goal>mutationCoverage</goal>
+                </goals>
+                <phase>verify</phase>
+              </execution>
+            </executions>
           </plugin>
         </plugins>
       </build>
