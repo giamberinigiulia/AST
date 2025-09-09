@@ -73,4 +73,14 @@ public class TennisPlayerRepositoryMongoTest {
 	public void testFindByIDWhenItDoesntExist() {
 		assertThat(repo.findById(TENNIS_PLAYER_ID_1)).isNull();
 	}
+
+	@Test
+	public void testFindByIdWhenTheTennisPlayerExist() {
+		TennisPlayer tennisPlayer1 = new TennisPlayer(TENNIS_PLAYER_ID_1, TENNIS_PLAYER_NAME_1,
+				TENNIS_PLAYER_SURNAME_1);
+		TennisPlayer tennisPlayer2 = new TennisPlayer(TENNIS_PLAYER_ID_2, TENNIS_PLAYER_NAME_2,
+				TENNIS_PLAYER_SURNAME_2);
+		collection.insertMany(Arrays.asList(tennisPlayer1, tennisPlayer2));
+		assertThat(repo.findById(TENNIS_PLAYER_ID_2)).isEqualTo(tennisPlayer2);
+	}
 }
