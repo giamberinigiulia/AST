@@ -69,4 +69,8 @@ public class TennisPlayerRepositoryMongoTest {
 		assertThat(repo.findAll()).containsExactly(tennisPlayer1, tennisPlayer2);
 	}
 
+	@Test
+	public void testFindByIDWhenItDoesntExist() {
+		assertThat(repo.findById(TENNIS_PLAYER_ID_1)).isNull();
+	}
 }
