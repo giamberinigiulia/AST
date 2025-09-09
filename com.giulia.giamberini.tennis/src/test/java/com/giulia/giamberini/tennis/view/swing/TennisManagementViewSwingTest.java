@@ -416,4 +416,23 @@ public class TennisManagementViewSwingTest extends AssertJSwingJUnitTestCase {
 		assertThat(window.list("matchesList").contents()).containsExactly(match.toString());
 		window.label("errorMatchLbl").requireText(" ");
 	}
+	
+	@Test
+	@GUITest
+	public void testMatchSuccessfullyRemovedShouldRemoveTheMatchFromTheListAndResetTheErrorLabel() {
+		TennisPlayer player1 = new TennisPlayer("1", "test name1", "test surname1");
+		TennisPlayer player2 = new TennisPlayer("2", "test name2", "test surname2");
+		LocalDate date1 = LocalDate.of(2025, 10, 25);
+		LocalDate date2 = LocalDate.of(2025, 10, 28);
+		TennisMatch match1 = new TennisMatch(player1, player2, date1);
+		TennisMatch match2 = new TennisMatch(player2, player1, date2);
+		GuiActionRunner.execute(() -> {
+			DefaultListModel<TennisMatch> listMatchModel = view.getListMatchModel();
+			listMatchModel.addElement(match1);
+			listMatchModel.addElement(match2);
+		});
+		GuiActionRunner.execute(() -> view.tennisMatchRemoved(match1));
+		assertThat(window.list("matchesList").contents()).containsExactly(match2.toString());
+		window.label("errorMatchLbl").requireText(" ");
+	}
 }
