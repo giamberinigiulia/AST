@@ -22,6 +22,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.border.TitledBorder;
+import javax.swing.event.ListDataEvent;
+import javax.swing.event.ListDataListener;
 
 import com.giulia.giamberini.tennis.controller.TennisPlayerController;
 import com.giulia.giamberini.tennis.model.TennisMatch;
@@ -249,7 +251,25 @@ public class TennisManagementViewSwing extends JFrame implements TennisManagemen
 		matchPanel.add(winnerLbl, gbc_winnerLbl);
 
 		comboBoxModel = new DefaultComboBoxModel<TennisPlayer>();
+		ListDataListener listDataListener = new ListDataListener() {
+
+			@Override
+			public void intervalAdded(ListDataEvent e) {
+				winnerComboBox.setEnabled(comboBoxModel.getSize() > 1);
+				loserComboBox.setEnabled(comboBoxModel.getSize() > 1);
+			}
+
+			@Override
+			public void intervalRemoved(ListDataEvent e) {
+			}
+
+			@Override
+			public void contentsChanged(ListDataEvent e) {
+			}
+
+		};
 		winnerComboBox = new JComboBox<>(comboBoxModel);
+		winnerComboBox.getModel().addListDataListener(listDataListener);
 		winnerComboBox.setName("winnerComboBox");
 		winnerComboBox.setEnabled(false);
 		GridBagConstraints gbc_winnerComboBox = new GridBagConstraints();
@@ -269,6 +289,7 @@ public class TennisManagementViewSwing extends JFrame implements TennisManagemen
 		matchPanel.add(loserLbl, gbc_loserLbl);
 
 		loserComboBox = new JComboBox<>(comboBoxModel);
+		loserComboBox.getModel().addListDataListener(listDataListener);
 		loserComboBox.setName("loserComboBox");
 		loserComboBox.setEnabled(false);
 		GridBagConstraints gbc_loserComboBox = new GridBagConstraints();
@@ -416,8 +437,7 @@ public class TennisManagementViewSwing extends JFrame implements TennisManagemen
 	}
 
 	public DefaultComboBoxModel<TennisPlayer> getComboBoxModel() {
-		// TODO Auto-generated method stub
-		return null;
+		return comboBoxModel;
 	}
 
 }
