@@ -33,7 +33,7 @@ public class TennisMatchRepositoryMongoTest {
 	private static final String LOSER_ID = "2";
 	private static final String LOSER_NAME = "loser name";
 	private static final String LOSER_SURNAME = "loser surname";
-	
+
 	@ClassRule
 	public static final MongoDBContainer mongo = new MongoDBContainer("mongo:8.0.13");
 	private MongoClient mongoClient;
@@ -73,7 +73,7 @@ public class TennisMatchRepositoryMongoTest {
 		collection.insertMany(Arrays.asList(tennisMatch1, tennisMatch2));
 		assertThat(repo.findAll()).containsExactly(tennisMatch1, tennisMatch2);
 	}
-	
+
 	@Test
 	public void testFindByMatchInfoWhenTheMatchDoesntExist() {
 		TennisPlayer winner = new TennisPlayer(WINNER_ID, WINNER_NAME, WINNER_SURNAME);
@@ -81,7 +81,7 @@ public class TennisMatchRepositoryMongoTest {
 		LocalDate tennisMatchDate1 = LocalDate.of(2025, 10, 22);
 		assertThat(repo.findByMatchInfo(winner, loser, tennisMatchDate1)).isNull();
 	}
-	
+
 	@Test
 	public void testFindByMatchInforWhenTheMatchExistInTheDBAndTheWinnerAndLoserAreExactlyAsSupposedToBe() {
 		TennisPlayer winner = new TennisPlayer(WINNER_ID, WINNER_NAME, WINNER_SURNAME);
@@ -93,7 +93,7 @@ public class TennisMatchRepositoryMongoTest {
 		collection.insertMany(Arrays.asList(otherTennisMatch, tennisMatchToFind));
 		assertThat(repo.findByMatchInfo(winner, loser, tennisMatchDate1)).isEqualTo(tennisMatchToFind);
 	}
-	
+
 	@Test
 	public void testFindByMatchInforWhenTheMatchExistsWithOppositeResult() {
 		TennisPlayer winner = new TennisPlayer(WINNER_ID, WINNER_NAME, WINNER_SURNAME);
@@ -104,7 +104,7 @@ public class TennisMatchRepositoryMongoTest {
 		// with switched pair (aka. different result)
 		assertThat(repo.findByMatchInfo(loser, winner, tennisMatchDate1)).isEqualTo(existingTennisMatch);
 	}
-	
+
 	@Test
 	public void testSave() {
 		TennisPlayer winner = new TennisPlayer(WINNER_ID, WINNER_NAME, WINNER_SURNAME);
@@ -114,7 +114,7 @@ public class TennisMatchRepositoryMongoTest {
 		repo.save(tennisMatchToSave);
 		assertThat(collection.find()).containsExactly(tennisMatchToSave);
 	}
-	
+
 	@Test
 	public void testDelete() {
 		TennisPlayer winner = new TennisPlayer(WINNER_ID, WINNER_NAME, WINNER_SURNAME);
@@ -125,11 +125,28 @@ public class TennisMatchRepositoryMongoTest {
 		repo.delete(tennisMatchToDelete);
 		assertThat(collection.find()).isEmpty();
 	}
-	
+
 	@Test
 	public void testFindTennisMatchesByPlayerIdWhenNoMatchesAreAssociated() {
-		//no matches are stored of the player with id 1 in this scenario
+		// no matches are stored of the player with id 1 in this scenario
 		assertThat(repo.findMatchesByTennisPlayerId("1")).isEmpty();
+	}
+
+	@Test
+	public void testFindTennisMatchesByPlayerIdWhenMatchesAreAssociated() {
+		TennisPlayer player1 = new TennisPlayer("1", "test name1", "test surname1");
+		TennisPlayer player2 = new TennisPlayer("2", "test name2", "test surname2");
+		TennisPlayer player3 = new TennisPlayer("3", "test name3", "test surname3");
+		LocalDate datePlayer1VsPlayer2 = LocalDate.of(2025, 10, 22);
+		LocalDate datePlayer2VsPlayer3 = LocalDate.of(2025, 10, 23);
+		LocalDate datePlayer3VsPlayer1 = LocalDate.of(2025, 10, 24);
+		TennisMatch matchPlayer1VsPlayer2 = new TennisMatch(player1, player2, datePlayer1VsPlayer2);
+		TennisMatch matchPlayer2VsPlayer3 = new TennisMatch(player2, player3, datePlayer2VsPlayer3);
+		TennisMatch matchPlayer3VsPlayer1 = new TennisMatch(player3, player1, datePlayer3VsPlayer1);
+		collection.insertMany(Arrays.asList(matchPlayer1VsPlayer2, matchPlayer2VsPlayer3, matchPlayer3VsPlayer1));
+
+		assertThat(repo.findMatchesByTennisPlayerId("1")).containsExactlyInAnyOrder(matchPlayer1VsPlayer2,
+				matchPlayer3VsPlayer1);
 	}
 
 }
