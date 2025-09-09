@@ -81,5 +81,17 @@ public class TennisMatchRepositoryMongoTest {
 		LocalDate tennisMatchDate1 = LocalDate.of(2025, 10, 22);
 		assertThat(repo.findByMatchInfo(winner, loser, tennisMatchDate1)).isNull();
 	}
+	
+	@Test
+	public void testFindByMatchInforWhenTheMatchExistInTheDBAndTheWinnerAndLoserAreExactlyAsSupposedToBe() {
+		TennisPlayer winner = new TennisPlayer(WINNER_ID, WINNER_NAME, WINNER_SURNAME);
+		TennisPlayer loser = new TennisPlayer(LOSER_ID, LOSER_NAME, LOSER_SURNAME);
+		LocalDate tennisMatchDate1 = LocalDate.of(2025, 10, 22);
+		LocalDate tennisMatchDate2 = LocalDate.of(2025, 10, 22);
+		TennisMatch otherTennisMatch = new TennisMatch(winner, loser, tennisMatchDate1);
+		TennisMatch tennisMatchToFind = new TennisMatch(winner, loser, tennisMatchDate2);
+		collection.insertMany(Arrays.asList(otherTennisMatch, tennisMatchToFind));
+		assertThat(repo.findByMatchInfo(winner, loser, tennisMatchDate1)).isEqualTo(tennisMatchToFind);
+	}
 
 }
