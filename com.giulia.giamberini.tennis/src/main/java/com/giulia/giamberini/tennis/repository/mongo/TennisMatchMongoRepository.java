@@ -46,8 +46,7 @@ public class TennisMatchMongoRepository implements TennisMatchRepository {
 
 	@Override
 	public void save(TennisMatch tennisMatchToAdd) {
-		// TODO Auto-generated method stub
-
+		collection.insertOne(tennisMatchToAdd);
 	}
 
 	@Override
