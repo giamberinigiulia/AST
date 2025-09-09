@@ -447,8 +447,8 @@ public class TennisManagementViewSwing extends JFrame implements TennisManagemen
 
 	@Override
 	public void tennisMatchRemoved(TennisMatch matchToDelete) {
-		// TODO Auto-generated method stub
-
+		listMatchModel.removeElement(matchToDelete);
+		errorMatchLbl.setText(" ");
 	}
 
 	@Override
