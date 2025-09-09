@@ -359,6 +359,7 @@ public class TennisManagementViewSwing extends JFrame implements TennisManagemen
 
 		listMatchModel = new DefaultListModel<TennisMatch>();
 		matchesList = new JList<>(listMatchModel);
+		matchesList.addListSelectionListener(arg0 -> deleteMatchBtn.setEnabled(matchesList.getSelectedIndex() != -1));
 		matchesList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		matchesList.setName("matchesList");
 		matchesListScrollPane.setViewportView(matchesList);
