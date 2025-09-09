@@ -36,7 +36,7 @@ public class TennisManagementViewSwingTest extends AssertJSwingJUnitTestCase {
 		window.label(JLabelMatcher.withText("Surname"));
 		window.textBox("surnameTextBox").requireEnabled();
 		window.button(JButtonMatcher.withText("Add player")).requireDisabled();
-		window.list("playersList");
+		window.list("playersList").requireEnabled();
 		window.button(JButtonMatcher.withText("Delete player")).requireDisabled();
 		window.label("errorPlayerLbl").requireText(" ");
 		window.label(JLabelMatcher.withText("Winner"));
@@ -46,7 +46,7 @@ public class TennisManagementViewSwingTest extends AssertJSwingJUnitTestCase {
 		window.label(JLabelMatcher.withText("Date"));
 		window.textBox("dateOfTheMatchTextBox").requireEnabled();
 		window.button(JButtonMatcher.withText("Add match")).requireDisabled();
-		window.list("matchesList");
+		window.list("matchesList").requireEnabled();
 		window.button(JButtonMatcher.withText("Delete match")).requireDisabled();
 		window.label("errorMatchLbl").requireText(" ");
 	}
