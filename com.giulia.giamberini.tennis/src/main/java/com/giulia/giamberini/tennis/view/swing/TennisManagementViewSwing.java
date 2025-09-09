@@ -71,6 +71,7 @@ public class TennisManagementViewSwing extends JFrame implements TennisManagemen
 	private JLabel errorMatchLbl;
 	private JTextField idTextBox;
 	private DefaultListModel<TennisPlayer> listPlayerModel;
+	private TennisPlayerController playerController;
 
 	public TennisManagementViewSwing() {
 
@@ -170,6 +171,8 @@ public class TennisManagementViewSwing extends JFrame implements TennisManagemen
 		surnameTextBox.setColumns(10);
 
 		addPlayerBtn = new JButton("Add player");
+		addPlayerBtn.addActionListener(e -> playerController.addNewTennisPlayer(
+				new TennisPlayer(idTextBox.getText(), nameTextBox.getText(), surnameTextBox.getText())));
 		addPlayerBtn.setEnabled(false);
 		addPlayerBtn.setName("addPlayerBtn");
 		GridBagConstraints gbc_addPlayerBtn = new GridBagConstraints();
@@ -400,8 +403,7 @@ public class TennisManagementViewSwing extends JFrame implements TennisManagemen
 	}
 
 	public void setPlayerController(TennisPlayerController playerController) {
-		// TODO Auto-generated method stub
-		
+		this.playerController = playerController;
 	}
 
 }
