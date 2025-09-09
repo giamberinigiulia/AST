@@ -10,6 +10,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.List;
 
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -72,6 +73,7 @@ public class TennisManagementViewSwing extends JFrame implements TennisManagemen
 	private JTextField idTextBox;
 	private DefaultListModel<TennisPlayer> listPlayerModel;
 	private TennisPlayerController playerController;
+	private DefaultComboBoxModel<TennisPlayer> comboBoxModel;
 
 	public TennisManagementViewSwing() {
 
@@ -246,7 +248,8 @@ public class TennisManagementViewSwing extends JFrame implements TennisManagemen
 		gbc_winnerLbl.gridy = 0;
 		matchPanel.add(winnerLbl, gbc_winnerLbl);
 
-		winnerComboBox = new JComboBox<>();
+		comboBoxModel = new DefaultComboBoxModel<TennisPlayer>();
+		winnerComboBox = new JComboBox<>(comboBoxModel);
 		winnerComboBox.setName("winnerComboBox");
 		winnerComboBox.setEnabled(false);
 		GridBagConstraints gbc_winnerComboBox = new GridBagConstraints();
@@ -265,7 +268,7 @@ public class TennisManagementViewSwing extends JFrame implements TennisManagemen
 		gbc_loserLbl.gridy = 1;
 		matchPanel.add(loserLbl, gbc_loserLbl);
 
-		loserComboBox = new JComboBox<>();
+		loserComboBox = new JComboBox<>(comboBoxModel);
 		loserComboBox.setName("loserComboBox");
 		loserComboBox.setEnabled(false);
 		GridBagConstraints gbc_loserComboBox = new GridBagConstraints();
@@ -347,6 +350,7 @@ public class TennisManagementViewSwing extends JFrame implements TennisManagemen
 	@Override
 	public void newTennisPlayerAdded(TennisPlayer tennisPlayerToAdd) {
 		listPlayerModel.addElement(tennisPlayerToAdd);
+		comboBoxModel.addElement(tennisPlayerToAdd);
 		errorPlayerLbl.setText(" ");
 		idTextBox.setText("");
 		nameTextBox.setText("");
