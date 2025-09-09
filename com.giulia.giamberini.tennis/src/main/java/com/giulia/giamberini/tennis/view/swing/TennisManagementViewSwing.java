@@ -4,6 +4,8 @@ import java.awt.EventQueue;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -64,9 +66,9 @@ public class TennisManagementViewSwing extends JFrame implements TennisManagemen
 	private JButton deleteMatchBtn;
 	private JLabel errorMatchLbl;
 	private JTextField idTextBox;
-	
+
 	public TennisManagementViewSwing() {
-		
+
 		gridBagLayout = new GridBagLayout();
 		setSize(600, 400);
 		setTitle("Tennis Matches Management");
@@ -75,7 +77,7 @@ public class TennisManagementViewSwing extends JFrame implements TennisManagemen
 		gridBagLayout.columnWeights = new double[] { 1.0, Double.MIN_VALUE };
 		gridBagLayout.rowWeights = new double[] { 1.0, Double.MIN_VALUE };
 		getContentPane().setLayout(gridBagLayout);
-		
+
 		playerPanel = new JPanel();
 		playerPanel.setBorder(
 				new TitledBorder(null, "Player management", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -94,7 +96,7 @@ public class TennisManagementViewSwing extends JFrame implements TennisManagemen
 		gbl_playerPanel.columnWeights = new double[] { 0.0, 1.0 };
 		gbl_playerPanel.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, Double.MIN_VALUE };
 		playerPanel.setLayout(gbl_playerPanel);
-		
+
 		idLbl = new JLabel("ID");
 		idLbl.setName("idLbl");
 		GridBagConstraints gbc_idLbl = new GridBagConstraints();
@@ -103,8 +105,16 @@ public class TennisManagementViewSwing extends JFrame implements TennisManagemen
 		gbc_idLbl.gridx = 0;
 		gbc_idLbl.gridy = 0;
 		playerPanel.add(idLbl, gbc_idLbl);
-		
+
 		idTextBox = new JTextField();
+		KeyAdapter addPlayerBtnEnabler = new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				addPlayerBtn.setEnabled(!idTextBox.getText().isEmpty() && !nameTextBox.getText().isEmpty()
+						&& !surnameTextBox.getText().isEmpty());
+			}
+		};
+		idTextBox.addKeyListener(addPlayerBtnEnabler);
 		idTextBox.setName("idTextBox");
 		GridBagConstraints gbc_idTextBox = new GridBagConstraints();
 		gbc_idTextBox.insets = new Insets(0, 0, 5, 0);
@@ -113,7 +123,7 @@ public class TennisManagementViewSwing extends JFrame implements TennisManagemen
 		gbc_idTextBox.gridy = 0;
 		playerPanel.add(idTextBox, gbc_idTextBox);
 		idTextBox.setColumns(10);
-		
+
 		nameLbl = new JLabel("Name");
 		nameLbl.setName("nameLbl");
 		GridBagConstraints gbc_nameLbl = new GridBagConstraints();
@@ -122,8 +132,9 @@ public class TennisManagementViewSwing extends JFrame implements TennisManagemen
 		gbc_nameLbl.gridx = 0;
 		gbc_nameLbl.gridy = 1;
 		playerPanel.add(nameLbl, gbc_nameLbl);
-		
+
 		nameTextBox = new JTextField();
+		nameTextBox.addKeyListener(addPlayerBtnEnabler);
 		nameTextBox.setName("nameTextBox");
 		GridBagConstraints gbc_nameTextBox = new GridBagConstraints();
 		gbc_nameTextBox.insets = new Insets(0, 0, 5, 0);
@@ -132,7 +143,7 @@ public class TennisManagementViewSwing extends JFrame implements TennisManagemen
 		gbc_nameTextBox.gridy = 1;
 		playerPanel.add(nameTextBox, gbc_nameTextBox);
 		nameTextBox.setColumns(10);
-		
+
 		surnameLbl = new JLabel("Surname");
 		surnameLbl.setName("surnameLbl");
 		GridBagConstraints gbc_surnameLbl = new GridBagConstraints();
@@ -141,8 +152,9 @@ public class TennisManagementViewSwing extends JFrame implements TennisManagemen
 		gbc_surnameLbl.gridx = 0;
 		gbc_surnameLbl.gridy = 2;
 		playerPanel.add(surnameLbl, gbc_surnameLbl);
-		
+
 		surnameTextBox = new JTextField();
+		surnameTextBox.addKeyListener(addPlayerBtnEnabler);
 		surnameTextBox.setName("surnameTextBox");
 		GridBagConstraints gbc_surnameTextBox = new GridBagConstraints();
 		gbc_surnameTextBox.insets = new Insets(0, 0, 5, 0);
@@ -151,7 +163,7 @@ public class TennisManagementViewSwing extends JFrame implements TennisManagemen
 		gbc_surnameTextBox.gridy = 2;
 		playerPanel.add(surnameTextBox, gbc_surnameTextBox);
 		surnameTextBox.setColumns(10);
-		
+
 		addPlayerBtn = new JButton("Add player");
 		addPlayerBtn.setEnabled(false);
 		addPlayerBtn.setName("addPlayerBtn");
@@ -161,7 +173,7 @@ public class TennisManagementViewSwing extends JFrame implements TennisManagemen
 		gbc_addPlayerBtn.gridx = 0;
 		gbc_addPlayerBtn.gridy = 3;
 		playerPanel.add(addPlayerBtn, gbc_addPlayerBtn);
-		
+
 		playersListScrollPane = new JScrollPane();
 		GridBagConstraints gbc_scrollPane = new GridBagConstraints();
 		gbc_scrollPane.fill = GridBagConstraints.BOTH;
@@ -170,12 +182,12 @@ public class TennisManagementViewSwing extends JFrame implements TennisManagemen
 		gbc_scrollPane.gridx = 0;
 		gbc_scrollPane.gridy = 4;
 		playerPanel.add(playersListScrollPane, gbc_scrollPane);
-		
+
 		playersList = new JList<>();
 		playersList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		playersList.setName("playersList");
 		playersListScrollPane.setViewportView(playersList);
-		
+
 		deletePlayerBtn = new JButton("Delete player");
 		deletePlayerBtn.setEnabled(false);
 		deletePlayerBtn.setName("deletePlayerBtn");
@@ -185,7 +197,7 @@ public class TennisManagementViewSwing extends JFrame implements TennisManagemen
 		gbc_deletePlayerBtn.gridx = 0;
 		gbc_deletePlayerBtn.gridy = 5;
 		playerPanel.add(deletePlayerBtn, gbc_deletePlayerBtn);
-		
+
 		errorPlayerLbl = new JLabel(" ");
 		errorPlayerLbl.setName("errorPlayerLbl");
 		GridBagConstraints gbc_errorPlayerLbl = new GridBagConstraints();
@@ -193,7 +205,7 @@ public class TennisManagementViewSwing extends JFrame implements TennisManagemen
 		gbc_errorPlayerLbl.gridx = 0;
 		gbc_errorPlayerLbl.gridy = 6;
 		playerPanel.add(errorPlayerLbl, gbc_errorPlayerLbl);
-		
+
 		matchPanel = new JPanel();
 		matchPanel.setBorder(
 				new TitledBorder(null, "Match management", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -211,7 +223,7 @@ public class TennisManagementViewSwing extends JFrame implements TennisManagemen
 		gbl_matchPanel.columnWeights = new double[] { 0.0, 1.0, Double.MIN_VALUE };
 		gbl_matchPanel.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, Double.MIN_VALUE };
 		matchPanel.setLayout(gbl_matchPanel);
-		
+
 		winnerLbl = new JLabel("Winner");
 		winnerLbl.setName("winnerLbl");
 		GridBagConstraints gbc_winnerLbl = new GridBagConstraints();
@@ -220,7 +232,7 @@ public class TennisManagementViewSwing extends JFrame implements TennisManagemen
 		gbc_winnerLbl.gridx = 0;
 		gbc_winnerLbl.gridy = 0;
 		matchPanel.add(winnerLbl, gbc_winnerLbl);
-		
+
 		winnerComboBox = new JComboBox<>();
 		winnerComboBox.setName("winnerComboBox");
 		winnerComboBox.setEnabled(false);
@@ -230,7 +242,7 @@ public class TennisManagementViewSwing extends JFrame implements TennisManagemen
 		gbc_winnerComboBox.gridx = 1;
 		gbc_winnerComboBox.gridy = 0;
 		matchPanel.add(winnerComboBox, gbc_winnerComboBox);
-		
+
 		loserLbl = new JLabel("Loser");
 		loserLbl.setName("loserLbl");
 		GridBagConstraints gbc_loserLbl = new GridBagConstraints();
@@ -239,7 +251,7 @@ public class TennisManagementViewSwing extends JFrame implements TennisManagemen
 		gbc_loserLbl.gridx = 0;
 		gbc_loserLbl.gridy = 1;
 		matchPanel.add(loserLbl, gbc_loserLbl);
-		
+
 		loserComboBox = new JComboBox<>();
 		loserComboBox.setName("loserComboBox");
 		loserComboBox.setEnabled(false);
@@ -249,7 +261,7 @@ public class TennisManagementViewSwing extends JFrame implements TennisManagemen
 		gbc_loserComboBox.gridx = 1;
 		gbc_loserComboBox.gridy = 1;
 		matchPanel.add(loserComboBox, gbc_loserComboBox);
-		
+
 		dateLbl = new JLabel("Date");
 		dateLbl.setName("dateLbl");
 		GridBagConstraints gbc_dateLbl = new GridBagConstraints();
@@ -258,7 +270,7 @@ public class TennisManagementViewSwing extends JFrame implements TennisManagemen
 		gbc_dateLbl.gridx = 0;
 		gbc_dateLbl.gridy = 2;
 		matchPanel.add(dateLbl, gbc_dateLbl);
-		
+
 		dateOfTheMatchTextBox = new JTextField();
 		dateOfTheMatchTextBox.setName("dateOfTheMatchTextBox");
 		GridBagConstraints gbc_dateOfTheMatchTextBox = new GridBagConstraints();
@@ -268,7 +280,7 @@ public class TennisManagementViewSwing extends JFrame implements TennisManagemen
 		gbc_dateOfTheMatchTextBox.gridy = 2;
 		matchPanel.add(dateOfTheMatchTextBox, gbc_dateOfTheMatchTextBox);
 		dateOfTheMatchTextBox.setColumns(10);
-		
+
 		addMatchBtn = new JButton("Add match");
 		addMatchBtn.setName("addMatchBtn");
 		addMatchBtn.setEnabled(false);
@@ -278,7 +290,7 @@ public class TennisManagementViewSwing extends JFrame implements TennisManagemen
 		gbc_addMatchBtn.gridx = 0;
 		gbc_addMatchBtn.gridy = 3;
 		matchPanel.add(addMatchBtn, gbc_addMatchBtn);
-		
+
 		matchesListScrollPane = new JScrollPane();
 		GridBagConstraints gbc_scrollPane_1 = new GridBagConstraints();
 		gbc_scrollPane_1.fill = GridBagConstraints.BOTH;
@@ -287,11 +299,11 @@ public class TennisManagementViewSwing extends JFrame implements TennisManagemen
 		gbc_scrollPane_1.gridx = 0;
 		gbc_scrollPane_1.gridy = 4;
 		matchPanel.add(matchesListScrollPane, gbc_scrollPane_1);
-		
+
 		matchesList = new JList<>();
 		matchesList.setName("matchesList");
 		matchesListScrollPane.setViewportView(matchesList);
-		
+
 		deleteMatchBtn = new JButton("Delete match");
 		deleteMatchBtn.setName("deleteMatchBtn");
 		deleteMatchBtn.setEnabled(false);
@@ -301,7 +313,7 @@ public class TennisManagementViewSwing extends JFrame implements TennisManagemen
 		gbc_deleteMatchBtn.gridx = 0;
 		gbc_deleteMatchBtn.gridy = 5;
 		matchPanel.add(deleteMatchBtn, gbc_deleteMatchBtn);
-		
+
 		errorMatchLbl = new JLabel(" ");
 		errorMatchLbl.setName("errorMatchLbl");
 		GridBagConstraints gbc_errorMatchLbl = new GridBagConstraints();
@@ -309,8 +321,9 @@ public class TennisManagementViewSwing extends JFrame implements TennisManagemen
 		gbc_errorMatchLbl.gridx = 0;
 		gbc_errorMatchLbl.gridy = 6;
 		matchPanel.add(errorMatchLbl, gbc_errorMatchLbl);
-		
+
 	}
+
 	@Override
 	public void showAllTennisPlayers(List<TennisPlayer> players) {
 		// TODO Auto-generated method stub
