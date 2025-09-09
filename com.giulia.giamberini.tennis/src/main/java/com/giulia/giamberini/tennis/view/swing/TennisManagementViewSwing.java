@@ -279,7 +279,7 @@ public class TennisManagementViewSwing extends JFrame implements TennisManagemen
 			@Override
 			public void keyReleased(KeyEvent e) {
 				addMatchBtn.setEnabled(winnerComboBox.getSelectedIndex() != -1 && loserComboBox.getSelectedIndex() != -1
-						&& !dateOfTheMatchTextBox.getText().isEmpty());
+						&& !dateOfTheMatchTextBox.getText().trim().isEmpty());
 			}
 		};
 		winnerComboBox = new JComboBox<>(winnerComboBoxModel);
