@@ -83,7 +83,7 @@ public class TennisManagementViewSwingTest extends AssertJSwingJUnitTestCase {
 		window.button(JButtonMatcher.withText("Add player")).requireEnabled();
 	}
 
-	@Test
+	@Test @GUITest
 	public void testAddPlayerButtonShouldRemainDisabledWhenAtLeastOneOfIdNameAndSurnameIsBlank() {
 		window.textBox("idTextBox").enterText(" ");
 		window.textBox("nameTextBox").enterText("test name");
@@ -109,7 +109,7 @@ public class TennisManagementViewSwingTest extends AssertJSwingJUnitTestCase {
 		window.button(JButtonMatcher.withText("Add player")).requireDisabled();
 	}
 
-	@Test
+	@Test @GUITest
 	public void testSelectionOfPlayerShouldEnableDeletePlayerButton() {
 		GuiActionRunner.execute(
 				() -> view.getListPlayerModel().addElement(new TennisPlayer("1", "test name", "test surname")));
@@ -120,7 +120,7 @@ public class TennisManagementViewSwingTest extends AssertJSwingJUnitTestCase {
 		window.button(JButtonMatcher.withText("Delete player")).requireDisabled();
 	}
 
-	@Test
+	@Test @GUITest
 	public void testPlayerAreAddedToTheListWhenShowAllTennisPlayers() {
 		TennisPlayer player1 = new TennisPlayer("1", "test name1", "test surname1");
 		TennisPlayer player2 = new TennisPlayer("2", "test name2", "test surname2");
@@ -128,14 +128,14 @@ public class TennisManagementViewSwingTest extends AssertJSwingJUnitTestCase {
 		assertThat(window.list("playersList").contents()).containsExactly(player1.toString(), player2.toString());
 	}
 
-	@Test
+	@Test @GUITest
 	public void testshowErrorTennisPlayerAlreadyExistShouldShowTheErrorMessageInTheErrorPlayerLabel() {
 		TennisPlayer player = new TennisPlayer("1","test name","test surname");
 		GuiActionRunner.execute(() -> view.showErrorTennisPlayerAlreadyExist("Error message", player));
 		window.label("errorPlayerLbl").requireText("Error message: 1 - test name - test surname");
 	}
 	
-	@Test
+	@Test @GUITest
 	public void testShowErrorPlayerNotFound() {
 		TennisPlayer player1 = new TennisPlayer("1", "test name1", "test surname1");
 		TennisPlayer player2 = new TennisPlayer("2", "test name2", "test surname2");
@@ -149,7 +149,7 @@ public class TennisManagementViewSwingTest extends AssertJSwingJUnitTestCase {
 		assertThat(window.list("playersList").contents()).containsExactly(player2.toString());
 	}
 	
-	@Test
+	@Test @GUITest
 	public void testPlayerSuccessfullyAddedShouldResetTheErrorLabelAndAddTheNewPlayerToTheList() {
 		TennisPlayer player = new TennisPlayer("1", "test name", "test surname");
 		GuiActionRunner.execute(() -> view.newTennisPlayerAdded(player));
@@ -157,7 +157,7 @@ public class TennisManagementViewSwingTest extends AssertJSwingJUnitTestCase {
 		window.label("errorPlayerLbl").requireText(" ");
 	}
 	
-	@Test
+	@Test @GUITest
 	public void testPlayerSuccessfullyRemovedShouldRemoveThePlayerFromTheListAndResetTheErrorLabel() {
 		TennisPlayer player1 = new TennisPlayer("1","test name1", "test surname1");
 		TennisPlayer player2 = new TennisPlayer("2","test name2", "test surname2");
@@ -171,12 +171,26 @@ public class TennisManagementViewSwingTest extends AssertJSwingJUnitTestCase {
 		window.label("errorPlayerLbl").requireText(" ");
 	}
 	
-	@Test
+	@Test @GUITest
 	public void testAddButtonShouldInvokePlayerControllerForAddingNewPlayer() {
 		window.textBox("idTextBox").enterText("1");
 		window.textBox("nameTextBox").enterText("test name");
 		window.textBox("surnameTextBox").enterText("test surname");
 		window.button(JButtonMatcher.withText("Add player")).click();
 		verify(playerController).addNewTennisPlayer(new TennisPlayer("1","test name","test surname"));
+	}
+	
+	@Test @GUITest
+	public void testDeleteButtonShouldInvokePlayerControllerForDeletingThePlayer() {
+		TennisPlayer player1 = new TennisPlayer("1","test name1", "test surname1");
+		TennisPlayer player2 = new TennisPlayer("2","test name2", "test surname2");
+		GuiActionRunner.execute(() -> {
+			DefaultListModel<TennisPlayer> listPlayersModel = view.getListPlayerModel();
+			listPlayersModel.addElement(player1);
+			listPlayersModel.addElement(player2);
+		});
+		window.list("playersList").selectItem(1);
+		window.button(JButtonMatcher.withText("Delete player")).click();
+		verify(playerController).deleteTennisPlayer(player2);
 	}
 }
