@@ -104,5 +104,15 @@ public class TennisMatchRepositoryMongoTest {
 		// with switched pair (aka. different result)
 		assertThat(repo.findByMatchInfo(loser, winner, tennisMatchDate1)).isEqualTo(existingTennisMatch);
 	}
+	
+	@Test
+	public void testSave() {
+		TennisPlayer winner = new TennisPlayer(WINNER_ID, WINNER_NAME, WINNER_SURNAME);
+		TennisPlayer loser = new TennisPlayer(LOSER_ID, LOSER_NAME, LOSER_SURNAME);
+		LocalDate tennisMatchDate1 = LocalDate.of(2025, 10, 22);
+		TennisMatch tennisMatchToSave = new TennisMatch(winner, loser, tennisMatchDate1);
+		repo.save(tennisMatchToSave);
+		assertThat(collection.find()).containsExactly(tennisMatchToSave);
+	}
 
 }
