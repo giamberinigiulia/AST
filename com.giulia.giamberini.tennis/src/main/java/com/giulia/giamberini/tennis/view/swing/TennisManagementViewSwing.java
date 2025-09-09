@@ -8,6 +8,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.List;
 
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -382,6 +383,11 @@ public class TennisManagementViewSwing extends JFrame implements TennisManagemen
 	public void showErrorNotExistingTennisMatch(String errorMessage, TennisMatch matchToDelete) {
 		// TODO Auto-generated method stub
 
+	}
+	
+	public DefaultListModel<TennisPlayer> getListPlayerModel() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

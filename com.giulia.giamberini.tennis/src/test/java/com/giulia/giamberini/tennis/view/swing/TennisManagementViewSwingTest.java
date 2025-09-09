@@ -10,6 +10,8 @@ import org.assertj.swing.junit.testcase.AssertJSwingJUnitTestCase;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import com.giulia.giamberini.tennis.model.TennisPlayer;
+
 @RunWith(GUITestRunner.class)
 public class TennisManagementViewSwingTest extends AssertJSwingJUnitTestCase {
 
@@ -85,5 +87,16 @@ public class TennisManagementViewSwingTest extends AssertJSwingJUnitTestCase {
 		window.textBox("nameTextBox").enterText("test name");
 		window.textBox("surnameTextBox").enterText(" ");
 		window.button(JButtonMatcher.withText("Add player")).requireDisabled();
+	}
+	
+	@Test
+	public void testSelectionOfPlayerShouldEnableDeletePlayerButton() {
+		GuiActionRunner.execute(() -> view.getListPlayerModel()
+				.addElement(new TennisPlayer("1", "test name", "test surname")));
+
+		window.list("playersList").selectItem(0);
+		window.button(JButtonMatcher.withText("Delete player")).requireEnabled();
+		window.list("playersList").clearSelection();
+		window.button(JButtonMatcher.withText("Delete player")).requireDisabled();
 	}
 }
