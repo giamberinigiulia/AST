@@ -125,5 +125,11 @@ public class TennisMatchRepositoryMongoTest {
 		repo.delete(tennisMatchToDelete);
 		assertThat(collection.find()).isEmpty();
 	}
+	
+	@Test
+	public void testFindTennisMatchesByPlayerIdWhenNoMatchesAreAssociated() {
+		//no matches are stored of the player with id 1 in this scenario
+		assertThat(repo.findMatchesByTennisPlayerId("1")).isEmpty();
+	}
 
 }
