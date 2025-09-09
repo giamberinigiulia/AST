@@ -9,6 +9,7 @@ import java.util.List;
 
 import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.codecs.pojo.PojoCodecProvider;
+import org.bson.conversions.Bson;
 
 import com.giulia.giamberini.tennis.model.TennisMatch;
 import com.giulia.giamberini.tennis.model.TennisPlayer;
@@ -36,8 +37,11 @@ public class TennisMatchMongoRepository implements TennisMatchRepository {
 
 	@Override
 	public TennisMatch findByMatchInfo(TennisPlayer winner, TennisPlayer loser, LocalDate date) {
-		return collection.find(Filters.and(Filters.eq("winner", winner), Filters.eq("loser", loser),
-				Filters.eq("dateOfTheMatch", date))).first();
+		Bson tennisMatchAsGiven = Filters.and(Filters.eq("winner", winner), Filters.eq("loser", loser),
+				Filters.eq("dateOfTheMatch", date));
+		Bson tennisMatchWithOppositeResult = Filters.and(Filters.eq("winner", loser), Filters.eq("loser", winner),
+				Filters.eq("dateOfTheMatch", date));
+		return collection.find(Filters.or(tennisMatchAsGiven, tennisMatchWithOppositeResult)).first();
 	}
 
 	@Override
