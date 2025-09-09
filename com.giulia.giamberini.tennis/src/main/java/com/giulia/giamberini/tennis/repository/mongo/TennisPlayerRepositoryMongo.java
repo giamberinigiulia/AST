@@ -44,8 +44,7 @@ public class TennisPlayerRepositoryMongo implements TennisPlayerRepository {
 
 	@Override
 	public void delete(TennisPlayer tennisPlayerToRemove) {
-		// TODO Auto-generated method stub
-
+		collection.deleteOne(Filters.eq("_id", tennisPlayerToRemove.getId()));
 	}
 
 }
