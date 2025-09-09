@@ -93,5 +93,17 @@ public class TennisMatchRepositoryMongoTest {
 		collection.insertMany(Arrays.asList(otherTennisMatch, tennisMatchToFind));
 		assertThat(repo.findByMatchInfo(winner, loser, tennisMatchDate1)).isEqualTo(tennisMatchToFind);
 	}
+	
+	@Test
+	public void testFindByMatchInforWhenTheMatchExistsWithOppositeResult() {
+		TennisPlayer winner = new TennisPlayer(WINNER_ID, WINNER_NAME, WINNER_SURNAME);
+		TennisPlayer loser = new TennisPlayer(LOSER_ID, LOSER_NAME, LOSER_SURNAME);
+		LocalDate tennisMatchDate1 = LocalDate.of(2025, 10, 22);
+		LocalDate tennisMatchDate2 = LocalDate.of(2025, 10, 22);
+		TennisMatch existingTennisMatch = new TennisMatch(winner, loser, tennisMatchDate1);
+		collection.insertOne(existingTennisMatch);
+		// with switched pair (aka. different result)
+		assertThat(repo.findByMatchInfo(loser, winner, tennisMatchDate1)).isEqualTo(existingTennisMatch);
+	}
 
 }
