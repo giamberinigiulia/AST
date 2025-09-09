@@ -341,8 +341,8 @@ public class TennisManagementViewSwing extends JFrame implements TennisManagemen
 
 	@Override
 	public void newTennisPlayerAdded(TennisPlayer tennisPlayerToAdd) {
-		// TODO Auto-generated method stub
-
+		listPlayerModel.addElement(tennisPlayerToAdd);
+		errorPlayerLbl.setText(" ");
 	}
 
 	@Override
