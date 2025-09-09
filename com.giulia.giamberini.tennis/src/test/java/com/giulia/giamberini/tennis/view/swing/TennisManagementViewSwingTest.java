@@ -21,6 +21,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import com.giulia.giamberini.tennis.controller.TennisMatchController;
 import com.giulia.giamberini.tennis.controller.TennisPlayerController;
 import com.giulia.giamberini.tennis.model.TennisMatch;
 import com.giulia.giamberini.tennis.model.TennisPlayer;
@@ -33,6 +34,8 @@ public class TennisManagementViewSwingTest extends AssertJSwingJUnitTestCase {
 	@Mock
 	private TennisPlayerController playerController;
 	private AutoCloseable closeable;
+	@Mock
+	private TennisMatchController matchController;
 
 	@Override
 	protected void onSetUp() throws Exception {
@@ -40,6 +43,7 @@ public class TennisManagementViewSwingTest extends AssertJSwingJUnitTestCase {
 		GuiActionRunner.execute(() -> {
 			view = new TennisManagementViewSwing();
 			view.setPlayerController(playerController);
+			view.setMatchController(matchController);
 			return view;
 		});
 		window = new FrameFixture(robot(), view);
@@ -299,7 +303,7 @@ public class TennisManagementViewSwingTest extends AssertJSwingJUnitTestCase {
 
 		window.comboBox("winnerComboBox").selectItem(0);
 		window.comboBox("loserComboBox").selectItem(1);
-		window.textBox("dateOfTheMatchTextBox").enterText("21-10-2025");
+		window.textBox("dateOfTheMatchTextBox").enterText("2025-10-21");
 		window.button(JButtonMatcher.withText("Add match")).requireEnabled();
 	}
 	
@@ -343,7 +347,7 @@ public class TennisManagementViewSwingTest extends AssertJSwingJUnitTestCase {
 
 		window.comboBox("winnerComboBox").selectItem(0);
 		window.comboBox("loserComboBox").selectItem(0);
-		window.textBox("dateOfTheMatchTextBox").enterText("10-12-2025");
+		window.textBox("dateOfTheMatchTextBox").enterText("2025-12-10");
 		window.button(JButtonMatcher.withText("Add match")).requireDisabled();
 	}
 	
@@ -434,5 +438,26 @@ public class TennisManagementViewSwingTest extends AssertJSwingJUnitTestCase {
 		GuiActionRunner.execute(() -> view.tennisMatchRemoved(match1));
 		assertThat(window.list("matchesList").contents()).containsExactly(match2.toString());
 		window.label("errorMatchLbl").requireText(" ");
+	}
+	
+	@Test
+	@GUITest
+	public void testAddButtonShouldInvokematchControllerForAddingNewMatch() {
+		TennisPlayer player1 = new TennisPlayer("1", "test name1", "test surname1");
+		TennisPlayer player2 = new TennisPlayer("2", "test name2", "test surname2");
+		LocalDate date = LocalDate.of(2025, 10, 25);
+		GuiActionRunner.execute(() -> {
+			DefaultComboBoxModel<TennisPlayer> winnerComboBoxModel = view.getWinnerComboBoxModel();
+			winnerComboBoxModel.addElement(player1);
+			winnerComboBoxModel.addElement(player2);
+			DefaultComboBoxModel<TennisPlayer> loserComboBoxModel = view.getLoserComboBoxModel();
+			loserComboBoxModel.addElement(player1);
+			loserComboBoxModel.addElement(player2);
+		});
+		window.comboBox("winnerComboBox").selectItem(0);
+		window.comboBox("loserComboBox").selectItem(1);
+		window.textBox("dateOfTheMatchTextBox").enterText(date.toString());
+		window.button(JButtonMatcher.withText("Add match")).click();
+		verify(matchController).addNewTennisMatch(new TennisMatch(player1,player2,date));
 	}
 }

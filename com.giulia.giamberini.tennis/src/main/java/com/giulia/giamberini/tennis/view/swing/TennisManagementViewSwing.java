@@ -25,6 +25,7 @@ import javax.swing.border.TitledBorder;
 import javax.swing.event.ListDataEvent;
 import javax.swing.event.ListDataListener;
 
+import com.giulia.giamberini.tennis.controller.TennisMatchController;
 import com.giulia.giamberini.tennis.controller.TennisPlayerController;
 import com.giulia.giamberini.tennis.model.TennisMatch;
 import com.giulia.giamberini.tennis.model.TennisPlayer;
@@ -78,6 +79,7 @@ public class TennisManagementViewSwing extends JFrame implements TennisManagemen
 	private DefaultComboBoxModel<TennisPlayer> winnerComboBoxModel;
 	private DefaultComboBoxModel<TennisPlayer> loserComboBoxModel;
 	private DefaultListModel<TennisMatch> listMatchModel;
+	private TennisMatchController matchController;
 
 	public TennisManagementViewSwing() {
 
@@ -478,6 +480,11 @@ public class TennisManagementViewSwing extends JFrame implements TennisManagemen
 
 	public DefaultListModel<TennisMatch> getListMatchModel() {
 		return listMatchModel;
+	}
+
+	public void setMatchController(TennisMatchController matchController) {
+		this.matchController = matchController;
+		
 	}
 
 }
