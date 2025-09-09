@@ -193,4 +193,16 @@ public class TennisManagementViewSwingTest extends AssertJSwingJUnitTestCase {
 		window.button(JButtonMatcher.withText("Delete player")).click();
 		verify(playerController).deleteTennisPlayer(player2);
 	}
+	
+	@Test @GUITest
+	public void testPlayerSeccessfullyAddedShouldResetAlsoTheTextBoxes() {
+		TennisPlayer player = new TennisPlayer("1","test name","test surname");
+		window.textBox("idTextBox").enterText(player.getId());
+		window.textBox("nameTextBox").enterText(player.getName());
+		window.textBox("surnameTextBox").enterText(player.getSurname());
+		GuiActionRunner.execute(() -> view.newTennisPlayerAdded(player));
+		window.textBox("idTextBox").requireText("");
+		window.textBox("nameTextBox").requireText("");
+		window.textBox("surnameTextBox").requireText("");
+	}
 }
