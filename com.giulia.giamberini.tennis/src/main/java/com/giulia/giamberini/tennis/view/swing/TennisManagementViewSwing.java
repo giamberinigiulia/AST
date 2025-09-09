@@ -1,5 +1,7 @@
 package com.giulia.giamberini.tennis.view.swing;
 
+import java.awt.Color;
+import java.awt.Component;
 import java.awt.EventQueue;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -203,6 +205,8 @@ public class TennisManagementViewSwing extends JFrame implements TennisManagemen
 		playerPanel.add(deletePlayerBtn, gbc_deletePlayerBtn);
 
 		errorPlayerLbl = new JLabel(" ");
+		errorPlayerLbl.setForeground(new Color(255, 0, 0));
+		errorPlayerLbl.setAlignmentX(Component.CENTER_ALIGNMENT);
 		errorPlayerLbl.setName("errorPlayerLbl");
 		GridBagConstraints gbc_errorPlayerLbl = new GridBagConstraints();
 		gbc_errorPlayerLbl.gridwidth = 2;
@@ -343,8 +347,8 @@ public class TennisManagementViewSwing extends JFrame implements TennisManagemen
 
 	@Override
 	public void showErrorTennisPlayerAlreadyExist(String errorMessage, TennisPlayer existingTennisPlayer) {
-		// TODO Auto-generated method stub
-
+		errorPlayerLbl.setText(errorMessage + ": " + existingTennisPlayer.getId() + " - "
+				+ existingTennisPlayer.getName() + " - " + existingTennisPlayer.getSurname());
 	}
 
 	@Override
