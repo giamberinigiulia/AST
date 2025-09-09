@@ -5,6 +5,7 @@ import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.bson.codecs.configuration.CodecRegistry;
@@ -58,8 +59,7 @@ public class TennisMatchMongoRepository implements TennisMatchRepository {
 
 	@Override
 	public List<TennisMatch> findMatchesByTennisPlayerId(String playerId) {
-		// TODO Auto-generated method stub
-		return null;
+		return Collections.emptyList();
 	}
 
 }
