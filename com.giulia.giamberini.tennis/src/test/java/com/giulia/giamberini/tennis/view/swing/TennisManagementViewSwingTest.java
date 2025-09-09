@@ -213,4 +213,13 @@ public class TennisManagementViewSwingTest extends AssertJSwingJUnitTestCase {
 		assertThat(window.comboBox("winnerComboBox").contents()).containsExactly(player1.toString());
 		assertThat(window.comboBox("loserComboBox").contents()).containsExactly(player1.toString());
 	}
+	
+	@Test
+	public void testWinnerAndLoserComboBoxAreUpdatedWithExistingPlayerElementWhenshowAllTennisPlayers() {
+		TennisPlayer player1 = new TennisPlayer("1", "test name1", "test surname1");
+		GuiActionRunner.execute(() -> view.showAllTennisPlayers(Arrays.asList(player1)));
+		assertThat(window.comboBox("winnerComboBox").contents()).containsExactly(player1.toString());
+		assertThat(window.comboBox("loserComboBox").contents()).containsExactly(player1.toString());
+	}
+
 }
