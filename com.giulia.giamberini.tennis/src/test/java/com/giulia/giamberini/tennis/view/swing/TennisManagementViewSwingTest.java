@@ -134,4 +134,12 @@ public class TennisManagementViewSwingTest extends AssertJSwingJUnitTestCase {
 		window.label("errorPlayerLbl").requireText("Error message: 1 - test name1 - test surname1");
 		assertThat(window.list("playersList").contents()).containsExactly(player2.toString());
 	}
+	
+	@Test
+	public void testPlayerSuccessfullyAddedShouldResetTheErrorLabelAndAddTheNewPlayerToTheList() {
+		TennisPlayer player = new TennisPlayer("1", "test name", "test surname");
+		GuiActionRunner.execute(() -> view.newTennisPlayerAdded(player));
+		assertThat(window.list("playersList").contents()).containsExactly(player.toString());
+		window.label("errorPlayerLbl").requireText(" ");
+	}
 }
