@@ -269,5 +269,23 @@ public class TennisManagementViewSwingTest extends AssertJSwingJUnitTestCase {
 		window.comboBox("winnerComboBox").requireDisabled();
 		window.comboBox("loserComboBox").requireDisabled();
 	}
+	
+	@Test
+	public void testAddButtonShouldBeEnabledWhenWinnerAndLoserAreSelectedAndDateIsNotEmpty() {
+		TennisPlayer player1 = new TennisPlayer("1", "test name1", "test surname1");
+		TennisPlayer player2 = new TennisPlayer("2", "test name2", "test surname2");
+		GuiActionRunner.execute(() -> {
+			DefaultComboBoxModel<TennisPlayer> comboBoxModel = view.getComboBoxModel();
+			comboBoxModel.addElement(player1);
+			comboBoxModel.addElement(player2);
+		});
+		window.comboBox("winnerComboBox").requireEnabled();
+		window.comboBox("loserComboBox").requireEnabled();
+
+		window.comboBox("winnerComboBox").selectItem(0);
+		window.comboBox("loserComboBox").selectItem(1);
+		window.textBox("dateOfTheMatchTextBox").enterText("21-10-2025");
+		window.button(JButtonMatcher.withText("Add match")).requireEnabled();
+	}
 
 }
