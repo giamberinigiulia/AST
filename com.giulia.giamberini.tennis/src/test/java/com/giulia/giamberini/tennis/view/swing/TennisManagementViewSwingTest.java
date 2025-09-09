@@ -205,4 +205,12 @@ public class TennisManagementViewSwingTest extends AssertJSwingJUnitTestCase {
 		window.textBox("nameTextBox").requireText("");
 		window.textBox("surnameTextBox").requireText("");
 	}
+	
+	@Test @GUITest
+	public void testWinnerAndLoserComboBoxAreFilledWithTheSameElementsAsThePlayersList() {
+		TennisPlayer player1 = new TennisPlayer("1","test name1", "test surname1");
+		GuiActionRunner.execute(() -> view.newTennisPlayerAdded(player1));
+		assertThat(window.comboBox("winnerComboBox").contents()).containsExactly(player1.toString());
+		assertThat(window.comboBox("loserComboBox").contents()).containsExactly(player1.toString());
+	}
 }
