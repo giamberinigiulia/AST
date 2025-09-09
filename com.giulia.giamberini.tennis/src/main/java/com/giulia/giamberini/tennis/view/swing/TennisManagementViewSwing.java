@@ -77,6 +77,7 @@ public class TennisManagementViewSwing extends JFrame implements TennisManagemen
 	private TennisPlayerController playerController;
 	private DefaultComboBoxModel<TennisPlayer> winnerComboBoxModel;
 	private DefaultComboBoxModel<TennisPlayer> loserComboBoxModel;
+	private DefaultListModel<TennisMatch> listMatchModel;
 
 	public TennisManagementViewSwing() {
 
@@ -279,7 +280,8 @@ public class TennisManagementViewSwing extends JFrame implements TennisManagemen
 			@Override
 			public void keyReleased(KeyEvent e) {
 				addMatchBtn.setEnabled(winnerComboBox.getSelectedIndex() != -1 && loserComboBox.getSelectedIndex() != -1
-						&& !dateOfTheMatchTextBox.getText().trim().isEmpty() && winnerComboBox.getSelectedIndex() != loserComboBox.getSelectedIndex());
+						&& !dateOfTheMatchTextBox.getText().trim().isEmpty()
+						&& winnerComboBox.getSelectedIndex() != loserComboBox.getSelectedIndex());
 			}
 		};
 		winnerComboBox = new JComboBox<>(winnerComboBoxModel);
@@ -355,7 +357,9 @@ public class TennisManagementViewSwing extends JFrame implements TennisManagemen
 		gbc_scrollPane_1.gridy = 4;
 		matchPanel.add(matchesListScrollPane, gbc_scrollPane_1);
 
-		matchesList = new JList<>();
+		listMatchModel = new DefaultListModel<TennisMatch>();
+		matchesList = new JList<>(listMatchModel);
+		matchesList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		matchesList.setName("matchesList");
 		matchesListScrollPane.setViewportView(matchesList);
 
@@ -462,6 +466,10 @@ public class TennisManagementViewSwing extends JFrame implements TennisManagemen
 
 	public DefaultComboBoxModel<TennisPlayer> getLoserComboBoxModel() {
 		return loserComboBoxModel;
+	}
+
+	public DefaultListModel<TennisMatch> getListMatchModel() {
+		return listMatchModel;
 	}
 
 }

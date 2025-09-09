@@ -3,6 +3,7 @@ package com.giulia.giamberini.tennis.view.swing;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.verify;
 
+import java.time.LocalDate;
 import java.util.Arrays;
 
 import javax.swing.DefaultComboBoxModel;
@@ -21,6 +22,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import com.giulia.giamberini.tennis.controller.TennisPlayerController;
+import com.giulia.giamberini.tennis.model.TennisMatch;
 import com.giulia.giamberini.tennis.model.TennisPlayer;
 
 @RunWith(GUITestRunner.class)
@@ -343,6 +345,21 @@ public class TennisManagementViewSwingTest extends AssertJSwingJUnitTestCase {
 		window.comboBox("loserComboBox").selectItem(0);
 		window.textBox("dateOfTheMatchTextBox").enterText("10-12-2025");
 		window.button(JButtonMatcher.withText("Add match")).requireDisabled();
+	}
+	
+	@Test
+	@GUITest
+	public void testSelectionOfMatchShouldEnableDeleteMatchButton() {
+		TennisPlayer player1 = new TennisPlayer("1", "test name1", "test surname1");
+		TennisPlayer player2 = new TennisPlayer("2", "test name2", "test surname2");
+		LocalDate date = LocalDate.of(2025, 10, 25);
+		GuiActionRunner
+				.execute(() -> view.getListMatchModel().addElement(new TennisMatch(player1, player2, date)));
+
+		window.list("matchesList").selectItem(0);
+		window.button(JButtonMatcher.withText("Delete match")).requireEnabled();
+		window.list("matchesList").clearSelection();
+		window.button(JButtonMatcher.withText("Delete match")).requireDisabled();
 	}
 
 }
