@@ -374,6 +374,7 @@ public class TennisManagementViewSwing extends JFrame implements TennisManagemen
 		matchesListScrollPane.setViewportView(matchesList);
 
 		deleteMatchBtn = new JButton("Delete match");
+		deleteMatchBtn.addActionListener(e -> matchController.deleteTennisMatch(matchesList.getSelectedValue()));
 		deleteMatchBtn.setName("deleteMatchBtn");
 		deleteMatchBtn.setEnabled(false);
 		GridBagConstraints gbc_deleteMatchBtn = new GridBagConstraints();
