@@ -22,6 +22,7 @@ import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.border.TitledBorder;
 
+import com.giulia.giamberini.tennis.controller.TennisPlayerController;
 import com.giulia.giamberini.tennis.model.TennisMatch;
 import com.giulia.giamberini.tennis.model.TennisPlayer;
 import com.giulia.giamberini.tennis.view.TennisManagementView;
@@ -396,6 +397,11 @@ public class TennisManagementViewSwing extends JFrame implements TennisManagemen
 
 	public DefaultListModel<TennisPlayer> getListPlayerModel() {
 		return listPlayerModel;
+	}
+
+	public void setPlayerController(TennisPlayerController playerController) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

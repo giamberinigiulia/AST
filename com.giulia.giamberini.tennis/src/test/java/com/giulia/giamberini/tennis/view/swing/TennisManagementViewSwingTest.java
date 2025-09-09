@@ -1,6 +1,7 @@
 package com.giulia.giamberini.tennis.view.swing;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.verify;
 
 import java.util.Arrays;
 
@@ -15,7 +16,10 @@ import org.assertj.swing.junit.runner.GUITestRunner;
 import org.assertj.swing.junit.testcase.AssertJSwingJUnitTestCase;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
+import com.giulia.giamberini.tennis.controller.TennisPlayerController;
 import com.giulia.giamberini.tennis.model.TennisPlayer;
 
 @RunWith(GUITestRunner.class)
@@ -23,15 +27,25 @@ public class TennisManagementViewSwingTest extends AssertJSwingJUnitTestCase {
 
 	private FrameFixture window;
 	private TennisManagementViewSwing view;
+	@Mock
+	private TennisPlayerController playerController;
+	private AutoCloseable closeable;
 
 	@Override
 	protected void onSetUp() throws Exception {
+		closeable = MockitoAnnotations.openMocks(this);
 		GuiActionRunner.execute(() -> {
 			view = new TennisManagementViewSwing();
+			view.setPlayerController(playerController);
 			return view;
 		});
 		window = new FrameFixture(robot(), view);
 		window.show();
+	}
+	
+	@Override
+	public void onTearDown() throws Exception {
+		closeable.close();
 	}
 
 	@Test
@@ -155,5 +169,14 @@ public class TennisManagementViewSwingTest extends AssertJSwingJUnitTestCase {
 		GuiActionRunner.execute(() -> view.tennisPlayerRemoved(player1));
 		assertThat(window.list("playersList").contents()).containsExactly(player2.toString());
 		window.label("errorPlayerLbl").requireText(" ");
+	}
+	
+	@Test
+	public void testAddButtonShouldInvokePlayerControllerForAddingNewPlayer() {
+		window.textBox("idTextBox").enterText("1");
+		window.textBox("nameTextBox").enterText("test name");
+		window.textBox("surnameTextBox").enterText("test surname");
+		window.button(JButtonMatcher.withText("Add player")).click();
+		verify(playerController).addNewTennisPlayer(new TennisPlayer("1","test name","test surname"));
 	}
 }
