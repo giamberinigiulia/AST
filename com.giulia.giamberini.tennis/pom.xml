@@ -113,14 +113,14 @@
           <version>${pitest-maven-version}</version>
           <configuration>
             <targetClasses>
-              <param>com.giamberini.giulia.tennis.controller.*</param>
-              <param>com.giamberini.giulia.tennis.repository.mongo.*</param>
+              <param>com.giulia.giamberini.tennis.controller.*</param>
+              <param>com.giulia.giamberini.tennis.repository.mongo.*</param>
             </targetClasses>
             <targetTests>
-              <param>com.giamberini.giulia.tennis.controller.TennisMatchControllerTest</param>
-              <param>com.giamberini.giulia.tennis.controller.TennisPlayerControllerTest</param>
-              <param>com.giamberini.giulia.tennis.repository.mongo.TennisMatchRepositoryMongoTest</param>
-              <param>com.giamberini.giulia.tennis.repository.mongo.TennisPlayerRepositoryMongoTest</param>
+              <param>com.giulia.giamberini.tennis.controller.TennisMatchControllerTest</param>
+              <param>com.giulia.giamberini.tennis.controller.TennisPlayerControllerTest</param>
+              <param>com.giulia.giamberini.tennis.repository.mongo.TennisMatchRepositoryMongoTest</param>
+              <param>com.giulia.giamberini.tennis.repository.mongo.TennisPlayerRepositoryMongoTest</param>
             </targetTests>
             <mutators>
               <mutator>STRONGER</mutator>
