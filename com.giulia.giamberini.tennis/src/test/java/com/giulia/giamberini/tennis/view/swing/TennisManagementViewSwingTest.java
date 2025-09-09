@@ -362,4 +362,16 @@ public class TennisManagementViewSwingTest extends AssertJSwingJUnitTestCase {
 		window.button(JButtonMatcher.withText("Delete match")).requireDisabled();
 	}
 
+	@Test
+	@GUITest
+	public void testMatchesAreAddedToTheListWhenshowAllTennisMatches() {
+		TennisPlayer player1 = new TennisPlayer("1", "test name1", "test surname1");
+		TennisPlayer player2 = new TennisPlayer("2", "test name2", "test surname2");
+		LocalDate date1 = LocalDate.of(2025, 10, 25);
+		LocalDate date2 = LocalDate.of(2025, 10, 28);
+		TennisMatch match1 = new TennisMatch(player1, player2, date1);
+		TennisMatch match2 = new TennisMatch(player2, player1, date2);
+		GuiActionRunner.execute(() -> view.showAllTennisMatches(Arrays.asList(match1, match2)));
+		assertThat(window.list("matchesList").contents()).containsExactly(match1.toString(), match2.toString());
+	}
 }
