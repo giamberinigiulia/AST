@@ -73,5 +73,13 @@ public class TennisMatchRepositoryMongoTest {
 		collection.insertMany(Arrays.asList(tennisMatch1, tennisMatch2));
 		assertThat(repo.findAll()).containsExactly(tennisMatch1, tennisMatch2);
 	}
+	
+	@Test
+	public void testFindByMatchInfoWhenTheMatchDoesntExist() {
+		TennisPlayer winner = new TennisPlayer(WINNER_ID, WINNER_NAME, WINNER_SURNAME);
+		TennisPlayer loser = new TennisPlayer(LOSER_ID, LOSER_NAME, LOSER_SURNAME);
+		LocalDate tennisMatchDate1 = LocalDate.of(2025, 10, 22);
+		assertThat(repo.findByMatchInfo(winner, loser, tennisMatchDate1)).isNull();
+	}
 
 }
