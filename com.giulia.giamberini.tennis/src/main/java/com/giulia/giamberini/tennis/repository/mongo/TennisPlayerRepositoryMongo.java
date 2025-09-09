@@ -14,6 +14,7 @@ import com.giulia.giamberini.tennis.repository.TennisPlayerRepository;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientSettings;
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.model.Filters;
 
 public class TennisPlayerRepositoryMongo implements TennisPlayerRepository {
 
@@ -33,8 +34,7 @@ public class TennisPlayerRepositoryMongo implements TennisPlayerRepository {
 
 	@Override
 	public TennisPlayer findById(String id) {
-		// TODO Auto-generated method stub
-		return null;
+		return collection.find(Filters.eq("_id", id)).first();
 	}
 
 	@Override
