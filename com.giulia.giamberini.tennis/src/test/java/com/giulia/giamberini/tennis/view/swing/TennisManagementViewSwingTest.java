@@ -1,5 +1,9 @@
 package com.giulia.giamberini.tennis.view.swing;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.util.Arrays;
+
 import org.assertj.swing.annotation.GUITest;
 import org.assertj.swing.core.matcher.JButtonMatcher;
 import org.assertj.swing.core.matcher.JLabelMatcher;
@@ -88,15 +92,24 @@ public class TennisManagementViewSwingTest extends AssertJSwingJUnitTestCase {
 		window.textBox("surnameTextBox").enterText(" ");
 		window.button(JButtonMatcher.withText("Add player")).requireDisabled();
 	}
-	
+
 	@Test
 	public void testSelectionOfPlayerShouldEnableDeletePlayerButton() {
-		GuiActionRunner.execute(() -> view.getListPlayerModel()
-				.addElement(new TennisPlayer("1", "test name", "test surname")));
+		GuiActionRunner.execute(
+				() -> view.getListPlayerModel().addElement(new TennisPlayer("1", "test name", "test surname")));
 
 		window.list("playersList").selectItem(0);
 		window.button(JButtonMatcher.withText("Delete player")).requireEnabled();
 		window.list("playersList").clearSelection();
 		window.button(JButtonMatcher.withText("Delete player")).requireDisabled();
 	}
+
+	@Test
+	public void testPlayerAreAddedToTheListWhenShowAllTennisPlayers() {
+		TennisPlayer player1 = new TennisPlayer("1", "test name1", "test surname1");
+		TennisPlayer player2 = new TennisPlayer("2", "test name2", "test surname2");
+		GuiActionRunner.execute(() -> view.showAllTennisPlayers(Arrays.asList(player1, player2)));
+		assertThat(window.list("playersList").contents()).containsExactly(player1.toString(), player2.toString());
+	}
+
 }
