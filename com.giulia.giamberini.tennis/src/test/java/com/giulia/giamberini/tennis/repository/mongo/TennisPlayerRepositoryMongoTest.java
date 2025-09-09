@@ -4,6 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.bson.codecs.configuration.CodecRegistries.fromProviders;
 import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
 
+import java.util.Arrays;
+
 import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.codecs.pojo.PojoCodecProvider;
 import org.junit.After;
@@ -49,5 +51,12 @@ public class TennisPlayerRepositoryMongoTest {
 	public void testFindAllWhenDBIsEmpty() {
 		assertThat(repo.findAll()).isEmpty();
 	}
-
+	
+	@Test
+	public void testFindAllWhenThereAreElementsInTheDB() {
+		TennisPlayer tennisPlayer1 = new TennisPlayer("1","test name1", "test surname1");
+		TennisPlayer tennisPlayer2 = new TennisPlayer("2","test name2", "test surname2");
+		collection.insertMany(Arrays.asList(tennisPlayer1, tennisPlayer2));
+		assertThat(repo.findAll()).containsExactly(tennisPlayer1, tennisPlayer2);
+	}
 }
