@@ -99,7 +99,6 @@ public class TennisMatchRepositoryMongoTest {
 		TennisPlayer winner = new TennisPlayer(WINNER_ID, WINNER_NAME, WINNER_SURNAME);
 		TennisPlayer loser = new TennisPlayer(LOSER_ID, LOSER_NAME, LOSER_SURNAME);
 		LocalDate tennisMatchDate1 = LocalDate.of(2025, 10, 22);
-		LocalDate tennisMatchDate2 = LocalDate.of(2025, 10, 22);
 		TennisMatch existingTennisMatch = new TennisMatch(winner, loser, tennisMatchDate1);
 		collection.insertOne(existingTennisMatch);
 		// with switched pair (aka. different result)
