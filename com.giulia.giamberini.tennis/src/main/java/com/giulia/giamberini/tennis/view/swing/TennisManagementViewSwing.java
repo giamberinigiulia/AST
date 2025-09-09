@@ -67,6 +67,7 @@ public class TennisManagementViewSwing extends JFrame implements TennisManagemen
 	private JButton deleteMatchBtn;
 	private JLabel errorMatchLbl;
 	private JTextField idTextBox;
+	private DefaultListModel<TennisPlayer> listPlayerModel;
 
 	public TennisManagementViewSwing() {
 
@@ -184,7 +185,9 @@ public class TennisManagementViewSwing extends JFrame implements TennisManagemen
 		gbc_scrollPane.gridy = 4;
 		playerPanel.add(playersListScrollPane, gbc_scrollPane);
 
-		playersList = new JList<>();
+		listPlayerModel = new DefaultListModel<TennisPlayer>();
+		playersList = new JList<TennisPlayer>(listPlayerModel);
+		playersList.addListSelectionListener(arg0 -> deletePlayerBtn.setEnabled(playersList.getSelectedIndex() != -1));
 		playersList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		playersList.setName("playersList");
 		playersListScrollPane.setViewportView(playersList);
@@ -384,10 +387,9 @@ public class TennisManagementViewSwing extends JFrame implements TennisManagemen
 		// TODO Auto-generated method stub
 
 	}
-	
+
 	public DefaultListModel<TennisPlayer> getListPlayerModel() {
-		// TODO Auto-generated method stub
-		return null;
+		return listPlayerModel;
 	}
 
 }
