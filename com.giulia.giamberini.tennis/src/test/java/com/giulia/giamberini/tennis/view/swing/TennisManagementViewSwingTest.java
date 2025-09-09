@@ -5,6 +5,7 @@ import static org.mockito.Mockito.verify;
 
 import java.util.Arrays;
 
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 
 import org.assertj.swing.annotation.GUITest;
@@ -214,12 +215,25 @@ public class TennisManagementViewSwingTest extends AssertJSwingJUnitTestCase {
 		assertThat(window.comboBox("loserComboBox").contents()).containsExactly(player1.toString());
 	}
 	
-	@Test
+	@Test @GUITest
 	public void testWinnerAndLoserComboBoxAreUpdatedWithExistingPlayerElementWhenshowAllTennisPlayers() {
 		TennisPlayer player1 = new TennisPlayer("1", "test name1", "test surname1");
 		GuiActionRunner.execute(() -> view.showAllTennisPlayers(Arrays.asList(player1)));
 		assertThat(window.comboBox("winnerComboBox").contents()).containsExactly(player1.toString());
 		assertThat(window.comboBox("loserComboBox").contents()).containsExactly(player1.toString());
+	}
+	
+	@Test @GUITest
+	public void testWinnerAndLoserComboBoxesShouldBeEnabledWhenThereAreAtLeastTwoElementsInTheOptions() {
+		TennisPlayer player1 = new TennisPlayer("1", "test name1", "test surname1");
+		TennisPlayer player2 = new TennisPlayer("2", "test name2", "test surname2");
+		GuiActionRunner.execute(() -> {
+			DefaultComboBoxModel<TennisPlayer> comboBoxModel = view.getComboBoxModel();
+			comboBoxModel.addElement(player1);
+			comboBoxModel.addElement(player2);
+		});
+		window.comboBox("winnerComboBox").requireEnabled();
+		window.comboBox("loserComboBox").requireEnabled();
 	}
 
 }

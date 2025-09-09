@@ -415,4 +415,9 @@ public class TennisManagementViewSwing extends JFrame implements TennisManagemen
 		this.playerController = playerController;
 	}
 
+	public DefaultComboBoxModel<TennisPlayer> getComboBoxModel() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
