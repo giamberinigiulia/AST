@@ -348,6 +348,9 @@ public class TennisManagementViewSwing extends JFrame implements TennisManagemen
 	public void newTennisPlayerAdded(TennisPlayer tennisPlayerToAdd) {
 		listPlayerModel.addElement(tennisPlayerToAdd);
 		errorPlayerLbl.setText(" ");
+		idTextBox.setText("");
+		nameTextBox.setText("");
+		surnameTextBox.setText("");
 	}
 
 	@Override
