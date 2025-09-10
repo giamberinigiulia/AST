@@ -19,11 +19,11 @@ import com.mongodb.MongoClientSettings;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Filters;
 
-public class TennisMatchMongoRepository implements TennisMatchRepository {
+public class TennisMatchRepositoryMongo implements TennisMatchRepository {
 
 	private MongoCollection<TennisMatch> collection;
 
-	public TennisMatchMongoRepository(MongoClient client, String databaseName, String collectionName) {
+	public TennisMatchRepositoryMongo(MongoClient client, String databaseName, String collectionName) {
 		CodecRegistry pojoCodecRegistry = fromRegistries(MongoClientSettings.getDefaultCodecRegistry(),
 				fromProviders(PojoCodecProvider.builder().automatic(true).build()));
 		collection = client.getDatabase(databaseName).withCodecRegistry(pojoCodecRegistry).getCollection(collectionName,
