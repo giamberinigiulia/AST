@@ -284,7 +284,7 @@ public class TennisManagementViewSwingTest extends AssertJSwingJUnitTestCase {
 		window.comboBox("loserComboBox").requireDisabled();
 
 	}
-	
+
 	@Test
 	@GUITest
 	public void testAddButtonShouldBeEnabledWhenWinnerAndLoserAreSelectedAndDateIsNotEmpty() {
@@ -306,7 +306,7 @@ public class TennisManagementViewSwingTest extends AssertJSwingJUnitTestCase {
 		window.textBox("dateOfTheMatchTextBox").enterText("2025-10-21");
 		window.button(JButtonMatcher.withText("Add match")).requireEnabled();
 	}
-	
+
 	@Test
 	@GUITest
 	public void testWhenDateIsBlankThenAddButtonShouldNotBeEnabled() {
@@ -328,7 +328,7 @@ public class TennisManagementViewSwingTest extends AssertJSwingJUnitTestCase {
 		window.textBox("dateOfTheMatchTextBox").enterText(" ");
 		window.button(JButtonMatcher.withText("Add match")).requireDisabled();
 	}
-	
+
 	@Test
 	@GUITest
 	public void testThatIfSamePlayerIsSelectedAsWinnerAndLoserThanTheAddButtonShouldRemainDisabled() {
@@ -350,15 +350,14 @@ public class TennisManagementViewSwingTest extends AssertJSwingJUnitTestCase {
 		window.textBox("dateOfTheMatchTextBox").enterText("2025-12-10");
 		window.button(JButtonMatcher.withText("Add match")).requireDisabled();
 	}
-	
+
 	@Test
 	@GUITest
 	public void testSelectionOfMatchShouldEnableDeleteMatchButton() {
 		TennisPlayer player1 = new TennisPlayer("1", "test name1", "test surname1");
 		TennisPlayer player2 = new TennisPlayer("2", "test name2", "test surname2");
 		LocalDate date = LocalDate.of(2025, 10, 25);
-		GuiActionRunner
-				.execute(() -> view.getListMatchModel().addElement(new TennisMatch(player1, player2, date)));
+		GuiActionRunner.execute(() -> view.getListMatchModel().addElement(new TennisMatch(player1, player2, date)));
 
 		window.list("matchesList").selectItem(0);
 		window.button(JButtonMatcher.withText("Delete match")).requireEnabled();
@@ -378,7 +377,7 @@ public class TennisManagementViewSwingTest extends AssertJSwingJUnitTestCase {
 		GuiActionRunner.execute(() -> view.showAllTennisMatches(Arrays.asList(match1, match2)));
 		assertThat(window.list("matchesList").contents()).containsExactly(match1.toString(), match2.toString());
 	}
-	
+
 	@Test
 	@GUITest
 	public void testShowErrorMatchAlreadyPresentShouldShowTheErrorMessageInTheErrorMatchLabel() {
@@ -387,9 +386,10 @@ public class TennisManagementViewSwingTest extends AssertJSwingJUnitTestCase {
 		LocalDate date = LocalDate.of(2025, 10, 25);
 		TennisMatch match = new TennisMatch(player1, player2, date);
 		GuiActionRunner.execute(() -> view.showErrorTennisMatchAlreadyExist("Error message", match));
-		window.label("errorMatchLbl").requireText("Error message: (1,test name1,test surname1) - (2,test name2,test surname2) - 2025-10-25");
+		window.label("errorMatchLbl")
+				.requireText("Error message: (1,test name1,test surname1) - (2,test name2,test surname2) - 2025-10-25");
 	}
-	
+
 	@Test
 	@GUITest
 	public void testShowErrorTennisMatchNotExisting() {
@@ -405,10 +405,11 @@ public class TennisManagementViewSwingTest extends AssertJSwingJUnitTestCase {
 			listMatchModel.addElement(match2);
 		});
 		GuiActionRunner.execute(() -> view.showErrorNotExistingTennisMatch("Error message", match1));
-		window.label("errorMatchLbl").requireText("Error message: (1,test name1,test surname1) - (2,test name2,test surname2) - 2025-10-25");
+		window.label("errorMatchLbl")
+				.requireText("Error message: (1,test name1,test surname1) - (2,test name2,test surname2) - 2025-10-25");
 		assertThat(window.list("matchesList").contents()).containsExactly(match2.toString());
 	}
-	
+
 	@Test
 	@GUITest
 	public void testMatchSuccessfullyAddedShouldResetTheErrorLabelAndAddTheNewmatchToTheList() {
@@ -420,7 +421,7 @@ public class TennisManagementViewSwingTest extends AssertJSwingJUnitTestCase {
 		assertThat(window.list("matchesList").contents()).containsExactly(match.toString());
 		window.label("errorMatchLbl").requireText(" ");
 	}
-	
+
 	@Test
 	@GUITest
 	public void testMatchSuccessfullyRemovedShouldRemoveTheMatchFromTheListAndResetTheErrorLabel() {
@@ -439,7 +440,7 @@ public class TennisManagementViewSwingTest extends AssertJSwingJUnitTestCase {
 		assertThat(window.list("matchesList").contents()).containsExactly(match2.toString());
 		window.label("errorMatchLbl").requireText(" ");
 	}
-	
+
 	@Test
 	@GUITest
 	public void testAddButtonShouldInvokematchControllerForAddingNewMatch() {
@@ -458,9 +459,9 @@ public class TennisManagementViewSwingTest extends AssertJSwingJUnitTestCase {
 		window.comboBox("loserComboBox").selectItem(1);
 		window.textBox("dateOfTheMatchTextBox").enterText(date.toString());
 		window.button(JButtonMatcher.withText("Add match")).click();
-		verify(matchController).addNewTennisMatch(new TennisMatch(player1,player2,date));
+		verify(matchController).addNewTennisMatch(new TennisMatch(player1, player2, date));
 	}
-	
+
 	@Test
 	@GUITest
 	public void testDeleteButtonShouldInvokeMatchControllerForDeletingTheMatch() {
@@ -479,7 +480,7 @@ public class TennisManagementViewSwingTest extends AssertJSwingJUnitTestCase {
 		window.button(JButtonMatcher.withText("Delete match")).click();
 		verify(matchController).deleteTennisMatch(match2);
 	}
-	
+
 	@Test
 	@GUITest
 	public void testMatchSeccessfullyAddedShouldResetAlsoTheSelections() {
@@ -502,10 +503,10 @@ public class TennisManagementViewSwingTest extends AssertJSwingJUnitTestCase {
 		window.comboBox("loserComboBox").clearSelection();
 		window.textBox("dateOfTheMatchTextBox").requireText("");
 	}
-	
+
 	@Test
 	@GUITest
-	public void testThatRemovingSuccessfullyAPlayerMustDeleteItAlsoFromTheComboBoxes(){
+	public void testThatRemovingSuccessfullyAPlayerMustDeleteItAlsoFromTheComboBoxes() {
 		TennisPlayer player1 = new TennisPlayer("1", "test name1", "test surname1");
 		TennisPlayer player2 = new TennisPlayer("2", "test name2", "test surname2");
 		GuiActionRunner.execute(() -> {
@@ -525,7 +526,7 @@ public class TennisManagementViewSwingTest extends AssertJSwingJUnitTestCase {
 		window.comboBox("winnerComboBox").requireDisabled();
 		window.comboBox("loserComboBox").requireDisabled();
 	}
-	
+
 	@Test
 	@GUITest
 	public void testAddSuccessfullyAPlayerMustResetAlsoEnablingConditionOfAddButton() {
@@ -535,5 +536,28 @@ public class TennisManagementViewSwingTest extends AssertJSwingJUnitTestCase {
 		window.textBox("surnameTextBox").enterText(player.getSurname());
 		GuiActionRunner.execute(() -> view.newTennisPlayerAdded(player));
 		window.button(JButtonMatcher.withText("Add player")).requireDisabled();
+	}
+
+	@Test
+	@GUITest
+	public void testAddSuccessfullyAMatchMustResetEnablingConditionOfAddButton() {
+		TennisPlayer player1 = new TennisPlayer("1", "test name1", "test surname1");
+		TennisPlayer player2 = new TennisPlayer("2", "test name2", "test surname2");
+		GuiActionRunner.execute(() -> {
+			DefaultComboBoxModel<TennisPlayer> winnerComboBoxModel = view.getWinnerComboBoxModel();
+			winnerComboBoxModel.addElement(player1);
+			winnerComboBoxModel.addElement(player2);
+			DefaultComboBoxModel<TennisPlayer> loserComboBoxModel = view.getLoserComboBoxModel();
+			loserComboBoxModel.addElement(player1);
+			loserComboBoxModel.addElement(player2);
+		});
+
+		window.comboBox("winnerComboBox").selectItem(0);
+		window.comboBox("loserComboBox").selectItem(1);
+		window.textBox("dateOfTheMatchTextBox").enterText("2025-12-10");
+		GuiActionRunner.execute(() -> {
+			view.newTennisMatchAdded(new TennisMatch(player1, player2, LocalDate.of(2025, 12, 10)));
+		});
+		window.button(JButtonMatcher.withText("Add match")).requireDisabled();
 	}
 }
