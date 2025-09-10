@@ -9,6 +9,7 @@
   <packaging>jar</packaging>
 
   <properties>
+    <maven-failsafe-plugin-version>3.5.3</maven-failsafe-plugin-version>
     <build-helper-maven-plugin-version>3.6.1</build-helper-maven-plugin-version>
     <pitest-maven-version>1.16.1</pitest-maven-version>
     <jaxb-api-version>2.3.1</jaxb-api-version>
@@ -151,6 +152,19 @@
                   <source>src/it/java</source>
                 </sources>
               </configuration>
+            </execution>
+          </executions>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-failsafe-plugin</artifactId>
+          <version>${maven-failsafe-plugin-version}</version>
+          <executions>
+            <execution>
+              <goals>
+                <goal>integration-test</goal>
+                <goal>verify</goal>
+              </goals>
             </execution>
           </executions>
         </plugin>
