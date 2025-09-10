@@ -9,6 +9,7 @@
   <packaging>jar</packaging>
 
   <properties>
+    <build-helper-maven-plugin-version>3.6.1</build-helper-maven-plugin-version>
     <pitest-maven-version>1.16.1</pitest-maven-version>
     <jaxb-api-version>2.3.1</jaxb-api-version>
     <coveralls-maven-plugin-version>4.3.0</coveralls-maven-plugin-version>
@@ -115,19 +116,43 @@
           <configuration>
             <targetClasses>
               <param>com.giulia.giamberini.tennis.controller.*</param>
-              <param>com.giulia.giamberini.tennis.repository.mongo.*</param>
+              <param>
+                com.giulia.giamberini.tennis.repository.mongo.*</param>
             </targetClasses>
             <targetTests>
-              <param>com.giulia.giamberini.tennis.controller.TennisMatchControllerTest</param>
-              <param>com.giulia.giamberini.tennis.controller.TennisPlayerControllerTest</param>
-              <param>com.giulia.giamberini.tennis.repository.mongo.TennisMatchRepositoryMongoTest</param>
-              <param>com.giulia.giamberini.tennis.repository.mongo.TennisPlayerRepositoryMongoTest</param>
+              <param>
+                com.giulia.giamberini.tennis.controller.TennisMatchControllerTest</param>
+              <param>
+                com.giulia.giamberini.tennis.controller.TennisPlayerControllerTest</param>
+              <param>
+                com.giulia.giamberini.tennis.repository.mongo.TennisMatchRepositoryMongoTest</param>
+              <param>
+                com.giulia.giamberini.tennis.repository.mongo.TennisPlayerRepositoryMongoTest</param>
             </targetTests>
             <mutators>
               <mutator>STRONGER</mutator>
             </mutators>
             <mutationThreshold>100</mutationThreshold>
           </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>build-helper-maven-plugin</artifactId>
+          <version>${build-helper-maven-plugin-version}</version>
+          <executions>
+            <execution>
+              <id>add-test-source</id>
+              <phase>generate-test-sources</phase>
+              <goals>
+                <goal>add-test-source</goal>
+              </goals>
+              <configuration>
+                <sources>
+                  <source>src/it/java</source>
+                </sources>
+              </configuration>
+            </execution>
+          </executions>
         </plugin>
       </plugins>
     </pluginManagement>
