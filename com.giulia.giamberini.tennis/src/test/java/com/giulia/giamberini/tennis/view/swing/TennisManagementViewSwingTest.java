@@ -502,4 +502,27 @@ public class TennisManagementViewSwingTest extends AssertJSwingJUnitTestCase {
 		window.comboBox("loserComboBox").clearSelection();
 		window.textBox("dateOfTheMatchTextBox").requireText("");
 	}
+	
+	@Test
+	@GUITest
+	public void testThatRemovingSuccessfullyAPlayerMustDeleteItAlsoFromTheComboBoxes(){
+		TennisPlayer player1 = new TennisPlayer("1", "test name1", "test surname1");
+		TennisPlayer player2 = new TennisPlayer("2", "test name2", "test surname2");
+		GuiActionRunner.execute(() -> {
+			DefaultListModel<TennisPlayer> listPlayersModel = view.getListPlayerModel();
+			listPlayersModel.addElement(player1);
+			listPlayersModel.addElement(player2);
+			DefaultComboBoxModel<TennisPlayer> winnerComboBoxModel = view.getWinnerComboBoxModel();
+			winnerComboBoxModel.addElement(player1);
+			winnerComboBoxModel.addElement(player2);
+			DefaultComboBoxModel<TennisPlayer> loserComboBoxModel = view.getLoserComboBoxModel();
+			loserComboBoxModel.addElement(player1);
+			loserComboBoxModel.addElement(player2);
+		});
+		GuiActionRunner.execute(() -> view.tennisPlayerRemoved(player1));
+		assertThat(window.comboBox("winnerComboBox").contents()).containsExactly(player2.toString());
+		assertThat(window.comboBox("loserComboBox").contents()).containsExactly(player2.toString());
+		window.comboBox("winnerComboBox").requireDisabled();
+		window.comboBox("loserComboBox").requireDisabled();
+	}
 }
