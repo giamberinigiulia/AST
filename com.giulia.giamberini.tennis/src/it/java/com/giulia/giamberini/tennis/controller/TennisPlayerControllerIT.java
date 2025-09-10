@@ -59,5 +59,12 @@ public class TennisPlayerControllerIT {
 		controller.findAllTennisPlayers();
 		verify(view).showAllTennisPlayers(Arrays.asList(player1));
 	}
+	
+	@Test
+	public void testAddNewTennisPlayer() {
+		TennisPlayer player1 = new TennisPlayer("1", "test name", "test surname");
+		controller.addNewTennisPlayer(player1);
+		verify(view).newTennisPlayerAdded(player1);
+	}
 
 }
