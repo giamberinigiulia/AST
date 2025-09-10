@@ -432,6 +432,7 @@ public class TennisManagementViewSwing extends JFrame implements TennisManagemen
 	@Override
 	public void newTennisMatchAdded(TennisMatch tennisMatchToAdd) {
 		listMatchModel.addElement(tennisMatchToAdd);
+		addMatchBtn.setEnabled(false);
 		errorMatchLbl.setText(" ");
 		winnerComboBox.setSelectedIndex(-1);
 		loserComboBox.setSelectedIndex(-1);
