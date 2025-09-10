@@ -2,7 +2,6 @@ package com.giulia.giamberini.tennis.view.swing;
 
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.EventQueue;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -35,20 +34,6 @@ import com.giulia.giamberini.tennis.view.TennisManagementView;
 public class TennisManagementViewSwing extends JFrame implements TennisManagementView {
 
 	private static final long serialVersionUID = 1L;
-
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			@Override
-			public void run() {
-				try {
-					TennisManagementViewSwing frame = new TennisManagementViewSwing();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	private JPanel playerPanel;
 	private GridBagLayout gridBagLayout;
