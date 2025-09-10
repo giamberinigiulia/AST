@@ -525,4 +525,15 @@ public class TennisManagementViewSwingTest extends AssertJSwingJUnitTestCase {
 		window.comboBox("winnerComboBox").requireDisabled();
 		window.comboBox("loserComboBox").requireDisabled();
 	}
+	
+	@Test
+	@GUITest
+	public void testAddSuccessfullyAPlayerMustResetAlsoEnablingConditionOfAddButton() {
+		TennisPlayer player = new TennisPlayer("1", "test name", "test surname");
+		window.textBox("idTextBox").enterText(player.getId());
+		window.textBox("nameTextBox").enterText(player.getName());
+		window.textBox("surnameTextBox").enterText(player.getSurname());
+		GuiActionRunner.execute(() -> view.newTennisPlayerAdded(player));
+		window.button(JButtonMatcher.withText("Add player")).requireDisabled();
+	}
 }
