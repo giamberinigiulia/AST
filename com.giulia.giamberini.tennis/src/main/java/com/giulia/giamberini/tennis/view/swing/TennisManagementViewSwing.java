@@ -398,6 +398,7 @@ public class TennisManagementViewSwing extends JFrame implements TennisManagemen
 		idTextBox.setText("");
 		nameTextBox.setText("");
 		surnameTextBox.setText("");
+		addPlayerBtn.setEnabled(false);
 	}
 
 	@Override
