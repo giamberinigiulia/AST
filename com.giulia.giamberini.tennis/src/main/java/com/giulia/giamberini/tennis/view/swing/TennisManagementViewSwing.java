@@ -409,6 +409,8 @@ public class TennisManagementViewSwing extends JFrame implements TennisManagemen
 	@Override
 	public void tennisPlayerRemoved(TennisPlayer tennisPlayerToRemove) {
 		listPlayerModel.removeElement(tennisPlayerToRemove);
+		winnerComboBoxModel.removeElement(tennisPlayerToRemove);
+		loserComboBoxModel.removeElement(tennisPlayerToRemove);
 		errorPlayerLbl.setText(" ");
 	}
 
