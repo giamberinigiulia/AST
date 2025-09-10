@@ -26,9 +26,9 @@ public class TennisManagementAppSwing {
 				}
 				MongoClient client = new MongoClient(new ServerAddress(hostMongoDabatase, defaultPortMongoDatabase));
 				TennisPlayerRepositoryMongo playerRepositoryMongo = new TennisPlayerRepositoryMongo(client,
-						"tennis_management", "players");
+						"tennis_matches", "players");
 				TennisMatchMongoRepository matchRepositoryMongo = new TennisMatchMongoRepository(client,
-						"tennis_management", "matches");
+						"tennis_matches", "matches");
 				TennisManagementViewSwing tennisManagementView = new TennisManagementViewSwing();
 				TennisPlayerController playerController = new TennisPlayerController(playerRepositoryMongo,
 						matchRepositoryMongo, tennisManagementView);
