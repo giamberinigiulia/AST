@@ -2,6 +2,8 @@ package com.giulia.giamberini.tennis.view.swing;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.time.LocalDate;
+
 import org.assertj.swing.annotation.GUITest;
 import org.assertj.swing.core.matcher.JButtonMatcher;
 import org.assertj.swing.edt.GuiActionRunner;
@@ -121,6 +123,22 @@ public class TennisManagementViewSwingIT extends AssertJSwingJUnitTestCase {
 		assertThat(window.list("playersList").contents()).isEmpty();
 		window.label("errorPlayerLbl").requireText(
 				"The selected id 1 is not associated with any tennis player: 1 - test name1 - test surname1");
+	}
+
+	@Test
+	@GUITest
+	public void testAllTennisMatches() {
+		TennisPlayer player1 = new TennisPlayer("1", "test name1", "test surname1");
+		TennisPlayer player2 = new TennisPlayer("2", "test name2", "test surname2");
+		LocalDate date1 = LocalDate.of(2025, 10, 10);
+		LocalDate date2 = LocalDate.of(2025, 10, 15);
+		TennisMatch match1 = new TennisMatch(player1, player2, date1);
+		TennisMatch match2 = new TennisMatch(player2, player1, date2);
+		matchRepo.save(match1);
+		matchRepo.save(match2);
+		playerRepo.save(player2);
+		GuiActionRunner.execute(() -> matchController.findAllTennisMatches());
+		assertThat(window.list("matchesList").contents()).containsExactly(match1.toString(), match2.toString());
 	}
 
 }
