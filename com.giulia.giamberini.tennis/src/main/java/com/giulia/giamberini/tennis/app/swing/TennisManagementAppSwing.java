@@ -4,7 +4,7 @@ import java.awt.EventQueue;
 
 import com.giulia.giamberini.tennis.controller.TennisMatchController;
 import com.giulia.giamberini.tennis.controller.TennisPlayerController;
-import com.giulia.giamberini.tennis.repository.mongo.TennisMatchMongoRepository;
+import com.giulia.giamberini.tennis.repository.mongo.TennisMatchRepositoryMongo;
 import com.giulia.giamberini.tennis.repository.mongo.TennisPlayerRepositoryMongo;
 import com.giulia.giamberini.tennis.view.swing.TennisManagementViewSwing;
 import com.mongodb.MongoClient;
@@ -26,9 +26,9 @@ public class TennisManagementAppSwing {
 				}
 				MongoClient client = new MongoClient(new ServerAddress(hostMongoDabatase, defaultPortMongoDatabase));
 				TennisPlayerRepositoryMongo playerRepositoryMongo = new TennisPlayerRepositoryMongo(client,
-						"tennis_management", "players");
-				TennisMatchMongoRepository matchRepositoryMongo = new TennisMatchMongoRepository(client,
-						"tennis_management", "matches");
+						"tennis_matches", "players");
+				TennisMatchRepositoryMongo matchRepositoryMongo = new TennisMatchRepositoryMongo(client,
+						"tennis_matches", "matches");
 				TennisManagementViewSwing tennisManagementView = new TennisManagementViewSwing();
 				TennisPlayerController playerController = new TennisPlayerController(playerRepositoryMongo,
 						matchRepositoryMongo, tennisManagementView);

@@ -37,7 +37,7 @@ public class TennisMatchRepositoryMongoTest {
 	@ClassRule
 	public static final MongoDBContainer mongo = new MongoDBContainer("mongo:8.0.13");
 	private MongoClient mongoClient;
-	private TennisMatchMongoRepository repo;
+	private TennisMatchRepositoryMongo repo;
 	private MongoCollection<TennisMatch> collection;
 
 	@Before
@@ -45,7 +45,7 @@ public class TennisMatchRepositoryMongoTest {
 		CodecRegistry pojoCodecRegistry = fromRegistries(MongoClientSettings.getDefaultCodecRegistry(),
 				fromProviders(PojoCodecProvider.builder().automatic(true).build()));
 		mongoClient = new MongoClient(new ServerAddress(mongo.getHost(), mongo.getFirstMappedPort()));
-		repo = new TennisMatchMongoRepository(mongoClient, DATABASE_NAME_TENNIS_MATCHES, COLLECTION_NAME_MATCHES);
+		repo = new TennisMatchRepositoryMongo(mongoClient, DATABASE_NAME_TENNIS_MATCHES, COLLECTION_NAME_MATCHES);
 		MongoDatabase database = mongoClient.getDatabase(DATABASE_NAME_TENNIS_MATCHES)
 				.withCodecRegistry(pojoCodecRegistry);
 		database.drop();
