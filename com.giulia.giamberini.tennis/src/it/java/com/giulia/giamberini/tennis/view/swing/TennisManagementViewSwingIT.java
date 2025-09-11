@@ -3,6 +3,7 @@ package com.giulia.giamberini.tennis.view.swing;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.time.LocalDate;
+import java.util.Arrays;
 
 import org.assertj.swing.annotation.GUITest;
 import org.assertj.swing.core.matcher.JButtonMatcher;
@@ -139,6 +140,23 @@ public class TennisManagementViewSwingIT extends AssertJSwingJUnitTestCase {
 		playerRepo.save(player2);
 		GuiActionRunner.execute(() -> matchController.findAllTennisMatches());
 		assertThat(window.list("matchesList").contents()).containsExactly(match1.toString(), match2.toString());
+	}
+
+	@Test
+	@GUITest
+	public void testAddTennisMatchButtonSuccess() {
+		TennisPlayer player1 = new TennisPlayer("1", "test name1", "test surname1");
+		TennisPlayer player2 = new TennisPlayer("2", "test name2", "test surname2");
+		playerRepo.save(player1);
+		playerRepo.save(player2);
+		GuiActionRunner.execute(() -> view.showAllTennisPlayers(Arrays.asList(player1, player2)));
+		window.comboBox("winnerComboBox").selectItem(0);
+		window.comboBox("loserComboBox").selectItem(1);
+		LocalDate date = LocalDate.of(2025, 10, 10);
+		window.textBox("dateOfTheMatchTextBox").enterText(date.toString());
+		window.button(JButtonMatcher.withText("Add match")).click();
+		TennisMatch match = new TennisMatch(player1, player2, date);
+		assertThat(window.list("matchesList").contents()).containsExactly(match.toString());
 	}
 
 }
