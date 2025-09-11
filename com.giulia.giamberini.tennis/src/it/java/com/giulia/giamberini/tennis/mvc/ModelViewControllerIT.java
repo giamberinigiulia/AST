@@ -2,6 +2,8 @@ package com.giulia.giamberini.tennis.mvc;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.time.LocalDate;
+
 import org.assertj.swing.annotation.GUITest;
 import org.assertj.swing.core.matcher.JButtonMatcher;
 import org.assertj.swing.edt.GuiActionRunner;
@@ -85,6 +87,22 @@ public class ModelViewControllerIT extends AssertJSwingJUnitTestCase {
 		window.list("playersList").selectItem(0);
 		window.button(JButtonMatcher.withText("Delete player")).click();
 		assertThat(playerRepo.findById("1")).isNull();
+	}
+
+	@Test
+	@GUITest
+	public void testAddTennisMatch() {
+		TennisPlayer winner = new TennisPlayer("1", "test name1", "test surname1");
+		TennisPlayer loser = new TennisPlayer("2", "test name2", "test surname2");
+		LocalDate date = LocalDate.of(2025, 10, 10);
+		playerRepo.save(winner);
+		playerRepo.save(loser);
+		GuiActionRunner.execute(() -> playerController.findAllTennisPlayers());
+		window.comboBox("winnerComboBox").selectItem(0);
+		window.comboBox("loserComboBox").selectItem(1);
+		window.textBox("dateOfTheMatchTextBox").enterText(date.toString());
+		window.button(JButtonMatcher.withText("Add match")).click();
+		assertThat(matchRepo.findByMatchInfo(winner, loser, date)).isEqualTo(new TennisMatch(winner, loser, date));
 	}
 
 }
