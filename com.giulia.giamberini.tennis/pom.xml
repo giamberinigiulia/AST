@@ -9,6 +9,7 @@
   <packaging>jar</packaging>
 
   <properties>
+    <picocli-version>4.7.7</picocli-version>
     <maven-failsafe-plugin-version>3.5.3</maven-failsafe-plugin-version>
     <build-helper-maven-plugin-version>3.6.1</build-helper-maven-plugin-version>
     <pitest-maven-version>1.16.1</pitest-maven-version>
@@ -74,6 +75,11 @@
       <artifactId>slf4j-simple</artifactId>
       <version>${slf4j-api-version}</version>
       <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>info.picocli</groupId>
+      <artifactId>picocli</artifactId>
+      <version>${picocli-version}</version>
     </dependency>
   </dependencies>
   <build>
