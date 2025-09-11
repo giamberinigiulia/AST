@@ -59,15 +59,25 @@ public class TennisMatchControllerIT {
 		controller.findAllTennisMatches();
 		verify(view).showAllTennisMatches(Arrays.asList(match));
 	}
-	
+
 	@Test
 	public void testAddNewTennisMatch() {
 		TennisPlayer player1 = new TennisPlayer("1", "test name1", "test surname1");
 		TennisPlayer player2 = new TennisPlayer("2", "test name2", "test surname2");
 		LocalDate date = LocalDate.of(2025, 10, 10);
-		TennisMatch match = new TennisMatch(player1,player2,date);
+		TennisMatch match = new TennisMatch(player1, player2, date);
 		controller.addNewTennisMatch(match);
 		verify(view).newTennisMatchAdded(match);
 	}
 
+	@Test
+	public void testRemoveTennisMatch() {
+		TennisPlayer player1 = new TennisPlayer("1", "test name1", "test surname1");
+		TennisPlayer player2 = new TennisPlayer("2", "test name2", "test surname2");
+		LocalDate date = LocalDate.of(2025, 10, 10);
+		TennisMatch match = new TennisMatch(player1, player2, date);
+		matchRepo.save(match);
+		controller.deleteTennisMatch(match);
+		verify(view).tennisMatchRemoved(match);
+	}
 }
