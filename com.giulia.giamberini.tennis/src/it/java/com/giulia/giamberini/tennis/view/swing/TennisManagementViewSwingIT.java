@@ -76,7 +76,7 @@ public class TennisManagementViewSwingIT extends AssertJSwingJUnitTestCase {
 		GuiActionRunner.execute(() -> playerController.findAllTennisPlayers());
 		assertThat(window.list("playersList").contents()).containsExactly(player1.toString(), player2.toString());
 	}
-	
+
 	@Test
 	@GUITest
 	public void testAddTennisPlayerButtonSuccess() {
@@ -86,6 +86,19 @@ public class TennisManagementViewSwingIT extends AssertJSwingJUnitTestCase {
 		window.button(JButtonMatcher.withText("Add player")).click();
 		assertThat(window.list("playersList").contents())
 				.containsExactly(new TennisPlayer("1", "test name", "test surname").toString());
+	}
+
+	@Test
+	@GUITest
+	public void testAddTennisPlayerButtonWithError() {
+		playerRepo.save(new TennisPlayer("1", "existing name", "existing surname"));
+		window.textBox("idTextBox").enterText("1");
+		window.textBox("nameTextBox").enterText("test name");
+		window.textBox("surnameTextBox").enterText("test surname");
+		window.button(JButtonMatcher.withText("Add player")).click();
+		assertThat(window.list("playersList").contents()).isEmpty();
+		window.label("errorPlayerLbl").requireText(
+				"The selected id 1 is already in use by another player: 1 - existing name - existing surname");
 	}
 
 }
