@@ -76,4 +76,15 @@ public class ModelViewControllerIT extends AssertJSwingJUnitTestCase {
 		window.button(JButtonMatcher.withText("Add player")).click();
 		assertThat(playerRepo.findById("1")).isEqualTo(new TennisPlayer("1", "test name", "test surname"));
 	}
+
+	@Test
+	@GUITest
+	public void testDeleteTennisPlayer() {
+		playerRepo.save(new TennisPlayer("1", "test name", "test surname"));
+		GuiActionRunner.execute(() -> playerController.findAllTennisPlayers());
+		window.list("playersList").selectItem(0);
+		window.button(JButtonMatcher.withText("Delete player")).click();
+		assertThat(playerRepo.findById("1")).isNull();
+	}
+
 }
