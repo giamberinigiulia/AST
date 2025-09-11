@@ -180,4 +180,17 @@ public class TennisManagementViewSwingIT extends AssertJSwingJUnitTestCase {
 						+ ": (1,test name1,test surname1) - (2,test name2,test surname2) - 2025-10-10");
 	}
 
+	@Test
+	@GUITest
+	public void testDeleteTennisMatchButtonSuccess() {
+		TennisPlayer player1 = new TennisPlayer("1", "test name1", "test surname1");
+		TennisPlayer player2 = new TennisPlayer("2", "test name2", "test surname2");
+		LocalDate date = LocalDate.of(2025, 10, 10);
+		TennisMatch match = new TennisMatch(player1, player2, date);
+		GuiActionRunner.execute(() -> matchController.addNewTennisMatch(match));
+		window.list("matchesList").selectItem(0);
+		window.button(JButtonMatcher.withText("Delete match")).click();
+		assertThat(window.list("matchesList").contents()).isEmpty();
+	}
+
 }
