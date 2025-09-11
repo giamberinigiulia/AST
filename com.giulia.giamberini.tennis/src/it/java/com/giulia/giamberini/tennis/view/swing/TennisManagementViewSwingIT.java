@@ -111,4 +111,16 @@ public class TennisManagementViewSwingIT extends AssertJSwingJUnitTestCase {
 		assertThat(window.list("playersList").contents()).isEmpty();
 	}
 
+	@Test
+	@GUITest
+	public void testDeleteTennisPlayerButtonWithError() {
+		TennisPlayer player1 = new TennisPlayer("1", "test name1", "test surname1");
+		GuiActionRunner.execute(() -> view.getListPlayerModel().addElement(player1));
+		window.list("playersList").selectItem(0);
+		window.button(JButtonMatcher.withText("Delete player")).click();
+		assertThat(window.list("playersList").contents()).isEmpty();
+		window.label("errorPlayerLbl").requireText(
+				"The selected id 1 is not associated with any tennis player: 1 - test name1 - test surname1");
+	}
+
 }
