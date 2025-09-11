@@ -101,4 +101,14 @@ public class TennisManagementViewSwingIT extends AssertJSwingJUnitTestCase {
 				"The selected id 1 is already in use by another player: 1 - existing name - existing surname");
 	}
 
+	@Test
+	@GUITest
+	public void testDeleteTennisPlayerButtonSuccess() {
+		TennisPlayer player1 = new TennisPlayer("1", "test name1", "test surname1");
+		GuiActionRunner.execute(() -> playerController.addNewTennisPlayer(player1));
+		window.list("playersList").selectItem(0);
+		window.button(JButtonMatcher.withText("Delete player")).click();
+		assertThat(window.list("playersList").contents()).isEmpty();
+	}
+
 }
