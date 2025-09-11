@@ -3,6 +3,7 @@ package com.giulia.giamberini.tennis.view.swing;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.assertj.swing.annotation.GUITest;
+import org.assertj.swing.core.matcher.JButtonMatcher;
 import org.assertj.swing.edt.GuiActionRunner;
 import org.assertj.swing.fixture.FrameFixture;
 import org.assertj.swing.junit.runner.GUITestRunner;
@@ -75,4 +76,16 @@ public class TennisManagementViewSwingIT extends AssertJSwingJUnitTestCase {
 		GuiActionRunner.execute(() -> playerController.findAllTennisPlayers());
 		assertThat(window.list("playersList").contents()).containsExactly(player1.toString(), player2.toString());
 	}
+	
+	@Test
+	@GUITest
+	public void testAddTennisPlayerButtonSuccess() {
+		window.textBox("idTextBox").enterText("1");
+		window.textBox("nameTextBox").enterText("test name");
+		window.textBox("surnameTextBox").enterText("test surname");
+		window.button(JButtonMatcher.withText("Add player")).click();
+		assertThat(window.list("playersList").contents())
+				.containsExactly(new TennisPlayer("1", "test name", "test surname").toString());
+	}
+
 }
