@@ -121,4 +121,23 @@ public class ModelViewControllerIT extends AssertJSwingJUnitTestCase {
 		assertThat(matchRepo.findByMatchInfo(winner, loser, date)).isNull();
 	}
 
+	@Test
+	@GUITest
+	public void testDeleteTennisPlayerDeleteAlsoTennisMatchAssociated() {
+		TennisPlayer winner = new TennisPlayer("1", "test name1", "test surname1");
+		TennisPlayer loser = new TennisPlayer("2", "test name2", "test surname2");
+		LocalDate date = LocalDate.of(2025, 10, 10);
+		playerRepo.save(winner);
+		playerRepo.save(loser);
+		TennisMatch match = new TennisMatch(winner, loser, date);
+		matchRepo.save(match);
+		GuiActionRunner.execute(() -> {
+			playerController.findAllTennisPlayers();
+			matchController.findAllTennisMatches();
+		});
+		window.list("playersList").selectItem(0);
+		window.button(JButtonMatcher.withText("Delete player")).click();
+		assertThat(matchRepo.findByMatchInfo(winner, loser, date)).isNull();
+	}
+
 }
