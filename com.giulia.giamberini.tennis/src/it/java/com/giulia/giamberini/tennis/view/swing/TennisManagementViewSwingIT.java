@@ -159,4 +159,25 @@ public class TennisManagementViewSwingIT extends AssertJSwingJUnitTestCase {
 		assertThat(window.list("matchesList").contents()).containsExactly(match.toString());
 	}
 
+	@Test
+	@GUITest
+	public void testAddTennisMatchButtonWithError() {
+		TennisPlayer player1 = new TennisPlayer("1", "test name1", "test surname1");
+		TennisPlayer player2 = new TennisPlayer("2", "test name2", "test surname2");
+		playerRepo.save(player1);
+		playerRepo.save(player2);
+		GuiActionRunner.execute(() -> view.showAllTennisPlayers(Arrays.asList(player1, player2)));
+		LocalDate date = LocalDate.of(2025, 10, 10);
+		matchRepo.save(new TennisMatch(player1, player2, date));
+		window.comboBox("winnerComboBox").selectItem(1);
+		window.comboBox("loserComboBox").selectItem(0);
+		window.textBox("dateOfTheMatchTextBox").enterText(date.toString());
+		window.button(JButtonMatcher.withText("Add match")).click();
+		assertThat(window.list("matchesList").contents()).isEmpty();
+		window.label("errorMatchLbl")
+				.requireText("The match between " + player1.toString() + " and " + player2.toString()
+						+ " has been already played in the selected date " + date.toString()
+						+ ": (1,test name1,test surname1) - (2,test name2,test surname2) - 2025-10-10");
+	}
+
 }
