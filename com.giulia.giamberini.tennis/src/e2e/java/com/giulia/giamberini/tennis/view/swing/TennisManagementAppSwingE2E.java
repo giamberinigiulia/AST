@@ -226,4 +226,22 @@ public class TennisManagementAppSwingE2E extends AssertJSwingJUnitTestCase {
 						TENNIS_PLAYER_FIXTURE_2_SURNAME, newDateFedererVsNadal));
 	}
 
+	@Test
+	@GUITest
+	public void testAddButtonShowErrorWhenAttemptToAddAMatchThatHasAlreadyBeenPlayedAmongTheSamePlayersAndInTheSameDateButWhitDifferentResult() {
+		// in the db there is Nadal wins over Federer on DATE_NADAL_FEDERER so the
+		// attempt will be to add a match on the same date with same players but
+		// different result (also same result will have the same consequences)
+		window.comboBox("winnerComboBox").selectItem(
+				Pattern.compile(".*" + TENNIS_PLAYER_FIXTURE_1_NAME + ".*" + TENNIS_PLAYER_FIXTURE_1_SURNAME + ".*")); // federer
+		window.comboBox("loserComboBox").selectItem(
+				Pattern.compile(".*" + TENNIS_PLAYER_FIXTURE_2_NAME + ".*" + TENNIS_PLAYER_FIXTURE_2_SURNAME + ".*")); // nadal
+		window.textBox("dateOfTheMatchTextBox").enterText(DATE_NADAL_FEDERER.toString());
+		window.button(JButtonMatcher.withText("Add match")).click();
+		assertThat(window.label("errorMatchLbl").text()).contains(TENNIS_PLAYER_FIXTURE_1_NAME,
+				TENNIS_PLAYER_FIXTURE_1_SURNAME, TENNIS_PLAYER_FIXTURE_2_NAME, TENNIS_PLAYER_FIXTURE_2_SURNAME,
+				DATE_NADAL_FEDERER.toString());
+	}
+
+
 }
