@@ -159,4 +159,16 @@ public class TennisManagementAppSwingE2E extends AssertJSwingJUnitTestCase {
 				.anySatisfy(e -> assertThat(e).contains("4", "Novak", "Djokovic"));
 	}
 
+	@Test
+	@GUITest
+	public void testAddNewPlayerButtonShowError() {
+		window.textBox("idTextBox").enterText(TENNIS_PLAYER_FIXTURE_1_ID); // reuse of the same ID as for Roger Federer
+		window.textBox("nameTextBox").enterText("Andy");
+		window.textBox("surnameTextBox").enterText("Murray");
+		window.button(JButtonMatcher.withText("Add player")).click();
+		// expected to see the already in memory tennis player
+		assertThat(window.label("errorPlayerLbl").text()).contains(TENNIS_PLAYER_FIXTURE_1_ID,
+				TENNIS_PLAYER_FIXTURE_1_NAME, TENNIS_PLAYER_FIXTURE_1_SURNAME);
+	}
+
 }
