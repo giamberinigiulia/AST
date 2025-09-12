@@ -210,4 +210,20 @@ public class TennisManagementAppSwingE2E extends AssertJSwingJUnitTestCase {
 				TENNIS_PLAYER_FIXTURE_1_SURNAME);
 	}
 
+	@Test
+	@GUITest
+	public void testAddMatchButtonSuccess() {
+		window.comboBox("winnerComboBox").selectItem(
+				Pattern.compile(".*" + TENNIS_PLAYER_FIXTURE_1_NAME + ".*" + TENNIS_PLAYER_FIXTURE_1_SURNAME + ".*"));
+		window.comboBox("loserComboBox").selectItem(
+				Pattern.compile(".*" + TENNIS_PLAYER_FIXTURE_2_NAME + ".*" + TENNIS_PLAYER_FIXTURE_2_SURNAME + ".*"));
+		String newDateFedererVsNadal = "2025-10-15";
+		window.textBox("dateOfTheMatchTextBox").enterText(newDateFedererVsNadal);
+		window.button(JButtonMatcher.withText("Add match")).click();
+		assertThat(window.list("matchesList").contents())
+				.anySatisfy(e -> assertThat(e).contains(TENNIS_PLAYER_FIXTURE_1_ID, TENNIS_PLAYER_FIXTURE_1_NAME,
+						TENNIS_PLAYER_FIXTURE_1_SURNAME, TENNIS_PLAYER_FIXTURE_2_ID, TENNIS_PLAYER_FIXTURE_2_NAME,
+						TENNIS_PLAYER_FIXTURE_2_SURNAME, newDateFedererVsNadal));
+	}
+
 }
