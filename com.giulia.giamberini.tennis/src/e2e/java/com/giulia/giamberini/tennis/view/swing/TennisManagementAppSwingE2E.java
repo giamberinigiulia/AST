@@ -7,6 +7,7 @@ import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
 
 import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.regex.Pattern;
 
 import javax.swing.JFrame;
 
@@ -169,6 +170,20 @@ public class TennisManagementAppSwingE2E extends AssertJSwingJUnitTestCase {
 		// expected to see the already in memory tennis player
 		assertThat(window.label("errorPlayerLbl").text()).contains(TENNIS_PLAYER_FIXTURE_1_ID,
 				TENNIS_PLAYER_FIXTURE_1_NAME, TENNIS_PLAYER_FIXTURE_1_SURNAME);
+	}
+
+	@Test
+	@GUITest
+	public void testDeletePlayerSuccess() {
+		window.list("playersList").selectItem(
+				Pattern.compile(".*" + TENNIS_PLAYER_FIXTURE_1_NAME + ".*" + TENNIS_PLAYER_FIXTURE_1_SURNAME + ".*"));
+		window.button(JButtonMatcher.withText("Delete player")).click();
+		assertThat(window.list("playersList").contents()).noneMatch(
+				e -> e.contains(TENNIS_PLAYER_FIXTURE_1_NAME) && e.contains(TENNIS_PLAYER_FIXTURE_1_SURNAME));
+		assertThat(window.comboBox("winnerComboBox").contents()).noneMatch(
+				e -> e.contains(TENNIS_PLAYER_FIXTURE_1_NAME) && e.contains(TENNIS_PLAYER_FIXTURE_1_SURNAME));
+		assertThat(window.comboBox("loserComboBox").contents()).noneMatch(
+				e -> e.contains(TENNIS_PLAYER_FIXTURE_1_NAME) && e.contains(TENNIS_PLAYER_FIXTURE_1_SURNAME));
 	}
 
 }
