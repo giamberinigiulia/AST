@@ -12,6 +12,7 @@ import javax.swing.JFrame;
 
 import org.assertj.swing.annotation.GUITest;
 import org.assertj.swing.core.GenericTypeMatcher;
+import org.assertj.swing.core.matcher.JButtonMatcher;
 import org.assertj.swing.finder.WindowFinder;
 import org.assertj.swing.fixture.FrameFixture;
 import org.assertj.swing.junit.testcase.AssertJSwingJUnitTestCase;
@@ -141,6 +142,21 @@ public class TennisManagementAppSwingE2E extends AssertJSwingJUnitTestCase {
 				.anySatisfy(e -> assertThat(e).contains(TENNIS_PLAYER_FIXTURE_1_ID, TENNIS_PLAYER_FIXTURE_1_NAME,
 						TENNIS_PLAYER_FIXTURE_1_SURNAME, TENNIS_PLAYER_FIXTURE_2_ID, TENNIS_PLAYER_FIXTURE_2_NAME,
 						TENNIS_PLAYER_FIXTURE_2_SURNAME, DATE_FEDERER_NADAL.toString()));
+	}
+
+	@Test
+	@GUITest
+	public void testAddNewPlayerButtonSuccess() {
+		window.textBox("idTextBox").enterText("4");
+		window.textBox("nameTextBox").enterText("Novak");
+		window.textBox("surnameTextBox").enterText("Djokovic");
+		window.button(JButtonMatcher.withText("Add player")).click();
+		assertThat(window.list("playersList").contents())
+				.anySatisfy(e -> assertThat(e).contains("4", "Novak", "Djokovic"));
+		assertThat(window.comboBox("winnerComboBox").contents())
+				.anySatisfy(e -> assertThat(e).contains("4", "Novak", "Djokovic"));
+		assertThat(window.comboBox("loserComboBox").contents())
+				.anySatisfy(e -> assertThat(e).contains("4", "Novak", "Djokovic"));
 	}
 
 }
