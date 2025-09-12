@@ -243,5 +243,18 @@ public class TennisManagementAppSwingE2E extends AssertJSwingJUnitTestCase {
 				DATE_NADAL_FEDERER.toString());
 	}
 
+	@Test
+	@GUITest
+	public void testDeleteMatchButtonSuccess() {
+		// select FedererVsSinner match played in date DATE_FEDERER_SINNER from the list
+		window.list("matchesList")
+				.selectItem(Pattern.compile(".*" + TENNIS_PLAYER_FIXTURE_1_NAME + ".*" + TENNIS_PLAYER_FIXTURE_1_SURNAME
+						+ ".*" + TENNIS_PLAYER_FIXTURE_3_NAME + ".*" + TENNIS_PLAYER_FIXTURE_3_SURNAME + ".*"
+						+ DATE_FEDERER_SINNER.toString() + ".*"));
+		window.button(JButtonMatcher.withText("Delete match")).click();
+		assertThat(window.list("matchesList").contents()).noneMatch(e -> e.contains(TENNIS_PLAYER_FIXTURE_1_NAME)
+				&& e.contains(TENNIS_PLAYER_FIXTURE_1_SURNAME) && e.contains(TENNIS_PLAYER_FIXTURE_3_NAME)
+				&& e.contains(TENNIS_PLAYER_FIXTURE_3_SURNAME) && e.contains(DATE_FEDERER_SINNER.toString()));
+	}
 
 }
