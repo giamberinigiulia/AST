@@ -28,6 +28,7 @@ import com.giulia.giamberini.tennis.model.TennisPlayer;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientSettings;
 import com.mongodb.ServerAddress;
+import com.mongodb.client.model.Filters;
 
 public class TennisManagementAppSwingE2E extends AssertJSwingJUnitTestCase {
 
@@ -195,6 +196,18 @@ public class TennisManagementAppSwingE2E extends AssertJSwingJUnitTestCase {
 		assertThat(window.list("matchesList").contents()).noneMatch(
 				e -> e.contains(TENNIS_PLAYER_FIXTURE_3_NAME) && e.contains(TENNIS_PLAYER_FIXTURE_3_SURNAME));
 	}
-	
+
+	@Test
+	@GUITest
+	public void testDeletePlayerShowError() {
+		window.list("playersList").selectItem(
+				Pattern.compile(".*" + TENNIS_PLAYER_FIXTURE_1_NAME + ".*" + TENNIS_PLAYER_FIXTURE_1_SURNAME + ".*"));
+		client.getDatabase(DATABASE_NAME_TENNIS_MATCHES).withCodecRegistry(pojoCodecRegistry)
+				.getCollection(COLLECTION_NAME_PLAYERS, TennisPlayer.class)
+				.deleteOne(Filters.eq("_id", TENNIS_PLAYER_FIXTURE_1_ID));
+		window.button(JButtonMatcher.withText("Delete player")).click();
+		assertThat(window.label("errorPlayerLbl").text()).contains(TENNIS_PLAYER_FIXTURE_1_NAME,
+				TENNIS_PLAYER_FIXTURE_1_SURNAME);
+	}
 
 }
