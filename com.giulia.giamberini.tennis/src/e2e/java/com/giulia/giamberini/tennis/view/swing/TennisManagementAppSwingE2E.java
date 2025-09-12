@@ -186,4 +186,15 @@ public class TennisManagementAppSwingE2E extends AssertJSwingJUnitTestCase {
 				e -> e.contains(TENNIS_PLAYER_FIXTURE_1_NAME) && e.contains(TENNIS_PLAYER_FIXTURE_1_SURNAME));
 	}
 
+	@Test
+	@GUITest
+	public void testDeletePlayerButtonSuccessAndDeleteAssociatedMatches() {
+		window.list("playersList").selectItem(
+				Pattern.compile(".*" + TENNIS_PLAYER_FIXTURE_3_NAME + ".*" + TENNIS_PLAYER_FIXTURE_3_SURNAME + ".*"));
+		window.button(JButtonMatcher.withText("Delete player")).click();
+		assertThat(window.list("matchesList").contents()).noneMatch(
+				e -> e.contains(TENNIS_PLAYER_FIXTURE_3_NAME) && e.contains(TENNIS_PLAYER_FIXTURE_3_SURNAME));
+	}
+	
+
 }
