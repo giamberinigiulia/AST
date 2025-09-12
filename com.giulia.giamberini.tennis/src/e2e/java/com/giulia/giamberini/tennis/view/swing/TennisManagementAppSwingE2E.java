@@ -257,4 +257,21 @@ public class TennisManagementAppSwingE2E extends AssertJSwingJUnitTestCase {
 				&& e.contains(TENNIS_PLAYER_FIXTURE_3_SURNAME) && e.contains(DATE_FEDERER_SINNER.toString()));
 	}
 
+	@Test
+	@GUITest
+	public void testDeleteMatchButtonShowError() {
+		window.list("matchesList")
+				.selectItem(Pattern.compile(".*" + TENNIS_PLAYER_FIXTURE_1_NAME + ".*" + TENNIS_PLAYER_FIXTURE_1_SURNAME
+						+ ".*" + TENNIS_PLAYER_FIXTURE_3_NAME + ".*" + TENNIS_PLAYER_FIXTURE_3_SURNAME + ".*"
+						+ DATE_FEDERER_SINNER.toString() + ".*"));
+		client.getDatabase(DATABASE_NAME_TENNIS_MATCHES).withCodecRegistry(pojoCodecRegistry)
+				.getCollection(COLLECTION_NAME_MATCHES, TennisMatch.class)
+				.deleteOne(Filters.and(Filters.eq("winner._id", TENNIS_PLAYER_FIXTURE_1_ID),
+						Filters.eq("loser._id", TENNIS_PLAYER_FIXTURE_3_ID),
+						Filters.eq("dateOfTheMatch", DATE_FEDERER_SINNER)));
+		window.button(JButtonMatcher.withText("Delete match")).click();
+		assertThat(window.label("errorMatchLbl").text()).contains(TENNIS_PLAYER_FIXTURE_1_NAME,
+				TENNIS_PLAYER_FIXTURE_1_SURNAME, TENNIS_PLAYER_FIXTURE_3_NAME, TENNIS_PLAYER_FIXTURE_3_SURNAME,
+				DATE_FEDERER_SINNER.toString());
+	}
 }
