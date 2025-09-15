@@ -61,11 +61,11 @@ public class TennisManagementViewSwing extends JFrame implements TennisManagemen
 	private JLabel errorMatchLbl;
 	private JTextField idTextBox;
 	private DefaultListModel<TennisPlayer> listPlayerModel;
-	private TennisPlayerController playerController;
+	private transient TennisPlayerController playerController;
 	private DefaultComboBoxModel<TennisPlayer> winnerComboBoxModel;
 	private DefaultComboBoxModel<TennisPlayer> loserComboBoxModel;
 	private DefaultListModel<TennisMatch> listMatchModel;
-	private TennisMatchController matchController;
+	private transient TennisMatchController matchController;
 
 	public TennisManagementViewSwing() {
 
@@ -263,6 +263,8 @@ public class TennisManagementViewSwing extends JFrame implements TennisManagemen
 
 			@Override
 			public void contentsChanged(ListDataEvent e) {
+				// Not implemented because all list changes can be handled by intervalAdded()
+				// and intervalRemoved().
 			}
 
 		};
@@ -490,7 +492,7 @@ public class TennisManagementViewSwing extends JFrame implements TennisManagemen
 
 	public void setMatchController(TennisMatchController matchController) {
 		this.matchController = matchController;
-		
+
 	}
 
 }
