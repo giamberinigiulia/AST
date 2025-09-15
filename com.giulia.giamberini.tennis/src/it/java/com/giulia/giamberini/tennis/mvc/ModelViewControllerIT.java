@@ -36,8 +36,8 @@ public class ModelViewControllerIT extends AssertJSwingJUnitTestCase {
 	private MongoClient client;
 	private FrameFixture window;
 	private TennisManagementViewSwing view;
-	private TennisPlayerRepositoryMongo playerRepo;;
-	private TennisMatchRepositoryMongo matchRepo;;
+	private TennisPlayerRepositoryMongo playerRepo;
+	private TennisMatchRepositoryMongo matchRepo;
 	private TennisPlayerController playerController;
 	private TennisMatchController matchController;
 
