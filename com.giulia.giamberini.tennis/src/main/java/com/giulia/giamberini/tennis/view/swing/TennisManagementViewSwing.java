@@ -257,6 +257,8 @@ public class TennisManagementViewSwing extends JFrame implements TennisManagemen
 			private void updateEnablingDisablingCondition() {
 				winnerComboBox.setEnabled(winnerComboBoxModel.getSize() > 1);
 				loserComboBox.setEnabled(loserComboBoxModel.getSize() > 1);
+				winnerComboBox.setSelectedIndex(-1);
+				loserComboBox.setSelectedIndex(-1);
 			}
 
 			@Override
@@ -386,6 +388,8 @@ public class TennisManagementViewSwing extends JFrame implements TennisManagemen
 			listPlayerModel.addElement(tennisPlayer);
 			winnerComboBoxModel.addElement(tennisPlayer);
 			loserComboBoxModel.addElement(tennisPlayer);
+			winnerComboBox.setSelectedIndex(-1);
+			loserComboBox.setSelectedIndex(-1);
 		}
 	}
 
@@ -394,6 +398,8 @@ public class TennisManagementViewSwing extends JFrame implements TennisManagemen
 		listPlayerModel.addElement(tennisPlayerToAdd);
 		winnerComboBoxModel.addElement(tennisPlayerToAdd);
 		loserComboBoxModel.addElement(tennisPlayerToAdd);
+		winnerComboBox.setSelectedIndex(-1);
+		loserComboBox.setSelectedIndex(-1);
 		errorPlayerLbl.setText(" ");
 		idTextBox.setText("");
 		nameTextBox.setText("");
