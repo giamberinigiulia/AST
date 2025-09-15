@@ -230,6 +230,8 @@ public class TennisManagementViewSwingTest extends AssertJSwingJUnitTestCase {
 		GuiActionRunner.execute(() -> view.newTennisPlayerAdded(player1));
 		assertThat(window.comboBox("winnerComboBox").contents()).containsExactly(player1.toString());
 		assertThat(window.comboBox("loserComboBox").contents()).containsExactly(player1.toString());
+		window.comboBox("winnerComboBox").requireNoSelection();
+		window.comboBox("loserComboBox").requireNoSelection();
 	}
 
 	@Test
@@ -239,6 +241,8 @@ public class TennisManagementViewSwingTest extends AssertJSwingJUnitTestCase {
 		GuiActionRunner.execute(() -> view.showAllTennisPlayers(Arrays.asList(player1)));
 		assertThat(window.comboBox("winnerComboBox").contents()).containsExactly(player1.toString());
 		assertThat(window.comboBox("loserComboBox").contents()).containsExactly(player1.toString());
+		window.comboBox("winnerComboBox").requireNoSelection();
+		window.comboBox("loserComboBox").requireNoSelection();
 	}
 
 	@Test
@@ -256,6 +260,8 @@ public class TennisManagementViewSwingTest extends AssertJSwingJUnitTestCase {
 		});
 		window.comboBox("winnerComboBox").requireEnabled();
 		window.comboBox("loserComboBox").requireEnabled();
+		window.comboBox("winnerComboBox").requireNoSelection();
+		window.comboBox("loserComboBox").requireNoSelection();
 	}
 
 	@Test
