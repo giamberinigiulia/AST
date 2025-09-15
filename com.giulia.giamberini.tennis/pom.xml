@@ -9,6 +9,8 @@
   <packaging>jar</packaging>
 
   <properties>
+    <docker-maven-plugin-version>0.46.0</docker-maven-plugin-version>
+    <picocli-version>4.7.7</picocli-version>
     <maven-failsafe-plugin-version>3.5.3</maven-failsafe-plugin-version>
     <build-helper-maven-plugin-version>3.6.1</build-helper-maven-plugin-version>
     <pitest-maven-version>1.16.1</pitest-maven-version>
@@ -74,6 +76,11 @@
       <artifactId>slf4j-simple</artifactId>
       <version>${slf4j-api-version}</version>
       <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>info.picocli</groupId>
+      <artifactId>picocli</artifactId>
+      <version>${picocli-version}</version>
     </dependency>
   </dependencies>
   <build>
@@ -153,6 +160,7 @@
             <configuration>
               <sources>
                 <source>src/it/java</source>
+                <source>src/e2e/java</source>
               </sources>
             </configuration>
           </execution>
@@ -164,9 +172,58 @@
         <version>${maven-failsafe-plugin-version}</version>
         <executions>
           <execution>
+            <id>IT</id>
             <goals>
               <goal>integration-test</goal>
               <goal>verify</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>E2E-test</id>
+            <goals>
+              <goal>integration-test</goal>
+              <goal>verify</goal>
+            </goals>
+            <configuration>
+              <excludes>
+                <exclude>**/*IT.java</exclude>
+              </excludes>
+              <includes>
+                <include>**/*E2E.java</include>
+              </includes>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>io.fabric8</groupId>
+        <artifactId>docker-maven-plugin</artifactId>
+        <version>${docker-maven-plugin-version}</version>
+        <configuration>
+          <images>
+            <image>
+              <name>mongo:8.0.13</name>
+              <run>
+                <ports>
+                  <port>27017:27017</port>
+                </ports>
+              </run>
+            </image>
+          </images>
+        </configuration>
+        <executions>
+          <execution>
+            <id>run-docker</id>
+            <phase>pre-integration-test</phase>
+            <goals>
+              <goal>start</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>shutdown-docker</id>
+            <phase>post-integration-test</phase>
+            <goals>
+              <goal>stop</goal>
             </goals>
           </execution>
         </executions>
