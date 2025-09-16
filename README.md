@@ -1,2 +1,8 @@
 [![Coverage Status](https://coveralls.io/repos/github/giamberinigiulia/AST/badge.svg?branch=main)](https://coveralls.io/github/giamberinigiulia/AST?branch=main)
 [![Continuous Integration with Maven on Linux](https://github.com/giamberinigiulia/AST/actions/workflows/maven-ci.yml/badge.svg?branch=main)](https://github.com/giamberinigiulia/AST/actions/workflows/maven-ci.yml)
+[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=giamberinigiulia_AST&metric=bugs)](https://sonarcloud.io/summary/new_code?id=giamberinigiulia_AST)
+[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=giamberinigiulia_AST&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=giamberinigiulia_AST)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=giamberinigiulia_AST&metric=coverage)](https://sonarcloud.io/summary/new_code?id=giamberinigiulia_AST)
+[![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=giamberinigiulia_AST&metric=duplicated_lines_density)](https://sonarcloud.io/summary/new_code?id=giamberinigiulia_AST)
+[![Technical Debt](https://sonarcloud.io/api/project_badges/measure?project=giamberinigiulia_AST&metric=sqale_index)](https://sonarcloud.io/summary/new_code?id=giamberinigiulia_AST)
+[![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=giamberinigiulia_AST&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=giamberinigiulia_AST)
