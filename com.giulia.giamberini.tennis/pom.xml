@@ -9,6 +9,7 @@
   <packaging>jar</packaging>
 
   <properties>
+    <sonar-maven-plugin-version>5.1.0.4751</sonar-maven-plugin-version>
     <docker-maven-plugin-version>0.46.0</docker-maven-plugin-version>
     <picocli-version>4.7.7</picocli-version>
     <maven-failsafe-plugin-version>3.5.3</maven-failsafe-plugin-version>
@@ -227,6 +228,11 @@
             </goals>
           </execution>
         </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.sonarsource.scanner.maven</groupId>
+        <artifactId>sonar-maven-plugin</artifactId>
+        <version>${sonar-maven-plugin-version}</version>
       </plugin>
     </plugins>
   </build>
