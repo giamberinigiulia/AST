@@ -21,6 +21,9 @@ import com.mongodb.client.model.Filters;
 
 public class TennisMatchRepositoryMongo implements TennisMatchRepository {
 
+	private static final String DATE_OF_THE_MATCH = "dateOfTheMatch";
+	private static final String LOSER = "loser";
+	private static final String WINNER = "winner";
 	private MongoCollection<TennisMatch> collection;
 
 	public TennisMatchRepositoryMongo(MongoClient client, String databaseName, String collectionName) {
@@ -37,10 +40,10 @@ public class TennisMatchRepositoryMongo implements TennisMatchRepository {
 
 	@Override
 	public TennisMatch findByMatchInfo(TennisPlayer winner, TennisPlayer loser, LocalDate date) {
-		Bson tennisMatchAsGiven = Filters.and(Filters.eq("winner", winner), Filters.eq("loser", loser),
-				Filters.eq("dateOfTheMatch", date));
-		Bson tennisMatchWithOppositeResult = Filters.and(Filters.eq("winner", loser), Filters.eq("loser", winner),
-				Filters.eq("dateOfTheMatch", date));
+		Bson tennisMatchAsGiven = Filters.and(Filters.eq(WINNER, winner), Filters.eq(LOSER, loser),
+				Filters.eq(DATE_OF_THE_MATCH, date));
+		Bson tennisMatchWithOppositeResult = Filters.and(Filters.eq(WINNER, loser), Filters.eq(LOSER, winner),
+				Filters.eq(DATE_OF_THE_MATCH, date));
 		return collection.find(Filters.or(tennisMatchAsGiven, tennisMatchWithOppositeResult)).first();
 	}
 
@@ -51,9 +54,9 @@ public class TennisMatchRepositoryMongo implements TennisMatchRepository {
 
 	@Override
 	public void delete(TennisMatch matchToDelete) {
-		collection.deleteOne(Filters.and(Filters.eq("winner", matchToDelete.getWinner()),
-				Filters.eq("loser", matchToDelete.getLoser()),
-				Filters.eq("dateOfTheMatch", matchToDelete.getDateOfTheMatch())));
+		collection.deleteOne(Filters.and(Filters.eq(WINNER, matchToDelete.getWinner()),
+				Filters.eq(LOSER, matchToDelete.getLoser()),
+				Filters.eq(DATE_OF_THE_MATCH, matchToDelete.getDateOfTheMatch())));
 	}
 
 	@Override

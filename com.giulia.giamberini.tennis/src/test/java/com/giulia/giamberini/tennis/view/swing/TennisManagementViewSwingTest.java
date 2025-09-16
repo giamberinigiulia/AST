@@ -230,6 +230,8 @@ public class TennisManagementViewSwingTest extends AssertJSwingJUnitTestCase {
 		GuiActionRunner.execute(() -> view.newTennisPlayerAdded(player1));
 		assertThat(window.comboBox("winnerComboBox").contents()).containsExactly(player1.toString());
 		assertThat(window.comboBox("loserComboBox").contents()).containsExactly(player1.toString());
+		window.comboBox("winnerComboBox").requireNoSelection();
+		window.comboBox("loserComboBox").requireNoSelection();
 	}
 
 	@Test
@@ -239,6 +241,8 @@ public class TennisManagementViewSwingTest extends AssertJSwingJUnitTestCase {
 		GuiActionRunner.execute(() -> view.showAllTennisPlayers(Arrays.asList(player1)));
 		assertThat(window.comboBox("winnerComboBox").contents()).containsExactly(player1.toString());
 		assertThat(window.comboBox("loserComboBox").contents()).containsExactly(player1.toString());
+		window.comboBox("winnerComboBox").requireNoSelection();
+		window.comboBox("loserComboBox").requireNoSelection();
 	}
 
 	@Test
@@ -256,6 +260,8 @@ public class TennisManagementViewSwingTest extends AssertJSwingJUnitTestCase {
 		});
 		window.comboBox("winnerComboBox").requireEnabled();
 		window.comboBox("loserComboBox").requireEnabled();
+		window.comboBox("winnerComboBox").requireNoSelection();
+		window.comboBox("loserComboBox").requireNoSelection();
 	}
 
 	@Test
@@ -558,6 +564,38 @@ public class TennisManagementViewSwingTest extends AssertJSwingJUnitTestCase {
 		GuiActionRunner.execute(() -> {
 			view.newTennisMatchAdded(new TennisMatch(player1, player2, LocalDate.of(2025, 12, 10)));
 		});
+		window.button(JButtonMatcher.withText("Add match")).requireDisabled();
+	}
+	
+	@Test
+	@GUITest
+	public void testAddButtonRemainDisabledWhenNoPlayersAreSelected() {
+		TennisPlayer player1 = new TennisPlayer("1", "test name1", "test surname1");
+		TennisPlayer player2 = new TennisPlayer("2", "test name2", "test surname2");
+		GuiActionRunner.execute(() -> {
+			DefaultComboBoxModel<TennisPlayer> winnerComboBoxModel = view.getWinnerComboBoxModel();
+			winnerComboBoxModel.addElement(player1);
+			winnerComboBoxModel.addElement(player2);
+			DefaultComboBoxModel<TennisPlayer> loserComboBoxModel = view.getLoserComboBoxModel();
+			loserComboBoxModel.addElement(player1);
+			loserComboBoxModel.addElement(player2);
+		});
+		
+		window.comboBox("winnerComboBox").requireNoSelection();
+		window.comboBox("loserComboBox").requireNoSelection();
+		
+		window.textBox("dateOfTheMatchTextBox").enterText("2025-12-10");
+		window.button(JButtonMatcher.withText("Add match")).requireDisabled();
+		
+		window.textBox("dateOfTheMatchTextBox").setText("");
+		window.comboBox("winnerComboBox").selectItem(0);
+		window.textBox("dateOfTheMatchTextBox").enterText("2025-12-10");
+		window.button(JButtonMatcher.withText("Add match")).requireDisabled();
+		
+		window.textBox("dateOfTheMatchTextBox").setText("");
+		window.comboBox("winnerComboBox").clearSelection();
+		window.comboBox("loserComboBox").selectItem(0);
+		window.textBox("dateOfTheMatchTextBox").enterText("2025-12-10");
 		window.button(JButtonMatcher.withText("Add match")).requireDisabled();
 	}
 }

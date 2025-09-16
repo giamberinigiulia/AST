@@ -61,11 +61,11 @@ public class TennisManagementViewSwing extends JFrame implements TennisManagemen
 	private JLabel errorMatchLbl;
 	private JTextField idTextBox;
 	private DefaultListModel<TennisPlayer> listPlayerModel;
-	private TennisPlayerController playerController;
+	private transient TennisPlayerController playerController;
 	private DefaultComboBoxModel<TennisPlayer> winnerComboBoxModel;
 	private DefaultComboBoxModel<TennisPlayer> loserComboBoxModel;
 	private DefaultListModel<TennisMatch> listMatchModel;
-	private TennisMatchController matchController;
+	private transient TennisMatchController matchController;
 
 	public TennisManagementViewSwing() {
 
@@ -257,10 +257,14 @@ public class TennisManagementViewSwing extends JFrame implements TennisManagemen
 			private void updateEnablingDisablingCondition() {
 				winnerComboBox.setEnabled(winnerComboBoxModel.getSize() > 1);
 				loserComboBox.setEnabled(loserComboBoxModel.getSize() > 1);
+				winnerComboBox.setSelectedIndex(-1);
+				loserComboBox.setSelectedIndex(-1);
 			}
 
 			@Override
 			public void contentsChanged(ListDataEvent e) {
+				// Not implemented because all list changes can be handled by intervalAdded()
+				// and intervalRemoved().
 			}
 
 		};
@@ -386,6 +390,8 @@ public class TennisManagementViewSwing extends JFrame implements TennisManagemen
 			listPlayerModel.addElement(tennisPlayer);
 			winnerComboBoxModel.addElement(tennisPlayer);
 			loserComboBoxModel.addElement(tennisPlayer);
+			winnerComboBox.setSelectedIndex(-1);
+			loserComboBox.setSelectedIndex(-1);
 		}
 	}
 
@@ -394,6 +400,8 @@ public class TennisManagementViewSwing extends JFrame implements TennisManagemen
 		listPlayerModel.addElement(tennisPlayerToAdd);
 		winnerComboBoxModel.addElement(tennisPlayerToAdd);
 		loserComboBoxModel.addElement(tennisPlayerToAdd);
+		winnerComboBox.setSelectedIndex(-1);
+		loserComboBox.setSelectedIndex(-1);
 		errorPlayerLbl.setText(" ");
 		idTextBox.setText("");
 		nameTextBox.setText("");
@@ -484,7 +492,7 @@ public class TennisManagementViewSwing extends JFrame implements TennisManagemen
 
 	public void setMatchController(TennisMatchController matchController) {
 		this.matchController = matchController;
-		
+
 	}
 
 }

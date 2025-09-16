@@ -15,7 +15,6 @@ public class TennisMatch {
 	}
 
 	public TennisMatch() {
-		// TODO Auto-generated constructor stub
 	}
 
 	public TennisPlayer getWinner() {
