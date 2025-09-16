@@ -1,5 +1,4 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
@@ -14,16 +13,16 @@
     <picocli-version>4.7.7</picocli-version>
     <maven-failsafe-plugin-version>3.5.3</maven-failsafe-plugin-version>
     <build-helper-maven-plugin-version>3.6.1</build-helper-maven-plugin-version>
-    <pitest-maven-version>1.16.1</pitest-maven-version>
+    <pitest-maven-version>1.20.3</pitest-maven-version>
     <jaxb-api-version>2.3.1</jaxb-api-version>
     <coveralls-maven-plugin-version>4.3.0</coveralls-maven-plugin-version>
     <jacoco-maven-plugin-version>0.8.12</jacoco-maven-plugin-version>
     <slf4j-api-version>2.0.17</slf4j-api-version>
-    <testcontainers-mongodb-version>1.21.0</testcontainers-mongodb-version>
+    <testcontainers-mongodb-version>1.21.3</testcontainers-mongodb-version>
     <testcontainers-version>1.21.3</testcontainers-version>
     <mongo-java-driver-version>3.12.14</mongo-java-driver-version>
     <assertj-swing-junit-version>3.17.1</assertj-swing-junit-version>
-    <mockito-core-version>4.11.0</mockito-core-version>
+    <mockito-core-version>5.19.0</mockito-core-version>
     <junit-version>4.13.2</junit-version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>1.8</maven.compiler.source>
@@ -122,6 +121,11 @@
   <build>
     <pluginManagement>
       <plugins>
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>versions-maven-plugin</artifactId>
+          <version>2.16.0</version>
+        </plugin>
         <plugin>
           <groupId>org.jacoco</groupId>
           <artifactId>jacoco-maven-plugin</artifactId>
