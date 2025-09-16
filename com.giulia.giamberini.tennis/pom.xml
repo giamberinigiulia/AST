@@ -28,6 +28,41 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
+
+    <sonar.issue.ignore.multicriteria>e11a, e11b, e12, e13</sonar.issue.ignore.multicriteria>
+
+    <!-- Ignore S2699 (no assertions) for two specific test classes -->
+    <sonar.issue.ignore.multicriteria.e11a.ruleKey>java:S2699</sonar.issue.ignore.multicriteria.e11a.ruleKey>
+    <sonar.issue.ignore.multicriteria.e11a.resourceKey>
+      **/TennisManagementViewSwingTest.java</sonar.issue.ignore.multicriteria.e11a.resourceKey>
+
+    <sonar.issue.ignore.multicriteria.e11b.ruleKey>java:S2699</sonar.issue.ignore.multicriteria.e11b.ruleKey>
+    <sonar.issue.ignore.multicriteria.e11b.resourceKey>
+      **/TennisManagementViewSwingIT.java</sonar.issue.ignore.multicriteria.e11b.resourceKey>
+
+    <!-- Ignore S117 (variable naming) -->
+    <sonar.issue.ignore.multicriteria.e12.ruleKey>java:S117</sonar.issue.ignore.multicriteria.e12.ruleKey>
+    <sonar.issue.ignore.multicriteria.e12.resourceKey>
+      **/TennisManagementViewSwing.java</sonar.issue.ignore.multicriteria.e12.resourceKey>
+
+    <!-- Ignore S3577 (class naming) -->
+    <sonar.issue.ignore.multicriteria.e13.ruleKey>java:S3577</sonar.issue.ignore.multicriteria.e13.ruleKey>
+    <sonar.issue.ignore.multicriteria.e13.resourceKey>
+      **/TennisManagementAppSwingE2E.java</sonar.issue.ignore.multicriteria.e13.resourceKey>
+
+    <sonar.tests>
+      ${project.basedir}/src/test/java,
+      ${project.basedir}/src/it/java,
+      ${project.basedir}/src/e2e/java,
+    </sonar.tests>
+
+    <sonar.junit.reportPaths>
+      ${project.build.directory}/surefire-reports,
+      ${project.build.directory}/failsafe-reports
+    </sonar.junit.reportPaths>
+    <sonar.coverage.exclusions>
+      **/model/*.* , **/TennisManagementAppSwing.*
+    </sonar.coverage.exclusions>
   </properties>
 
   <dependencies>
